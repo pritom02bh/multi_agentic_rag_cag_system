@@ -1,0 +1,209 @@
+.pipeline-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.pipeline-progress {
+    margin-bottom: 30px;
+}
+
+.progress-bar {
+    height: 8px;
+    background: linear-gradient(90deg, #4CAF50, #2196F3);
+    border-radius: 4px;
+    transition: width 0.3s ease;
+    position: relative;
+}
+
+.progress-text {
+    position: absolute;
+    right: 0;
+    top: -20px;
+    font-size: 14px;
+    color: #666;
+}
+
+.pipeline-stages {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.pipeline-stage {
+    flex: 1;
+    min-width: 250px;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.pipeline-stage:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.pipeline-stage.with-connector::after {
+    content: '';
+    position: absolute;
+    right: -30px;
+    top: 50%;
+    width: 30px;
+    height: 2px;
+    background: #ddd;
+    z-index: 1;
+}
+
+.stage-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+    transition: all 0.3s ease;
+}
+
+.stage-icon i {
+    font-size: 24px;
+    color: #666;
+}
+
+/* Stage status styles */
+.stage-icon.waiting {
+    background: #f0f0f0;
+}
+
+.stage-icon.in_progress {
+    background: #2196F3;
+}
+
+.stage-icon.in_progress i {
+    color: white;
+}
+
+.stage-icon.completed {
+    background: #4CAF50;
+}
+
+.stage-icon.completed i {
+    color: white;
+}
+
+.stage-icon.error {
+    background: #f44336;
+}
+
+.stage-icon.error i {
+    color: white;
+}
+
+.stage-icon.cancelled {
+    background: #9e9e9e;
+}
+
+.stage-icon.cancelled i {
+    color: white;
+}
+
+/* Pulse animation for in-progress stages */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(33, 150, 243, 0.4);
+    }
+    70% {
+        transform: scale(1.05);
+        box-shadow: 0 0 0 10px rgba(33, 150, 243, 0);
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(33, 150, 243, 0);
+    }
+}
+
+.stage-icon.pulse {
+    animation: pulse 2s infinite;
+}
+
+.stage-content {
+    padding: 10px;
+}
+
+.stage-content h4 {
+    margin: 0 0 10px 0;
+    color: #333;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.stage-content p {
+    margin: 0 0 15px 0;
+    color: #666;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.stage-status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.status-indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #ddd;
+}
+
+.status-indicator.waiting {
+    background: #ddd;
+}
+
+.status-indicator.in_progress {
+    background: #2196F3;
+}
+
+.status-indicator.completed {
+    background: #4CAF50;
+}
+
+.status-indicator.error {
+    background: #f44336;
+}
+
+.status-indicator.cancelled {
+    background: #9e9e9e;
+}
+
+.status-text {
+    font-size: 12px;
+    color: #666;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .pipeline-stages {
+        flex-direction: column;
+    }
+
+    .pipeline-stage {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .pipeline-stage.with-connector::after {
+        display: none;
+    }
+} 
