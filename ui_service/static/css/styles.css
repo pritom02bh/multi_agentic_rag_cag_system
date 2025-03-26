@@ -1,0 +1,76 @@
+.visualization-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    margin: 20px 0;
+}
+
+.chart-container {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.inventory-summary, .inventory-details {
+    grid-column: 1 / -1;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.inventory-summary h3, .inventory-details h3 {
+    color: #2c3e50;
+    margin-bottom: 15px;
+    font-size: 1.2em;
+}
+
+.inventory-summary table, .inventory-details table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.inventory-summary th, .inventory-summary td,
+.inventory-details th, .inventory-details td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.inventory-summary th, .inventory-details th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+    color: #495057;
+}
+
+.inventory-details tr.status-low {
+    background-color: rgba(255, 159, 64, 0.1);
+}
+
+.inventory-details tr.status-out-of-stock {
+    background-color: rgba(255, 99, 132, 0.1);
+}
+
+.inventory-details tr.status-normal {
+    background-color: rgba(75, 192, 192, 0.1);
+}
+
+@media (max-width: 768px) {
+    .visualization-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .inventory-summary table, .inventory-details table {
+        font-size: 0.9em;
+    }
+    
+    .inventory-summary th, .inventory-summary td,
+    .inventory-details th, .inventory-details td {
+        padding: 8px;
+    }
+} 

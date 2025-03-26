@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chat API Diagnostic Tool</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .input-group {
+            display: flex;
+            gap: 10px;
+        }
+        input[type="text"] {
+            flex-grow: 1;
+            padding: 8px;
+            font-size: 16px;
+        }
+        button {
+            padding: 8px 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        pre {
+            background-color: #f5f5f5;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+        }
+        .message-container {
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        .message {
+            white-space: pre-wrap;
+        }
+        .status {
+            margin-top: 10px;
+            font-style: italic;
+            color: #666;
+        }
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 20px;
+        }
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            background-color: #f1f1f1;
+            margin-right: 5px;
+            border-radius: 5px 5px 0 0;
+        }
+        .tab.active {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <h1>Chat API Diagnostic Tool</h1>
+    
+    <div class="tabs">
+        <div class="tab active" onclick="switchTab('chat')">Chat Test</div>
+        <div class="tab" onclick="switchTab('system')">System Status</div>
+        <div class="tab" onclick="switchTab('router')">Router Debug</div>
+        <div class="tab" onclick="switchTab('router-detailed')">Router Detailed</div>
+        <div class="tab" onclick="switchTab('direct-test')">Direct Test</div>
+    </div>
+    
+    <div id="chat" class="tab-content active">
+        <h2>Test Chat API</h2>
+        <div class="container">
+            <div class="input-group">
+                <input id="query" type="text" placeholder="Enter your query here..." value="hi">
+                <button onclick="sendQuery()">Send</button>
+                <button onclick="clearChat()">Clear</button>
+            </div>
+            
+            <div id="chat-container"></div>
+            
+            <h3>Raw Response</h3>
+            <pre id="response"></pre>
+        </div>
+    </div>
+    
+    <div id="system" class="tab-content">
+        <h2>System Status</h2>
+        <button onclick="checkSystemStatus()">Check Status</button>
+        <pre id="system-status"></pre>
+    </div>
+    
+    <div id="router" class="tab-content">
+        <h2>Router Agent Debug</h2>
+        <button onclick="debugRouter()">Debug Router</button>
+        <pre id="router-debug"></pre>
+    </div>
+    
+    <div id="router-detailed" class="tab-content">
+        <h2>Router Agent Detailed Diagnostics</h2>
+        <button onclick="debugRouterDetailed()">Run Detailed Diagnostics</button>
+        <p>This will perform a comprehensive check of the router agent, including direct initialization and test queries.</p>
+        <pre id="router-detailed-debug"></pre>
+    </div>
+    
+    <div id="direct-test" class="tab-content">
+        <h2>Direct Function Testing</h2>
+        <p>This tests the core query detection and response generation functions directly, bypassing the API endpoint.</p>
+        <div class="container">
+            <div class="input-group">
+                <input id="direct-query" type="text" placeholder="Enter your query here..." value="hi">
+                <button onclick="testDirect()">Test</button>
+            </div>
+            
+            <h3>Test Results</h3>
+            <pre id="direct-results"></pre>
+        </div>
+    </div>
+    
+    <script>
+        // Configuration
+        const API_ENDPOINTS = {
+            chat: '/api/ui/chat',
+            debug: '/api/debug/ui-response',
+            status: '/api/system/status',
+            router: '/api/debug/router',
+            routerDetailed: '/api/debug/router-detailed',
+            directTest: '/api/test/direct'
+        };
+        
+        let sessionId = null;
+        
+        function switchTab(tabId) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Deactivate all tabs
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Activate the selected tab
+            document.getElementById(tabId).classList.add('active');
+            
+            // Activate the tab button
+            document.querySelectorAll('.tab').forEach(tab => {
+                if (tab.textContent.toLowerCase().includes(tabId)) {
+                    tab.classList.add('active');
+                }
+            });
+        }
+        
+        function sendQuery() {
+            const query = document.getElementById('query').value;
+            if (!query) return;
+            
+            // Add user message to chat
+            addMessage(query, 'user');
+            
+            // Prepare request data
+            const requestData = {
+                query: query
+            };
+            
+            if (sessionId) {
+                requestData.session_id = sessionId;
+            }
+            
+            // Send to both endpoints for comparison
+            Promise.all([
+                fetch(API_ENDPOINTS.chat, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(requestData)
+                }).then(response => response.json()),
+                
+                fetch(API_ENDPOINTS.debug, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(requestData)
+                }).then(response => response.json())
+            ])
+            .then(([chatResponse, debugResponse]) => {
+                // Display the chat response
+                if (chatResponse.message) {
+                    addMessage(chatResponse.message, 'bot', chatResponse.type);
+                    
+                    // Store session ID for future requests
+                    if (chatResponse.session_id) {
+                        sessionId = chatResponse.session_id;
+                    }
+                } else {
+                    addMessage("Error: No message in response", 'error');
+                }
+                
+                // Display raw responses
+                document.getElementById('response').textContent = 
+                    'Chat Response:\n' + JSON.stringify(chatResponse, null, 2) + 
+                    '\n\nDebug Info:\n' + JSON.stringify(debugResponse, null, 2);
+            })
+            .catch(error => {
+                addMessage("Error: " + error.message, 'error');
+                document.getElementById('response').textContent = 'Error: ' + error.message;
+            });
+            
+            // Clear input
+            document.getElementById('query').value = '';
+        }
+        
+        function addMessage(text, sender, type = '') {
+            const chatContainer = document.getElementById('chat-container');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message-container';
+            
+            const messageContent = document.createElement('div');
+            messageContent.className = 'message';
+            messageContent.textContent = text;
+            
+            const statusDiv = document.createElement('div');
+            statusDiv.className = 'status';
+            
+            if (sender === 'user') {
+                statusDiv.textContent = 'You';
+                messageDiv.style.backgroundColor = '#e6f7ff';
+            } else if (sender === 'bot') {
+                statusDiv.textContent = `Bot (${type || 'unknown'})`;
+                messageDiv.style.backgroundColor = '#f0f0f0';
+            } else {
+                statusDiv.textContent = sender;
+                messageDiv.style.backgroundColor = '#ffe6e6';
+            }
+            
+            messageDiv.appendChild(messageContent);
+            messageDiv.appendChild(statusDiv);
+            chatContainer.appendChild(messageDiv);
+            
+            // Scroll to bottom
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+        
+        function clearChat() {
+            document.getElementById('chat-container').innerHTML = '';
+            document.getElementById('response').textContent = '';
+            sessionId = null;
+        }
+        
+        function checkSystemStatus() {
+            fetch(API_ENDPOINTS.status)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('system-status').textContent = JSON.stringify(data, null, 2);
+                })
+                .catch(error => {
+                    document.getElementById('system-status').textContent = 'Error: ' + error.message;
+                });
+        }
+        
+        function debugRouter() {
+            fetch(API_ENDPOINTS.router)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('router-debug').textContent = JSON.stringify(data, null, 2);
+                })
+                .catch(error => {
+                    document.getElementById('router-debug').textContent = 'Error: ' + error.message;
+                });
+        }
+        
+        function debugRouterDetailed() {
+            document.getElementById('router-detailed-debug').textContent = 'Running detailed diagnostics, please wait...';
+            fetch(API_ENDPOINTS.routerDetailed)
+                .then(response => response.json())
+                .then(data => {
+                    // Format the recommendations as a list at the top
+                    let formattedOutput = '=== RECOMMENDATIONS ===\n';
+                    if (data.recommendations && data.recommendations.length > 0) {
+                        data.recommendations.forEach((rec, index) => {
+                            formattedOutput += `${index + 1}. ${rec}\n`;
+                        });
+                    } else {
+                        formattedOutput += 'No recommendations available.\n';
+                    }
+                    
+                    formattedOutput += '\n=== DETAILED RESULTS ===\n';
+                    formattedOutput += JSON.stringify(data, null, 2);
+                    
+                    document.getElementById('router-detailed-debug').textContent = formattedOutput;
+                })
+                .catch(error => {
+                    document.getElementById('router-detailed-debug').textContent = 'Error: ' + error.message;
+                });
+        }
+        
+        function testDirect() {
+            const query = document.getElementById('direct-query').value;
+            if (!query) return;
+            
+            document.getElementById('direct-results').textContent = 'Testing, please wait...';
+            
+            fetch(API_ENDPOINTS.directTest, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({query: query})
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Format the results in a readable way
+                let formattedOutput = '=== QUERY DETECTION ===\n';
+                formattedOutput += `Query: "${data.query}"\n`;
+                formattedOutput += `Is Casual: ${data.is_ultra_casual}\n`;
+                formattedOutput += `Is Business: ${data.is_likely_business}\n\n`;
+                
+                formattedOutput += '=== RESPONSES ===\n';
+                if (data.casual_response) {
+                    formattedOutput += `Casual Response: "${data.casual_response}"\n\n`;
+                }
+                
+                if (data.business_response) {
+                    formattedOutput += `Business Response: "${data.business_response}"\n\n`;
+                }
+                
+                if (data.fallback_response) {
+                    formattedOutput += `Fallback Response: "${data.fallback_response}"\n\n`;
+                }
+                
+                if (Object.keys(data.errors).length > 0) {
+                    formattedOutput += '=== ERRORS ===\n';
+                    for (const [key, value] of Object.entries(data.errors)) {
+                        formattedOutput += `${key}: ${value}\n`;
+                    }
+                }
+                
+                document.getElementById('direct-results').textContent = formattedOutput;
+            })
+            .catch(error => {
+                document.getElementById('direct-results').textContent = 'Error: ' + error.message;
+            });
+        }
+        
+        // Add event listener for Enter key
+        document.getElementById('query').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                sendQuery();
+            }
+        });
+    </script>
+</body>
+</html> 

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PharmAI Assistant</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Add Chart.js for visualizations -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Add additional Chart.js plugins if needed -->
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Left Sidebar -->
+        <div class="left-sidebar">
+            <div class="logo">
+                <i class="fas fa-capsules"></i>
+            </div>
+            <div class="sidebar-content">
+                <button id="new-chat-btn" class="new-chat-btn">
+                    <i class="fas fa-plus"></i>
+                    <span>New Chat</span>
+                </button>
+                <div class="chat-history">
+                    <div class="history-label">Recent</div>
+                    <div id="recent-chats" class="recent-chats">
+                        <!-- Recent chats will be populated here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Chat Area -->
+        <div class="main-chat">
+            <!-- Welcome Screen (shown when no chat is active) -->
+            <div id="welcome-screen" class="welcome-screen">
+                <h1>PharmAI Assistant</h1>
+                <p>Your intelligent pharmaceutical supply chain companion</p>
+                <div class="example-prompts">
+                    <div class="prompt-category">
+                        <h3>Example queries</h3>
+                        <div class="prompt-grid">
+                            <!-- Example queries will be populated from config -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chat Messages -->
+            <div id="chat-messages" class="chat-messages" style="display: none;">
+                <div class="messages-container" id="messages">
+                    <!-- Messages will be populated here -->
+                </div>
+            </div>
+            
+            <!-- Input Area -->
+            <div class="input-container">
+                <div class="input-wrapper">
+                    <textarea 
+                        id="chat-input" 
+                        placeholder="Message PharmAI..."
+                        rows="1"
+                        autofocus
+                    ></textarea>
+                    <button type="submit" id="send-button" aria-label="Send message">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+                <div class="loading" id="chat-loading">Processing your request...</div>
+                <div class="error-message" id="chat-error">Error processing your request. Please try again.</div>
+            </div>
+        </div>
+
+        <!-- Right Sidebar - Pipeline Visualization -->
+        <div class="right-sidebar">
+            <div class="pipeline-container">
+                <h3>Processing Pipeline</h3>
+                <div id="pipeline-visualization" class="pipeline-visualization">
+                    <!-- Pipeline stages will be populated from JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Load configuration -->
+    <script src="/static/js/config.js"></script>
+    <!-- Load main JavaScript -->
+    <script src="/static/js/main.js"></script>
+</body>
+</html> 
