@@ -108,7 +108,7 @@ Server will start on `http://localhost:5000`
 ---
 
 ## 📈 Performance Metrics
-- ⏱️ **Avg. Response Time**: < 3 seconds
+- ⏱️ **Avg. Response Time**: < 12 seconds
 - 🎯 **Answer Relevance Accuracy**: > 90%
 - 🔎 **Web Search Integration Success**: > 95%
 - 🔋 **System Uptime**: > 99.9%
