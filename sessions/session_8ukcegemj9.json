@@ -1,0 +1,29 @@
+{
+  "history": [
+    {
+      "query": "What are the best practices for pharmaceutical storage?",
+      "enhanced_query": "What are the best practices for pharmaceutical storage considering regulatory requirements for temperature control, UN 3373 handling procedures, and FDA guidelines on storage conditions and expiry date management?",
+      "response": "### Best Practices for Pharmaceutical Storage\n\n#### Temperature Control\n- **Refrigerated Storage**: Ensure products like Insulin (Refrigerated) are kept within the specified temperature range (2\u00b0C \u2013 8\u00b0C) to maintain efficacy.\n- **Room Temperature Storage**: Monitor drugs like Paracetamol and Ibuprofen stored at room temperature to prevent degradation.\n\n#### UN 3373 Handling Procedures\n- **Category B Infectious Substances**: Handle biologics like Erythropoietin and Alpha Interferon (UN 3373) according to PHMSA-compliant labeling and packaging standards.\n\n#### FDA Guidelines for Storage Conditions and Expiry Date Management\n- **Compliance with FDA Regulations**: Adhere to FDA guidelines on storage conditions (e.g., Cold Chain requirements for Flu Vaccine) to maintain product integrity.\n- **Expiry Date Management**: Regularly monitor expiry dates and manage inventory levels effectively to prevent expired stock.\n\nBy following these best practices, pharmaceutical companies can ensure compliance with regulatory requirements, maintain product quality, and uphold patient safety standards.",
+      "sources": [
+        "guidelines",
+        "inventory",
+        "policy"
+      ],
+      "query_type": "factual",
+      "timestamp": "2025-04-15T14:35:37.790071"
+    }
+  ],
+  "metadata": {
+    "query_types": {
+      "factual": 1
+    },
+    "sources_used": {
+      "guidelines": 1,
+      "inventory": 1,
+      "policy": 1
+    },
+    "total_interactions": 1
+  },
+  "created_at": "2025-04-15T14:35:37.790071",
+  "last_updated": "2025-04-15T14:35:37.790071"
+}

@@ -1,0 +1,25 @@
+{
+  "history": [
+    {
+      "query": "What is the current inventory status?",
+      "enhanced_query": "What is the current inventory status including stock levels, reorder points, and expiry dates for pharmaceutical products in the system?",
+      "response": "### Current Inventory Status for Pharmaceutical Products\n\n#### Paracetamol\n- **Current Stock**: 951,453 g\n- **Reorder Point**: 93,151 g\n- **Expiry Date**: 14-12-2026\n\n#### Ibuprofen\n- **Current Stock**: 770,922 g\n- **Reorder Point**: 61,370 g\n- **Expiry Date**: 14-10-2027\n\n#### Aspirin\n- **Current Stock**: 194,347 g\n- **Reorder Point**: 98,630 g\n- **Expiry Date**: 02-02-2026\n\n#### Atorvastatin\n- **Current Stock**: 16,052 g\n- **Reorder Point**: 15,753 g\n- **Expiry Date**: 23-02-2027\n\n#### Lisinopril\n- **Current Stock**: 133,725 g\n- **Reorder Point**: 28,767 g\n- **Expiry Date**: 10-02-2026\n\n#### Metformin\n- **Current Stock**: 357,566 g\n- **Reorder Point**: 76,438 g\n- **Expiry Date**: 17-01-2027\n\n#### Amoxicillin\n- **Current Stock**: 481,838 g\n- **Reorder Point**: 39,726 g\n- **Expiry Date**: 03-11-2025\n\n#### Ciprofloxacin\n- **Current Stock**: 63,189 g\n- **Reorder Point**: 36,164 g\n- **Expiry Date**: 01-12-2026\n\n#### Sildenafil\n- **Current Stock**: 87,637 g\n- **Reorder Point**: 26,849 g\n- **Expiry Date**: 25-12-2025\n\n#### Albuterol\n- **Current Stock**: 37,079 g\n- **Reorder Point**: 8,630 g\n- **Expiry Date**: 04-07-2027\n\n#### Insulin\n- **Current Stock**: 51,767 IU\n- **Reorder Point**: 8,493 IU\n- **Expiry Date**: 06-10-2027\n\n#### Adalimumab\n- **Current Stock**: 4,569 mg\n- **Reorder Point**: 3,973 mg\n- **Expiry Date**: 02-04-2027\n\n#### Rituximab\n- **Current Stock**: 41,600 mg\n- **Reorder Point**: 6,781 mg\n- **Expiry Date**: 28-10-2025\n\n#### Erythropoietin\n- **Current Stock**: 17,211 IU\n- **Reorder Point**: 5,589 IU\n- **Expiry Date**: 02-07-2027\n\n#### Growth Hormone\n- **Current Stock**: 13,941 IU\n- **Reorder Point**: 2,795 IU\n- **Expiry Date**: 26-10-2025\n\n#### Flu Vaccine\n- **Current Stock**: 134,306 doses\n- **Reorder Point**: 23,014 doses\n- **Expiry Date**: 23-12-2026\n\n#### Hydrocortisone\n- **Current Stock**: 3,252 mg\n- **Reorder Point**: 3,616 mg\n- **Expiry Date**: 10-06-2026\n- **Status**: Reorder Required\n\n#### Alpha Interferon\n- **Current Stock**: 3,403 mcg\n- **Reorder Point**: 2,055 mcg\n- **Expiry Date**: 23-02-2026\n\n#### Beta Interferon\n- **Current Stock**: 7,068 mcg\n- **Reorder Point**: 2,877 mcg\n- **Expiry Date**: 01-06-2026\n\n### Key Metrics\n- **Total Active Items**: 18\n- **Items Requiring Reorder**: Hydrocortisone\n\n### Supply Chain Implications\n- **Lead Times**: Range from 14 to 44 days, impacting reorder schedules.\n- **Expiry Dates**: Ensure timely usage to avoid wastage, especially for items expiring in 2025.\n\n### Recommendations\n- **Monitor Stock Levels**: Regularly check items nearing reorder points.\n- **Plan Reorders**: Consider lead times and expiry dates to maintain optimal stock levels.\n- **Expiry Management**: Prioritize distribution of items with nearer expiry dates to minimize waste.",
+      "sources": [
+        "inventory"
+      ],
+      "query_type": "factual",
+      "timestamp": "2025-04-16T20:58:37.610885"
+    }
+  ],
+  "metadata": {
+    "query_types": {
+      "factual": 1
+    },
+    "sources_used": {
+      "inventory": 1
+    },
+    "total_interactions": 1
+  },
+  "created_at": "2025-04-16T20:58:37.610885",
+  "last_updated": "2025-04-16T20:58:37.610885"
+}

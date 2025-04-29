@@ -18,8 +18,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const welcomeScreen = document.getElementById('welcome-screen');
     const chatMessages = document.getElementById('chat-messages');
     const messagesContainer = document.getElementById('messages');
-    const chatInput = document.getElementById('chat-input');
-    const sendButton = document.getElementById('send-button');
+    const chatInput = document.getElementById('userInput');
+    const sendButton = document.getElementById('sendButton');
     const newChatButton = document.getElementById('new-chat-btn');
     const recentChats = document.getElementById('recent-chats');
     const loadingIndicator = document.getElementById('chat-loading');
@@ -40,6 +40,9 @@ document.addEventListener('DOMContentLoaded', () => {
         messagesContainer.style.flexDirection = 'column';
         messagesContainer.style.width = '100%';
     }
+    
+    // Create and display timestamp
+    addTimestamp();
     
     // Set up event listeners
     if (sendButton) {
@@ -94,6 +97,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Create confirmation modal
 function createConfirmationModal() {
+    // Remove existing modal if any
+    const existingModal = document.getElementById('confirm-modal');
+    if (existingModal) {
+        existingModal.remove();
+    }
+
     const modal = document.createElement('div');
     modal.className = 'confirm-modal';
     modal.id = 'confirm-modal';
@@ -110,44 +119,61 @@ function createConfirmationModal() {
     `;
     
     document.body.appendChild(modal);
-    
-    // Add event listeners
-    document.getElementById('confirm-cancel').addEventListener('click', () => {
-        closeConfirmModal();
-    });
-    
-    // Close modal when clicking outside
-    modal.addEventListener('click', (e) => {
-        if (e.target === modal) {
-            closeConfirmModal();
-        }
-    });
 }
 
 // Show confirmation modal
 function showConfirmModal(message, callback) {
     const modal = document.getElementById('confirm-modal');
+    if (!modal) {
+        createConfirmationModal();
+    }
+    
     const modalText = document.getElementById('confirm-modal-text');
     const confirmButton = document.getElementById('confirm-delete');
+    const cancelButton = document.getElementById('confirm-cancel');
     
-    modalText.textContent = message;
-    modal.classList.add('active');
+    if (modalText) modalText.textContent = message;
     
-    // Remove previous event listener
+    // Remove existing event listeners
     const newConfirmButton = confirmButton.cloneNode(true);
-    confirmButton.parentNode.replaceChild(newConfirmButton, confirmButton);
+    const newCancelButton = cancelButton.cloneNode(true);
     
-    // Add new event listener
-    newConfirmButton.addEventListener('click', () => {
+    confirmButton.parentNode.replaceChild(newConfirmButton, confirmButton);
+    cancelButton.parentNode.replaceChild(newCancelButton, cancelButton);
+    
+    // Add new event listeners
+    newConfirmButton.onclick = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
         callback();
         closeConfirmModal();
-    });
+    };
+    
+    newCancelButton.onclick = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        closeConfirmModal();
+    };
+    
+    // Show modal
+    modal.style.display = 'flex';
+    modal.classList.add('active');
+    
+    // Close modal when clicking outside
+    modal.onclick = (e) => {
+        if (e.target === modal) {
+            closeConfirmModal();
+        }
+    };
 }
 
 // Close confirmation modal
 function closeConfirmModal() {
     const modal = document.getElementById('confirm-modal');
-    modal.classList.remove('active');
+    if (modal) {
+        modal.classList.remove('active');
+        modal.style.display = 'none';
+    }
 }
 
 // Check system status
@@ -174,9 +200,21 @@ function updateSystemStatus(isOnline) {
     }
 }
 
+// Define pipeline stages
+const PIPELINE_STAGES = [
+    { id: 'query', name: 'Query Received', icon: 'fa-question' },
+    { id: 'router', name: 'Router Agent', icon: 'fa-random' },
+    { id: 'knowledge', name: 'Knowledge Base', icon: 'fa-database' },
+    { id: 'web', name: 'Web Search', icon: 'fa-globe' },
+    { id: 'analytics', name: 'Analytics', icon: 'fa-chart-bar' },
+    { id: 'generator', name: 'Response Generator', icon: 'fa-cogs' },
+    { id: 'ui', name: 'UI Response', icon: 'fa-reply' }
+];
+
 // Initialize pipeline visualization
 function initializePipeline() {
     console.log("Initializing pipeline visualization");
+    
     const pipelineVisualization = document.getElementById('pipeline-visualization');
     if (!pipelineVisualization) {
         console.error("Pipeline visualization element not found");
@@ -186,19 +224,8 @@ function initializePipeline() {
     // Clear existing pipeline
     pipelineVisualization.innerHTML = '';
     
-    // Create pipeline stages
-    const stages = [
-        { id: 'query', name: 'Query Received', icon: 'fa-question' },
-        { id: 'router', name: 'Router Agent', icon: 'fa-random' },
-        { id: 'knowledge', name: 'Knowledge Base', icon: 'fa-database' },
-        { id: 'web', name: 'Web Search', icon: 'fa-globe' },
-        { id: 'analytics', name: 'Analytics', icon: 'fa-chart-bar' },
-        { id: 'generator', name: 'Response Generator', icon: 'fa-cogs' },
-        { id: 'ui', name: 'UI Response', icon: 'fa-reply' }
-    ];
-    
     // Add stages to pipeline
-    stages.forEach((stage, index) => {
+    PIPELINE_STAGES.forEach((stage, index) => {
         const stageElement = document.createElement('div');
         stageElement.className = 'pipeline-stage waiting';
         stageElement.id = `stage-${stage.id}`;
@@ -215,58 +242,40 @@ function initializePipeline() {
         pipelineVisualization.appendChild(stageElement);
     });
     
-    console.log("Pipeline visualization initialized with", stages.length, "stages");
+    console.log("Pipeline visualization initialized with", PIPELINE_STAGES.length, "stages");
 }
 
-// Update pipeline stage
+// Update pipeline stage status
 function updatePipelineStage(stageId, status) {
-    console.log(`Updating pipeline stage: ${stageId} to ${status}`);
-    const stage = document.getElementById(`stage-${stageId}`);
-    if (!stage) {
-        console.error(`Stage element not found: stage-${stageId}`);
+    const stageElement = document.getElementById(`stage-${stageId}`);
+    if (!stageElement) {
+        console.error(`Pipeline stage element not found: ${stageId}`);
         return;
     }
     
-    // Remove existing status classes
-    stage.classList.remove('waiting', 'active', 'completed', 'error');
+    // Remove current status classes
+    stageElement.classList.remove('waiting', 'active', 'completed', 'error');
     
     // Add new status class
-    stage.classList.add(status);
+    stageElement.classList.add(status);
     
     // Update status text
-    const statusElement = stage.querySelector('.stage-status');
+    const statusElement = stageElement.querySelector('.stage-status');
     if (statusElement) {
         statusElement.textContent = status.charAt(0).toUpperCase() + status.slice(1);
     }
     
-    // Add processing class to pipeline visualization when any stage is active
-    const pipelineVisualization = document.getElementById('pipeline-visualization');
-    if (pipelineVisualization) {
-        if (status === 'active') {
-            pipelineVisualization.classList.add('processing');
-        } else {
-            // Check if any stage is still active
-            const activeStages = document.querySelectorAll('.pipeline-stage.active');
-            if (activeStages.length === 0) {
-                pipelineVisualization.classList.remove('processing');
+    // If this stage is active, mark all previous stages as completed
+    if (status === 'active') {
+        const stageIndex = PIPELINE_STAGES.findIndex(stage => stage.id === stageId);
+        if (stageIndex > 0) {
+            for (let i = 0; i < stageIndex; i++) {
+                updatePipelineStage(PIPELINE_STAGES[i].id, 'completed');
             }
         }
     }
-}
-
-// Reset pipeline to initial state
-function resetPipeline() {
-    console.log("Resetting pipeline");
-    const stages = ['query', 'router', 'knowledge', 'web', 'analytics', 'generator', 'ui'];
-    stages.forEach(stage => {
-        updatePipelineStage(stage, 'waiting');
-    });
     
-    // Remove processing class
-    const pipelineVisualization = document.getElementById('pipeline-visualization');
-    if (pipelineVisualization) {
-        pipelineVisualization.classList.remove('processing');
-    }
+    console.log(`Updated pipeline stage ${stageId} to ${status}`);
 }
 
 // Populate example queries
@@ -293,7 +302,7 @@ function populateExampleQueries() {
         promptItem.className = 'prompt-item';
         promptItem.textContent = query;
         promptItem.addEventListener('click', () => {
-            const chatInput = document.getElementById('chat-input');
+            const chatInput = document.getElementById('userInput');
             if (chatInput) {
                 chatInput.value = query;
                 chatInput.dispatchEvent(new Event('input'));
@@ -313,6 +322,12 @@ function loadChatHistory() {
         const savedHistory = localStorage.getItem('chatHistory');
         if (savedHistory) {
             chatHistory = JSON.parse(savedHistory);
+            
+            // Convert string timestamps to Date objects
+            chatHistory.forEach(chat => {
+                chat.timestamp = new Date(chat.timestamp).getTime();
+            });
+            
             updateChatHistorySidebar();
             console.log("Chat history loaded:", chatHistory.length, "chats");
         }
@@ -333,151 +348,148 @@ function saveChatHistory() {
 
 // Update chat history sidebar
 function updateChatHistorySidebar() {
-    const historyContainer = document.querySelector('.chat-history');
-    if (!historyContainer) {
-        console.error("History container element not found");
-        return;
-    }
-    
-    // Update or create history header
-    let historyHeader = historyContainer.querySelector('.history-header');
-    if (!historyHeader) {
-        historyHeader = document.createElement('div');
-        historyHeader.className = 'history-header';
-        
-        const historyLabel = document.createElement('div');
-        historyLabel.className = 'history-label';
-        historyLabel.textContent = 'RECENT';
-        
-        const deleteAllBtn = document.createElement('button');
-        deleteAllBtn.className = 'delete-all-btn';
-        deleteAllBtn.innerHTML = '<i class="fas fa-trash-alt"></i> Clear All';
-        deleteAllBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            if (chatHistory.length > 0) {
-                showConfirmModal('Are you sure you want to delete all chats?', deleteAllChats);
-            }
-        });
-        
-        historyHeader.appendChild(historyLabel);
-        historyHeader.appendChild(deleteAllBtn);
-        
-        // Insert at the beginning
-        if (historyContainer.firstChild) {
-            historyContainer.insertBefore(historyHeader, historyContainer.firstChild);
-        } else {
-            historyContainer.appendChild(historyHeader);
-        }
-    }
-    
     const recentChats = document.getElementById('recent-chats');
-    if (!recentChats) {
-        console.error("Recent chats element not found");
-        return;
-    }
-    
+    if (!recentChats) return;
+
+    // Clear existing chats
     recentChats.innerHTML = '';
-    
-    // Display most recent chats first (up to 10)
-    const recentChatHistory = [...chatHistory].reverse();
-    
-    recentChatHistory.forEach(chat => {
+
+    // Sort chats by timestamp (most recent first)
+    const sortedChats = [...chatHistory].sort((a, b) => b.timestamp - a.timestamp);
+
+    // Add each chat to the sidebar
+    sortedChats.forEach(chat => {
+        // Get the first user message as the title
+        const firstUserMessage = chat.messages?.find(m => m.role === 'user')?.content || 'Untitled Chat';
+        
+        // Create chat item container
         const chatItem = document.createElement('div');
         chatItem.className = 'chat-item';
+        chatItem.dataset.chatId = chat.id;
         if (chat.id === sessionId) {
             chatItem.classList.add('active');
         }
-        
-        // Get first message or use default title
-        const title = chat.messages && chat.messages.length > 0 
-            ? chat.messages[0].content.substring(0, 25) + (chat.messages[0].content.length > 25 ? '...' : '')
-            : 'New Chat';
-        
-        chatItem.innerHTML = `
-            <div class="chat-item-header">
-                <div class="chat-item-title">${title}</div>
-                <button class="delete-chat-btn" title="Delete chat">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="chat-item-time">${formatDate(chat.timestamp)}</div>
-        `;
-        
-        // Add event listener for loading chat
-        chatItem.addEventListener('click', () => {
-            loadChat(chat.id);
+
+        // Create chat content
+        const chatContent = document.createElement('div');
+        chatContent.className = 'chat-item-content';
+
+        // Create left section
+        const chatLeft = document.createElement('div');
+        chatLeft.className = 'chat-item-left';
+
+        // Create and set up title
+        const title = document.createElement('div');
+        title.className = 'chat-item-title';
+        title.textContent = truncateText(firstUserMessage, 40);
+
+        // Create and set up timestamp
+        const time = document.createElement('div');
+        time.className = 'chat-item-time';
+        time.textContent = formatTimestamp(chat.timestamp);
+
+        // Create delete button
+        const deleteBtn = document.createElement('button');
+        deleteBtn.type = 'button';
+        deleteBtn.className = 'delete-chat';
+        deleteBtn.innerHTML = '<i class="fas fa-times"></i>';
+        deleteBtn.setAttribute('aria-label', 'Delete chat');
+        deleteBtn.title = 'Delete chat';
+
+        // Set up delete button click handler
+        deleteBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            const chatId = this.closest('.chat-item').dataset.chatId;
+            if (chatId) {
+                showConfirmModal('Are you sure you want to delete this chat?', () => {
+                    deleteChat(chatId);
+                });
+            }
         });
-        
-        // Add event listener for delete button
-        const deleteBtn = chatItem.querySelector('.delete-chat-btn');
-        deleteBtn.addEventListener('click', (e) => {
-            e.stopPropagation(); // Prevent chat from loading when delete is clicked
-            showConfirmModal('Are you sure you want to delete this chat?', () => deleteChat(chat.id));
+
+        // Set up chat item click handler
+        chatItem.addEventListener('click', function(e) {
+            if (!e.target.closest('.delete-chat')) {
+                const chatId = this.dataset.chatId;
+                if (chatId) {
+                    loadChat(chatId);
+                }
+            }
         });
-        
+
+        // Assemble the components
+        chatLeft.appendChild(title);
+        chatLeft.appendChild(time);
+        chatContent.appendChild(chatLeft);
+        chatItem.appendChild(chatContent);
+        chatItem.appendChild(deleteBtn);
         recentChats.appendChild(chatItem);
     });
+
+    // Update empty state
+    if (sortedChats.length === 0) {
+        const emptyState = document.createElement('div');
+        emptyState.className = 'empty-state';
+        emptyState.innerHTML = `
+            <div class="empty-state-icon">
+                <i class="fas fa-comments"></i>
+            </div>
+            <div class="empty-state-text">No chat history</div>
+        `;
+        recentChats.appendChild(emptyState);
+    }
 }
 
-// Format date for chat history
-function formatDate(timestamp) {
+// Format timestamp
+function formatTimestamp(timestamp) {
     const date = new Date(timestamp);
     const now = new Date();
-    
-    // If today, show time
-    if (date.toDateString() === now.toDateString()) {
-        return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    const diff = now - date;
+    const seconds = Math.floor(diff / 1000);
+    const minutes = Math.floor(seconds / 60);
+    const hours = Math.floor(minutes / 60);
+    const days = Math.floor(hours / 24);
+
+    if (days > 0) {
+        return date.toLocaleTimeString('en-US', { 
+            hour: 'numeric', 
+            minute: '2-digit',
+            hour12: true 
+        });
+    } else if (hours > 0) {
+        return `${hours}h ago`;
+    } else if (minutes > 0) {
+        return `${minutes}m ago`;
+    } else {
+        return 'Just now';
     }
-    
-    // If this year, show month and day
-    if (date.getFullYear() === now.getFullYear()) {
-        return date.toLocaleDateString([], { month: 'short', day: 'numeric' });
-    }
-    
-    // Otherwise show full date
-    return date.toLocaleDateString([], { year: 'numeric', month: 'short', day: 'numeric' });
 }
 
 // Start a new chat
 function startNewChat() {
     console.log("Starting new chat");
     
-    // Generate new session ID
+    // Set active chat to false first to reset UI
+    activeChat = false;
+    
+    // Reset the UI (will clear messages and show chat area)
+    resetUI();
+    
+    // Generate a new session ID
     sessionId = generateSessionId();
     
-    // Create new chat in history
-    const newChat = {
-        id: sessionId,
-        timestamp: new Date().toISOString(),
-        messages: []
-    };
-    
-    chatHistory.push(newChat);
-    saveChatHistory();
-    updateChatHistorySidebar();
-    
-    // Clear messages
-    const messagesContainer = document.getElementById('messages');
-    if (messagesContainer) {
-        messagesContainer.innerHTML = '';
-    }
-    
-    // Show chat interface
-    const welcomeScreen = document.getElementById('welcome-screen');
-    const chatMessages = document.getElementById('chat-messages');
-    
-    if (welcomeScreen) welcomeScreen.style.display = 'none';
-    if (chatMessages) chatMessages.style.display = 'block';
-    
-    // Reset pipeline
+    // Explicitly reset the pipeline to ensure it's in waiting state
     resetPipeline();
     
-    // Set active chat flag
+    // Set active chat to true after resetting UI
     activeChat = true;
     
-    // Focus input
-    const chatInput = document.getElementById('chat-input');
-    if (chatInput) chatInput.focus();
+    // Focus the input field
+    const userInput = document.getElementById('userInput');
+    if (userInput) {
+        userInput.focus();
+    }
 }
 
 // Load an existing chat
@@ -506,7 +518,7 @@ function loadChat(chatId) {
     // Add messages
     if (chat.messages && chat.messages.length > 0) {
         chat.messages.forEach(message => {
-            addMessageToUI(message.role, message.content);
+            addMessageToUI(message);
         });
     }
     
@@ -515,7 +527,10 @@ function loadChat(chatId) {
     const chatMessages = document.getElementById('chat-messages');
     
     if (welcomeScreen) welcomeScreen.style.display = 'none';
-    if (chatMessages) chatMessages.style.display = 'block';
+    if (chatMessages) {
+        chatMessages.style.display = 'flex';
+        chatMessages.style.flexDirection = 'column';
+    }
     
     // Reset pipeline
     resetPipeline();
@@ -527,7 +542,7 @@ function loadChat(chatId) {
     scrollToBottom();
     
     // Focus input
-    const chatInput = document.getElementById('chat-input');
+    const chatInput = document.getElementById('userInput');
     if (chatInput) chatInput.focus();
 }
 
@@ -536,254 +551,395 @@ function generateSessionId() {
     return 'session_' + Math.random().toString(36).substring(2, 15);
 }
 
-// Send a message
+// Reset pipeline to initial state
+function resetPipeline() {
+    console.log("Resetting pipeline");
+    // Ensure all pipeline stages are reset to waiting state
+    PIPELINE_STAGES.forEach(stage => {
+        const stageElement = document.getElementById(`stage-${stage.id}`);
+        if (stageElement) {
+            // Remove all status classes
+            stageElement.classList.remove('active', 'completed', 'error');
+            stageElement.classList.add('waiting');
+            
+            // Reset status text
+            const statusElement = stageElement.querySelector('.stage-status');
+            if (statusElement) {
+                statusElement.textContent = 'Waiting';
+            }
+        }
+    });
+}
+
 function sendMessage() {
-    console.log("sendMessage function called");
+    const userInput = document.getElementById('userInput');
+    if (!userInput) return;
     
-    const chatInput = document.getElementById('chat-input');
-    if (!chatInput) {
-        console.error("Chat input element not found");
-        return;
-    }
-    
-    const message = chatInput.value.trim();
-    if (!message) {
-        console.log("Message is empty, not sending");
-        return;
-    }
-    
-    console.log("Sending message:", message);
+    const query = userInput.value.trim();
+    if (!query) return;
     
     // Clear input
-    chatInput.value = '';
-    chatInput.style.height = 'auto';
+    userInput.value = '';
+    userInput.style.height = 'auto';
     
-    // If no active chat, start one
+    // If this is a new chat, reset the UI
     if (!activeChat) {
-        startNewChat();
+        resetUI();
+        activeChat = true;
+    } else {
+        // For existing chats, ensure pipeline is reset for the new query
+        resetPipeline();
     }
     
-    // Add message to UI
-    addMessageToUI('user', message);
+    // Generate session ID if needed
+    if (!sessionId) {
+        sessionId = generateSessionId();
+    }
     
-    // Save message to chat history
-    saveMessageToHistory('user', message);
+    // Show chat messages area
+    const welcomeScreen = document.getElementById('welcome-screen');
+    const chatMessages = document.getElementById('chat-messages');
     
-    // Show loading indicator
-    const loadingIndicator = document.getElementById('chat-loading');
-    const errorMessage = document.getElementById('chat-error');
+    if (welcomeScreen) welcomeScreen.style.display = 'none';
+    if (chatMessages) {
+        chatMessages.style.display = 'flex';
+        chatMessages.style.flexDirection = 'column';
+    }
     
-    if (loadingIndicator) loadingIndicator.style.display = 'block';
-    if (errorMessage) errorMessage.style.display = 'none';
+    // Add user message
+    addMessageToUI({
+        role: 'user',
+        content: query
+    });
     
-    // Update pipeline - query received
-    updatePipelineStage('query', 'completed');
-    updatePipelineStage('router', 'active');
+    // Update pipeline visualization - start with query received
+    updatePipelineStage('query', 'active');
     
-    console.log("Sending message to API:", message);
+    // Show loading state
+    setLoading(true);
     
-    // Send message to API
+    // Debug
+    console.log("Sending query:", query, "with session ID:", sessionId);
+    
+    // Prepare API request
+    const requestData = {
+        query: query,
+        session_id: sessionId
+    };
+    
+    // Send to API
     fetch(API_CONFIG.chatEndpoint, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({
-            query: message,
-            session_id: sessionId
-        })
+        body: JSON.stringify(requestData)
     })
     .then(response => {
-        console.log("API response status:", response.status);
         if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
+            throw new Error(`HTTP error ${response.status}`);
         }
         return response.json();
     })
     .then(data => {
-        console.log("API response data:", data);
+        console.log('API response:', data);
         
-        // Hide loading indicator
-        if (loadingIndicator) loadingIndicator.style.display = 'none';
+        // Extract metadata about which components were actually used
+        const pipelineMetadata = data.pipeline_metadata || {};
+        const activeAgent = pipelineMetadata.active_agent || 'vector_rag';
+        const activeSources = pipelineMetadata.active_sources || [];
         
-        // Check for error responses
-        if (data.status === 'error') {
-            console.error("Error from API:", data.message || "Unknown error");
-            
-            // Update pipeline to show error
-            updatePipelineStage('router', 'error');
-            
-            // Add error message to UI
-            const errorMsg = data.message || 'Sorry, there was an error processing your request.';
-            addMessageToUI('assistant', errorMsg);
-            
-            // Save error to chat history
-            saveMessageToHistory('assistant', errorMsg);
-            
-            return;
+        // Helper function to handle stage animation
+        function animateStage(stageId, isActive, nextCallback) {
+            if (isActive) {
+                updatePipelineStage(stageId, 'active');
+                setTimeout(() => {
+                    updatePipelineStage(stageId, 'completed');
+                    if (nextCallback) nextCallback();
+                }, 300);
+            } else {
+                // Make sure inactive stages show as 'waiting' not 'completed'
+                const stageElement = document.getElementById(`stage-${stageId}`);
+                if (stageElement) {
+                    stageElement.classList.remove('active', 'completed', 'error');
+                    stageElement.classList.add('waiting');
+                    
+                    // Update status text
+                    const statusElement = stageElement.querySelector('.stage-status');
+                    if (statusElement) {
+                        statusElement.textContent = 'Waiting';
+                    }
+                }
+                
+                if (nextCallback) nextCallback();
+            }
         }
         
-        // Process successful response
-        const responseMessage = data.response.text;
-        const visualizations = data.response.visualizations || [];
+        // Mark query stage as completed (this is always used)
+        updatePipelineStage('query', 'completed');
         
-        // Update pipeline stages
-        updatePipelineStage('router', 'completed');
-        updatePipelineStage('knowledge', 'completed');
-        updatePipelineStage('analytics', 'completed');
-        updatePipelineStage('generator', 'completed');
-        updatePipelineStage('ui', 'completed');
-        
-        // Add response text to UI
-        addMessageToUI('assistant', responseMessage);
-        
-        // Handle visualizations if present
-        if (visualizations.length > 0) {
-            visualizations.forEach(chart => {
-                addVisualizationToUI(chart);
+        // Router stage (always used)
+        updatePipelineStage('router', 'active');
+        setTimeout(() => {
+            updatePipelineStage('router', 'completed');
+            
+            // Knowledge base is used if any source other than 'web' is in the active sources
+            const knowledgeBaseSources = ['inventory', 'transport', 'guidelines', 'policy'];
+            const usedKnowledgeBase = activeSources.some(source => knowledgeBaseSources.includes(source));
+            
+            // Start knowledge base animation
+            animateStage('knowledge', usedKnowledgeBase, () => {
+                // Web search is only used if 'web' is in the sources
+                const usedWebSearch = activeSources.includes('web');
+                
+                // Start web search animation
+                animateStage('web', usedWebSearch, () => {
+                    // Analytics is only used for analytics or hybrid agent types
+                    const usedAnalytics = activeAgent === 'analytics' || activeAgent === 'hybrid';
+                    
+                    // Start analytics animation
+                    animateStage('analytics', usedAnalytics, () => {
+                        // Response generator is always used
+                        animateStage('generator', true, () => {
+                            // UI response is always used
+                            animateStage('ui', true);
+                        });
+                    });
+                });
             });
-        }
+        }, 300);
         
-        // Save response to chat history
-        saveMessageToHistory('assistant', responseMessage);
+        // Clear loading state
+        setLoading(false);
         
-        // Update session ID if provided
-        if (data.session_id) {
-            sessionId = data.session_id;
+        // If we have a response, add it to the UI
+        if (data.response) {
+            // Save the chat title if this is the first message
+            if (chatHistory.length === 0 || !chatHistory.find(chat => chat.id === sessionId)) {
+                // Create a new chat entry
+                const newChat = {
+                    id: sessionId,
+                    title: truncateText(query, 30),
+                    timestamp: new Date().toISOString(),
+                    messages: []
+                };
+                
+                // Add to history
+                chatHistory.push(newChat);
+                saveChatHistory();
+                updateChatHistorySidebar();
+            }
+            
+            // Add response to UI
+            addMessageToUI({
+                role: 'assistant',
+                content: data.response
+            });
+            
+            // Scroll to bottom
+            scrollToBottom();
+        } else {
+            showError('No response received');
+            updatePipelineStage('ui', 'error');
         }
     })
     .catch(error => {
         console.error('Error sending message:', error);
+        setLoading(false);
+        showError('Error: ' + error.message);
         
-        // Hide loading indicator
-        if (loadingIndicator) loadingIndicator.style.display = 'none';
-        
-        // Show error message
-        if (errorMessage) {
-            errorMessage.style.display = 'block';
-            errorMessage.textContent = 'Error processing your request. Please try again.';
-            
-            // Hide error message after 5 seconds
-            setTimeout(() => {
-                errorMessage.style.display = 'none';
-            }, 5000);
-        }
-        
-        // Update pipeline to show error
-        updatePipelineStage('query', 'error');
-        
-        // Add error message to UI
-        addMessageToUI('assistant', 'Sorry, there was an error processing your request. Please try again or rephrase your question.');
-        
-        // Save error to chat history
-        saveMessageToHistory('assistant', 'Sorry, there was an error processing your request.');
-    });
-}
-
-// Scroll to bottom of messages - improved version
-function scrollToBottom() {
-    const chatMessages = document.getElementById('chat-messages');
-    
-    if (chatMessages) {
-        // Use requestAnimationFrame for smoother scrolling
-        requestAnimationFrame(() => {
-            // Force scroll to absolute bottom
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-            console.log("Scrolled to bottom, height:", chatMessages.scrollHeight);
+        // Mark all stages as error
+        PIPELINE_STAGES.forEach(stage => {
+            if (stage.id !== 'query') { // Keep query stage as completed
+                updatePipelineStage(stage.id, 'error');
+            }
         });
-    }
+    });
+    
+    // Scroll to bottom
+    scrollToBottom();
 }
 
-// Add a message to the UI
-function addMessageToUI(role, content) {
-    console.log(`Adding ${role} message to UI:`, content.substring(0, 50) + (content.length > 50 ? '...' : ''));
-    
+// Add chart to UI
+function addChartToUI(chart) {
     const messagesContainer = document.getElementById('messages');
     if (!messagesContainer) {
-        console.error("Messages container element not found");
+        console.error("Messages container not found");
         return;
     }
     
-    // Ensure messages container exists and is properly configured
-    if (!document.getElementById('messages')) {
-        const chatMessages = document.getElementById('chat-messages');
-        if (chatMessages) {
-            const newMessagesContainer = document.createElement('div');
-            newMessagesContainer.id = 'messages';
-            newMessagesContainer.className = 'messages-container';
-            chatMessages.appendChild(newMessagesContainer);
-            messagesContainer = newMessagesContainer;
-        }
-    }
+    const chartElement = document.createElement('div');
+    chartElement.className = 'message assistant-message chart-message';
     
-    const messageElement = document.createElement('div');
-    messageElement.className = `message ${role}-message`;
+    chartElement.innerHTML = `
+        <div class="message-avatar"><i class="fas fa-chart-bar"></i></div>
+        <div class="message-content">
+            <div class="chart-title">${chart.title || 'Analysis Chart'}</div>
+            <div class="chart-container" id="chart-${Date.now()}"></div>
+            ${chart.description ? `<div class="chart-description">${chart.description}</div>` : ''}
+        </div>
+    `;
     
-    // Format content (handle newlines and trim any extra spaces)
-    let formattedContent = content.trim().replace(/\n/g, '<br>');
+    messagesContainer.appendChild(chartElement);
     
-    // Create message HTML with minimal whitespace
-    let messageHTML = '';
-    if (role === 'user') {
-        messageHTML = `<div class="message-avatar"><i class="fas fa-user"></i></div><div class="message-content"><div class="message-text">${formattedContent}</div></div>`;
-    } else {
-        messageHTML = `<div class="message-avatar"><i class="fas fa-robot"></i></div><div class="message-content"><div class="message-text">${formattedContent}</div></div>`;
-    }
-    
-    messageElement.innerHTML = messageHTML;
-    messagesContainer.appendChild(messageElement);
-    
-    // Force immediate scroll to bottom
-    scrollToBottom();
-    
-    // Add event listener to ensure scrolling works when images load
-    const images = messageElement.querySelectorAll('img');
-    if (images.length > 0) {
-        images.forEach(img => {
-            img.addEventListener('load', scrollToBottom);
+    // Render chart using Chart.js
+    const chartContainer = chartElement.querySelector('.chart-container');
+    if (chartContainer && chart.data) {
+        const ctx = document.createElement('canvas');
+        chartContainer.appendChild(ctx);
+        
+        new Chart(ctx, {
+            type: chart.type || 'bar',
+            data: chart.data,
+            options: chart.options || {
+                responsive: true,
+                maintainAspectRatio: false
+            }
         });
     }
     
-    // Add MutationObserver to watch for content changes
-    const observer = new MutationObserver(scrollToBottom);
-    
-    // Start observing the message element for content changes
-    observer.observe(messageElement, { 
-        childList: true, 
-        subtree: true, 
-        characterData: true 
-    });
-    
-    // Disconnect after 2 seconds to avoid performance issues
-    setTimeout(() => {
-        observer.disconnect();
-    }, 2000);
+    scrollToBottom();
 }
 
-// Save a message to chat history
-function saveMessageToHistory(role, content) {
-    // Find current chat
-    const currentChat = chatHistory.find(chat => chat.id === sessionId);
-    if (!currentChat) {
-        console.error("Current chat not found in history");
+// Scroll to the bottom of the messages container
+function scrollToBottom() {
+    const messagesContainer = document.getElementById('messages');
+    const chatMessages = document.getElementById('chat-messages');
+    
+    if (messagesContainer && chatMessages) {
+        // Use requestAnimationFrame to ensure the DOM has updated
+        requestAnimationFrame(() => {
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            
+            // Double-check scroll position after a short delay
+            setTimeout(() => {
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }, 100);
+        });
+    }
+}
+
+// Function to add a message to the UI
+function addMessageToUI(message) {
+    const messagesContainer = document.getElementById('messages');
+    if (!messagesContainer) {
+        console.error("Messages container not found");
         return;
     }
     
-    // Add message
-    currentChat.messages.push({
-        role,
-        content,
-        timestamp: new Date().toISOString()
-    });
+    // Create message element
+    const messageElement = document.createElement('div');
+    messageElement.className = `message message-${message.role}`;
     
-    // Update timestamp
-    currentChat.timestamp = new Date().toISOString();
+    // Create message icon (avatar)
+    const iconElement = document.createElement('div');
+    iconElement.className = 'message-icon';
     
-    // Save to local storage
+    // Set icon based on role - use more modern icons
+    if (message.role === 'user') {
+        iconElement.innerHTML = '<i class="fas fa-user"></i>';
+    } else if (message.role === 'assistant') {
+        iconElement.innerHTML = '<i class="fas fa-brain"></i>';
+    } else {
+        iconElement.innerHTML = '<i class="fas fa-exclamation-circle"></i>';
+    }
+    
+    // Create message content
+    const contentElement = document.createElement('div');
+    contentElement.className = 'message-content';
+    
+    // Process message content (convert markdown and sanitize)
+    let processedContent = '';
+    try {
+        // Use marked to parse markdown
+        processedContent = marked.parse(message.content);
+        // Use DOMPurify to sanitize HTML
+        processedContent = DOMPurify.sanitize(processedContent, {
+            ALLOWED_TAGS: ['p', 'br', 'ul', 'ol', 'li', 'strong', 'em', 'code', 'pre', 'table', 'thead', 'tbody', 'tr', 'th', 'td', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'a', 'hr', 'img'],
+            ALLOWED_ATTR: ['href', 'target', 'src', 'alt', 'class']
+        });
+    } catch (e) {
+        console.error("Error processing message content:", e);
+        processedContent = `<p>${message.content}</p>`;
+    }
+    
+    // Set the content
+    contentElement.innerHTML = processedContent;
+    
+    // Create message footer with token count (only for assistant messages)
+    if (message.role === 'assistant') {
+        const footerElement = document.createElement('div');
+        footerElement.className = 'message-footer';
+        
+        // Action buttons
+        const actionsElement = document.createElement('div');
+        actionsElement.className = 'message-actions';
+        
+        // Copy button
+        const copyButton = document.createElement('button');
+        copyButton.className = 'message-action-button';
+        copyButton.innerHTML = '<i class="fas fa-copy"></i>';
+        copyButton.title = 'Copy to clipboard';
+        copyButton.addEventListener('click', () => {
+            const text = message.content;
+            navigator.clipboard.writeText(text).then(() => {
+                // Show a brief notification that text was copied
+                copyButton.innerHTML = '<i class="fas fa-check"></i>';
+                setTimeout(() => {
+                    copyButton.innerHTML = '<i class="fas fa-copy"></i>';
+                }, 2000);
+            });
+        });
+        
+        // Other action buttons
+        const actionsHTML = `
+            <button class="message-action-button" title="Like response"><i class="far fa-thumbs-up"></i></button>
+            <button class="message-action-button" title="Dislike response"><i class="far fa-thumbs-down"></i></button>
+            <button class="message-action-button" title="More options"><i class="fas fa-ellipsis-h"></i></button>
+        `;
+        
+        actionsElement.appendChild(copyButton);
+        actionsElement.innerHTML += actionsHTML;
+        
+        // Token count (randomize for demo or use actual count if available)
+        const tokenCount = message.tokens || Math.floor(Math.random() * 100) + 20;
+        const tokenCountElement = document.createElement('div');
+        tokenCountElement.className = 'token-count';
+        tokenCountElement.textContent = `${tokenCount} tokens`;
+        
+        // Add elements to footer
+        footerElement.appendChild(actionsElement);
+        footerElement.appendChild(tokenCountElement);
+        
+        // Add footer to content
+        contentElement.appendChild(footerElement);
+    }
+    
+    // Add message components to the message element
+    messageElement.appendChild(iconElement);
+    messageElement.appendChild(contentElement);
+    
+    // Add the message element to the container
+    messagesContainer.appendChild(messageElement);
+    
+    // Scroll to the bottom of the messages container
+    scrollToBottom();
+    
+    // Save to history
+    saveMessageToHistory(message);
+}
+
+// Function to save message to history
+function saveMessageToHistory(message) {
+    // Find the current chat in history
+    const chat = chatHistory.find(c => c.id === sessionId);
+    if (!chat) return;
+    
+    // Add message to chat
+    chat.messages.push(message);
+    
+    // Save updated history
     saveChatHistory();
-    
-    // Update sidebar
-    updateChatHistorySidebar();
 }
 
 // Remove the periodic check and replace with a better scroll handler
@@ -805,18 +961,26 @@ window.loadChat = loadChat;
 function deleteChat(chatId) {
     console.log("Deleting chat:", chatId);
     
+    // Find the chat to delete
+    const chatToDelete = chatHistory.find(chat => chat.id === chatId);
+    if (!chatToDelete) {
+        console.error("Chat not found:", chatId);
+        return;
+    }
+    
     // Remove from chat history
     chatHistory = chatHistory.filter(chat => chat.id !== chatId);
     
     // Save to local storage
-    saveChatHistory();
+    localStorage.setItem('chatHistory', JSON.stringify(chatHistory));
     
     // Update sidebar
     updateChatHistorySidebar();
     
-    // If the deleted chat was the active one, start a new chat
+    // If the deleted chat was active, show welcome screen
     if (chatId === sessionId) {
-        startNewChat();
+        showWelcomeScreen();
+        sessionId = null;
     }
 }
 
@@ -826,138 +990,235 @@ function deleteAllChats() {
     
     // Clear chat history
     chatHistory = [];
+    sessionId = null;
     
     // Save to local storage
-    saveChatHistory();
+    localStorage.setItem('chatHistory', JSON.stringify(chatHistory));
     
     // Update sidebar
     updateChatHistorySidebar();
     
-    // Start a new chat
-    startNewChat();
+    // Show welcome screen
+    showWelcomeScreen();
 }
 
-// Add a visualization to the UI
-function addVisualizationToUI(chartData) {
-    console.log('Adding visualization to UI:', chartData);
+// Show welcome screen
+function showWelcomeScreen() {
+    console.log("Showing welcome screen");
+    const welcomeScreen = document.getElementById('welcome-screen');
+    const chatMessages = document.getElementById('chat-messages');
     
-    const messagesContainer = document.getElementById('messages');
-    if (!messagesContainer) {
-        console.error("Messages container element not found");
-        return;
+    if (welcomeScreen && chatMessages) {
+        welcomeScreen.style.display = 'flex';
+        chatMessages.style.display = 'none';
     }
     
-    // Create container for the chart
-    const chartContainer = document.createElement('div');
-    chartContainer.className = 'message assistant-message chart-container';
+    // Reset active chat flag
+    activeChat = false;
     
-    // Create canvas for the chart
-    const canvas = document.createElement('canvas');
-    chartContainer.appendChild(canvas);
-    messagesContainer.appendChild(chartContainer);
-    
-    // Create and render the chart using Chart.js
-    try {
-        new Chart(canvas, chartData);
-        scrollToBottom();
-    } catch (error) {
-        console.error('Error creating chart:', error);
-    }
+    // Ensure pipeline is reset when showing welcome screen
+    resetPipeline();
 }
 
-function addMessageToChat(role, content) {
-    console.log(`Adding ${role} message:`, content);
-    
-    // Create message element
-    const messageEl = document.createElement('div');
-    messageEl.className = `chat-message ${role}-message`;
-    
-    // Create avatar
-    const avatar = document.createElement('div');
-    avatar.className = 'avatar';
-    
-    if (role === 'user') {
-        avatar.innerHTML = '<i class="fas fa-user"></i>';
-    } else {
-        avatar.innerHTML = '<i class="fas fa-robot"></i>';
+// Add event listener for Clear All button
+document.addEventListener('DOMContentLoaded', () => {
+    const clearAllButton = document.getElementById('clear-all-chats');
+    if (clearAllButton) {
+        clearAllButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            if (chatHistory.length > 0) {
+                showConfirmModal('Are you sure you want to delete all chats?', deleteAllChats);
+            }
+        });
+    }
+});
+
+// Helper function to truncate text
+function truncateText(text, maxLength) {
+    if (text.length <= maxLength) return text;
+    return text.substring(0, maxLength - 1) + '…';
+}
+
+// Set loading state
+function setLoading(isLoading) {
+    const loadingIndicator = document.getElementById('chat-loading');
+    if (loadingIndicator) {
+        loadingIndicator.style.display = isLoading ? 'block' : 'none';
     }
     
-    // Create message content
-    const contentEl = document.createElement('div');
-    contentEl.className = 'message-content';
+    // Disable/enable input during loading
+    const chatInput = document.getElementById('userInput');
+    const sendButton = document.getElementById('sendButton');
     
-    // Parse content if it's a JSON string
-    let parsedContent;
-    if (typeof content === 'string') {
-        try {
-            parsedContent = JSON.parse(content);
-        } catch (e) {
-            parsedContent = content;
-        }
-    } else {
-        parsedContent = content;
+    if (chatInput) chatInput.disabled = isLoading;
+    if (sendButton) sendButton.disabled = isLoading;
+}
+
+// Show error message
+function showError(message) {
+    const errorMessage = document.getElementById('chat-error');
+    if (errorMessage) {
+        errorMessage.textContent = message;
+        errorMessage.style.display = 'block';
+        
+        // Hide error after 5 seconds
+        setTimeout(() => {
+            errorMessage.style.display = 'none';
+        }, 5000);
     }
     
-    // Handle structured content
-    if (typeof parsedContent === 'object' && parsedContent !== null) {
-        // Extract text content
-        const textContent = parsedContent.text || parsedContent.formatted_response || parsedContent;
-        
-        // Format text with proper line breaks and structure
-        const formattedText = typeof textContent === 'string' 
-            ? textContent.replace(/\\n/g, '<br>').replace(/\n/g, '<br>')
-            : 'Error: Invalid response';
-        
-        contentEl.innerHTML = formattedText;
-        
-        // Add insights if available
-        if (parsedContent.insights) {
-            const insightsEl = document.createElement('div');
-            insightsEl.className = 'message-insights';
-            insightsEl.innerHTML = parsedContent.insights.replace(/\n/g, '<br>');
-            contentEl.appendChild(insightsEl);
-        }
-        
-        // Add visualizations if available
-        if (parsedContent.visualizations && parsedContent.visualizations.length > 0) {
-            parsedContent.visualizations.forEach(chart => {
-                const chartContainer = document.createElement('div');
-                chartContainer.className = 'chart-container';
-                
-                // Create canvas for the chart
-                const canvas = document.createElement('canvas');
-                chartContainer.appendChild(canvas);
-                contentEl.appendChild(chartContainer);
-                
-                // Initialize chart
-                try {
-                    new Chart(canvas, {
-                        type: chart.type,
-                        data: chart.data,
-                        options: chart.options || {}
-                    });
-                } catch (error) {
-                    console.error('Error creating chart:', error);
-                }
-            });
-        }
-    } else {
-        // Handle plain text content
-        contentEl.innerHTML = typeof parsedContent === 'string' 
-            ? parsedContent.replace(/\\n/g, '<br>').replace(/\n/g, '<br>')
-            : 'Error: Invalid response';
-    }
+    // Add error to chat if needed
+    addMessageToUI({
+        role: 'system',
+        content: `Error: ${message}`
+    });
+}
+
+// Reset UI for new chat
+function resetUI() {
+    console.log("Resetting UI for new chat");
     
-    // Add elements to message
-    messageEl.appendChild(avatar);
-    messageEl.appendChild(contentEl);
-    
-    // Add to chat
+    // Clear messages
     const messagesContainer = document.getElementById('messages');
-    messagesContainer.appendChild(messageEl);
+    if (messagesContainer) {
+        messagesContainer.innerHTML = '';
+    }
     
-    // Scroll to bottom
-    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    // Show chat messages area
+    const welcomeScreen = document.getElementById('welcome-screen');
+    const chatMessages = document.getElementById('chat-messages');
     
-    return messageEl;
+    if (welcomeScreen) welcomeScreen.style.display = 'none';
+    if (chatMessages) {
+        chatMessages.style.display = 'flex';
+        chatMessages.style.flexDirection = 'column';
+    }
+    
+    // Reset pipeline visualization
+    resetPipeline();
+    
+    // Clear errors
+    const errorMessage = document.getElementById('chat-error');
+    if (errorMessage) {
+        errorMessage.style.display = 'none';
+    }
+    
+    // Reset loading state
+    setLoading(false);
+}
+
+// Function to add timestamp to the messages
+function addTimestamp() {
+    const messagesContainer = document.getElementById('messages');
+    if (!messagesContainer) return;
+    
+    const timestamp = document.createElement('div');
+    timestamp.className = 'message-timestamp';
+    
+    // Format current date
+    const now = new Date();
+    const formattedTime = now.toLocaleString('en-US', {
+        weekday: 'short',
+        month: 'short',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: '2-digit',
+        hour12: true
+    });
+    
+    timestamp.textContent = formattedTime;
+    messagesContainer.appendChild(timestamp);
+}
+
+// Function to show notification
+function showNotification(message) {
+    // Create notification element if it doesn't exist
+    let notification = document.getElementById('notification');
+    if (!notification) {
+        notification = document.createElement('div');
+        notification.id = 'notification';
+        notification.style.position = 'fixed';
+        notification.style.bottom = '20px';
+        notification.style.left = '50%';
+        notification.style.transform = 'translateX(-50%)';
+        notification.style.padding = '10px 16px';
+        notification.style.backgroundColor = 'rgba(0, 255, 133, 0.9)';
+        notification.style.color = '#000';
+        notification.style.borderRadius = '8px';
+        notification.style.zIndex = '1000';
+        notification.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.2)';
+        notification.style.fontWeight = '500';
+        notification.style.fontSize = '14px';
+        notification.style.opacity = '0';
+        notification.style.transition = 'opacity 0.3s ease';
+        document.body.appendChild(notification);
+    }
+    
+    // Set message and show notification
+    notification.textContent = message;
+    notification.style.opacity = '1';
+    
+    // Hide after 3 seconds
+    setTimeout(() => {
+        notification.style.opacity = '0';
+    }, 3000);
+}
+
+function displayResponse(data) {
+    const response = data.response;
+    const responseContainer = document.querySelector('#response-container');
+    const loadingIndicator = document.querySelector('#loading-indicator');
+    
+    // Hide loading indicator
+    loadingIndicator.style.display = 'none';
+    
+    // Build response HTML
+    let responseHTML = `<div class="response-text">${formatResponse(response)}</div>`;
+    
+    // Add sources if available
+    if (data.source_info && data.source_info.trim()) {
+        responseHTML += `<div class="sources-section">
+            <div class="sources-header">
+                <i class="fas fa-info-circle"></i> Sources
+            </div>
+            <div class="sources-content">
+                ${formatSources(data.source_info)}
+            </div>
+        </div>`;
+    }
+    
+    // Add charts if available
+    if (data.charts && data.charts.length > 0) {
+        responseHTML += `<div class="charts-section">
+            <div class="charts-header">
+                <i class="fas fa-chart-bar"></i> Visualizations
+            </div>
+            <div class="charts-container" id="charts-container">
+                ${generateChartContainers(data.charts)}
+            </div>
+        </div>`;
+    }
+    
+    // Display in container
+    responseContainer.innerHTML = responseHTML;
+    responseContainer.style.display = 'block';
+    
+    // Initialize charts if needed
+    if (data.charts && data.charts.length > 0) {
+        initCharts(data.charts);
+    }
+    
+    // Update pipeline visualization
+    updatePipelineVisualization(data);
+}
+
+function formatSources(sourcesText) {
+    // Format the sources text for HTML display
+    if (!sourcesText) return '';
+    
+    // Replace new lines with <br> tags and add bullet styling
+    return sourcesText
+        .replace(/•/g, '<span class="source-bullet">•</span>')
+        .replace(/\n/g, '<br>');
 } 

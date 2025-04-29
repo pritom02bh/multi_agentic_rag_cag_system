@@ -1,0 +1,93 @@
+{
+  "session_id": "session_ilz038hy1n",
+  "timestamp": "2025-03-26T23:30:28.747177",
+  "query": "What is the current inventory status?",
+  "enhanced_query": "Please enhance the following query for pharmaceutical inventory analysis:\n\nQuery: What is the current inventory status?\n\nEnhance it to include relevant pharmaceutical inventory management concepts and metrics.\n\nEnhanced query: What is the current inventory status of pharmaceutical products, including metrics such as stock levels, expiration dates, and turnover rates?",
+  "source": "inventory",
+  "response": {
+    "status": "success",
+    "response": "I apologize, but I encountered an error while generating the response. Please try again or rephrase your query.",
+    "analysis": {
+      "total_items": 19,
+      "total_stock": 3370925.0,
+      "avg_stock": 177417.1052631579,
+      "low_stock_items": 1,
+      "total_value": 180236477.79
+    },
+    "charts": [
+      {
+        "type": "bar",
+        "title": "Top 10 Items by Stock Level",
+        "data": {
+          "labels": [
+            "Paracetamol",
+            "Ibuprofen",
+            "Amoxicillin",
+            "Metformin",
+            "Aspirin",
+            "Flu Vaccine",
+            "Lisinopril",
+            "Sildenafil",
+            "Ciprofloxacin",
+            "Insulin"
+          ],
+          "datasets": [
+            {
+              "label": "Current Stock",
+              "data": [
+                951453.0,
+                770922.0,
+                481838.0,
+                357566.0,
+                194347.0,
+                134306.0,
+                133725.0,
+                87637.0,
+                63189.0,
+                51767.0
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "type": "pie",
+        "title": "Inventory Value Distribution (Top 5)",
+        "data": {
+          "labels": [
+            "Paracetamol",
+            "Ibuprofen",
+            "Metformin",
+            "Aspirin",
+            "Lisinopril"
+          ],
+          "datasets": [
+            {
+              "data": [
+                60445809.09,
+                35940383.64,
+                24207218.2,
+                17050062.310000002,
+                12820215.75
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "recommendations": [
+      {
+        "type": "reorder",
+        "items": [
+          {
+            "ItemID": "ITEM-3A00619E",
+            "GenericName": "Hydrocortisone",
+            "CurrentStock": 3252.0,
+            "ReorderPoint": 3616.438356164384
+          }
+        ]
+      }
+    ],
+    "source_type": "inventory"
+  }
+}

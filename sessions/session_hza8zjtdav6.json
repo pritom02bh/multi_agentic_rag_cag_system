@@ -1,0 +1,27 @@
+{
+  "history": [
+    {
+      "query": "What is the average carbon footprint for shipments of Adalimumab?",
+      "enhanced_query": "What is the average carbon footprint in CO2 emissions for shipments of Adalimumab (commonly known as Humira)?",
+      "response": "I encountered an error while analyzing the data: The truth value of a DataFrame is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all().. Please try a different query or check your data sources.",
+      "sources": [
+        "transport",
+        "inventory"
+      ],
+      "query_type": "analytical",
+      "timestamp": "2025-04-15T23:31:42.047223"
+    }
+  ],
+  "metadata": {
+    "query_types": {
+      "analytical": 1
+    },
+    "sources_used": {
+      "transport": 1,
+      "inventory": 1
+    },
+    "total_interactions": 1
+  },
+  "created_at": "2025-04-15T23:31:42.047223",
+  "last_updated": "2025-04-15T23:31:42.047223"
+}

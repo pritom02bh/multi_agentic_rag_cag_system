@@ -1,0 +1,29 @@
+{
+  "history": [
+    {
+      "query": "What are the best practices for pharmaceutical storage?",
+      "enhanced_query": "What are the best practices for pharmaceutical storage according to FDA guidelines and Good Distribution Practices (GDP)?",
+      "response": "### Best Practices for Pharmaceutical Storage\n\n#### FDA Guidelines:\n1. **Temperature Control**:\n   - Maintain proper temperature ranges as per FDA guidelines (e.g., **Room Temperature** for Lisinopril and Metformin).\n   - Use cold chain containers for refrigerated items like **Insulin** and **Growth Hormone**.\n   - Ensure freezer containers for frozen vaccines like **Flu Vaccine** and **COVID-19 Vaccine**.\n\n2. **Labeling and Inventory**:\n   - Ensure accurate labeling matching temperature requirements (e.g., **Paracetamol** - \"Store at 15\u00b0C \u201325\u00b0C\").\n   - Maintain detailed records for receipt and distribution per **21 CFR Part 211.184**.\n\n3. **Monitoring**:\n   - Continuous monitoring is crucial; consider upgrading to real-time sensors for critical items.\n   - Regularly check for excursions to prevent compliance issues.\n\n#### Good Distribution Practices (GDP):\n1. **Complete Documentation**:\n   - Include temperature logs for all shipments to ensure compliance with regulations.\n   - Ensure all necessary documentation like Commercial Invoice, Packing List, and Certificate of Analysis is complete.\n\n2. **Product Integrity**:\n   - Maintain product integrity throughout transit to prevent any compromise in potency.\n   - Implement proper handling procedures to avoid contamination or damage during storage and transportation.\n\n3. **Temperature Management**:\n   - Adhere to temperature requirements specific to each pharmaceutical product.\n   - Implement suitable storage conditions such as refrigeration or controlled room temperature based on product needs.\n\nBy following these best practices aligned with FDA guidelines and GDP, pharmaceutical companies can ensure the safety, efficacy, and integrity of their products throughout the storage and distribution processes.",
+      "sources": [
+        "guidelines",
+        "inventory",
+        "transport"
+      ],
+      "query_type": "factual",
+      "timestamp": "2025-04-15T17:49:52.219073"
+    }
+  ],
+  "metadata": {
+    "query_types": {
+      "factual": 1
+    },
+    "sources_used": {
+      "guidelines": 1,
+      "inventory": 1,
+      "transport": 1
+    },
+    "total_interactions": 1
+  },
+  "created_at": "2025-04-15T17:49:52.219073",
+  "last_updated": "2025-04-15T17:49:52.219073"
+}

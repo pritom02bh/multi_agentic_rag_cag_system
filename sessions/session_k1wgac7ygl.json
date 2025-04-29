@@ -1,0 +1,29 @@
+{
+  "history": [
+    {
+      "query": "Show me the supply chain for Paracetamol",
+      "enhanced_query": "Display the supply chain logistics for Paracetamol, including shipment status, transport conditions, and regulatory compliance with relevant pharmaceutical agencies like the FDA and PHMSA.",
+      "response": "### Supply Chain Logistics for Paracetamol\n\n- **Shipment Status:**\n  - **Average Arrival Delay:** 0.2 days\n  - **Temperature Excursions:** Very Low\n\n- **Transport Conditions:**\n  - **Temperature Range:** 15-25\u00b0C\n  - **Storage Requirements:** Room temperature, dry place\n  - **Carriers:** MedFreight, GlobalRx, PharmaShip\n\n- **Regulatory Compliance:**\n  - **FDA:** Requires proper storage and handling during transport\n  - **PHMSA:** Regulates hazardous materials transport, including pharmaceuticals\n  - **Documentation Rule:** All shipments must have complete documentation, including temperature logs\n\n- **Risk Assessment:**\n  - **Category:** Low Risk\n  - **Factors:** Temperature stable, Common medication\n\n- **Environmental Impact:**\n  - **Carbon Footprint:** Low\n  - **Packaging Waste:** Medium (Standard packaging)\n\n### Recommendations:\n- Monitor carrier performance regularly\n- Ensure complete documentation for all shipments\n- Maintain product integrity throughout transit\n\nBy following these guidelines and ensuring regulatory compliance, the supply chain logistics for Paracetamol can be optimized for efficiency and safety.",
+      "sources": [
+        "guidelines",
+        "inventory",
+        "transport"
+      ],
+      "query_type": "factual",
+      "timestamp": "2025-04-15T14:56:51.108542"
+    }
+  ],
+  "metadata": {
+    "query_types": {
+      "factual": 1
+    },
+    "sources_used": {
+      "guidelines": 1,
+      "inventory": 1,
+      "transport": 1
+    },
+    "total_interactions": 1
+  },
+  "created_at": "2025-04-15T14:56:51.107525",
+  "last_updated": "2025-04-15T14:56:51.108542"
+}

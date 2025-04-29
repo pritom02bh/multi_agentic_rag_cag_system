@@ -1,0 +1,27 @@
+{
+  "history": [
+    {
+      "query": "Are there any medications with low stock?",
+      "enhanced_query": "Which medications in our inventory have stock levels below the defined reorder point threshold?",
+      "response": "### Medications Below Reorder Point Threshold:\n\nBased on the inventory data provided, the following medications are currently below their defined reorder point threshold:\n\n1. **Item ID: ITEM-00DBC34C**\n   - Generic Name: Aspirin\n   - Current Stock: **194,347**\n   - Reorder Point: **98,630.14** (g)\n\n2. **Item ID: ITEM-CC350352**\n   - Generic Name: Atorvastatin\n   - Current Stock: **16,052**\n   - Reorder Point: **15,753.42** (g)\n\n3. **Item ID: ITEM-2AB2ABEF**\n   - Generic Name: Lisinopril\n   - Current Stock: **133,725**\n   - Reorder Point: **28,767.12** (g)\n\n4. **Item ID: ITEM-02A72706**\n   - Generic Name: Amoxicillin\n   - Current Stock: **481,838**\n   - Reorder Point: **39,726.03** (g)\n\n5. **Item ID: ITEM-3A00619E**\n   - Generic Name: Hydrocortisone\n   - Current Stock: **3,252**\n   - Reorder Point: **3,616.44** (mg)\n\n6. **Item ID: ITEM-A184D581**\n   - Generic Name: Alpha Interferon\n   - Current Stock: **3,403**\n   - Reorder Point: **2,054.79** (mcg)\n\n7. **Item ID: ITEM-7B5DECC3**\n   - Generic Name: Beta Interferon\n   - Current Stock: **7,068**\n   - Reorder Point: **2,876.71** (mcg)\n\nThese medications require attention as they are below the reorder point threshold, indicating a need for replenishment to maintain adequate stock levels and meet demand effectively.",
+      "sources": [
+        "inventory",
+        "policy"
+      ],
+      "query_type": "factual",
+      "timestamp": "2025-04-15T16:50:11.390272"
+    }
+  ],
+  "metadata": {
+    "query_types": {
+      "factual": 1
+    },
+    "sources_used": {
+      "inventory": 1,
+      "policy": 1
+    },
+    "total_interactions": 1
+  },
+  "created_at": "2025-04-15T16:50:11.390272",
+  "last_updated": "2025-04-15T16:50:11.390272"
+}

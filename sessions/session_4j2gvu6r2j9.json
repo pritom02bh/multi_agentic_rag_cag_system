@@ -1,0 +1,70 @@
+{
+  "history": [
+    {
+      "query": "Compare our current stock levels of antibiotics versus painkillers",
+      "enhanced_query": "Compare the current inventory levels of antibiotics (e.g., amoxicillin, azithromycin) with painkillers (e.g., acetaminophen, ibuprofen) in our pharmaceutical stock.",
+      "response": "| Medication      | Current Stock | Reorder Point | Status   |\n|-----------------|---------------|---------------|----------|\n| Amoxicillin     | 1,000,000     | 93,150        | Adequate |\n| Azithromycin    | 750,000       | 98,630        | Adequate |\n| Acetaminophen   | 500,000       | 39,726        | Adequate |\n| Ibuprofen       | 200,000       | 26,849        | Adequate |",
+      "sources": [
+        "inventory",
+        "guidelines"
+      ],
+      "query_type": "analytical",
+      "timestamp": "2025-04-15T22:07:28.988536"
+    },
+    {
+      "query": "Which medications are both low in stock and experiencing shipment delays?",
+      "enhanced_query": "Which pharmaceuticals have inventory levels below the reorder point and are encountering delays in their shipment status?",
+      "response": "### Pharmaceuticals Below Reorder Point with Shipment Delays:\n\n1. **Lisinopril:**\n   - **Inventory Status:**\n     - Current Stock: **133,725 g**\n     - Reorder Point: **28,767.12 g**\n     - Below Reorder Point: Yes\n   - **Shipment Status:**\n     - Shipment SHIP-CDA1A448: Encounter delay in road transport from Mexico to USA.\n   - **Additional Info:**\n     - Manufacturing Date: 28-12-2024\n     - Expiry Date: 10-02-2026\n\n2. **Albuterol:**\n   - **Inventory Status:**\n     - Current Stock: **37,079 g**\n     - Reorder Point: **8,630.14 g**\n     - Below Reorder Point: Yes\n   - **Shipment Status:**\n     - Shipment SHIP-38E7C254: Delay in air transport from Vietnam to USA.\n   - **Additional Info:**\n     - Manufacturing Date: 04-01-2025\n     - Expiry Date: 04-07-2027\n\n3. **Amoxicillin:**\n   - **Inventory Status:**\n     - Current Stock: **481,838 g**\n     - Reorder Point: **39,726.03 g**\n     - Below Reorder Point: Yes\n   - **Shipment Status:**\n     - Shipment SHIP-68A3049C: Delay in air transport from Vietnam to USA.\n   - **Additional Info:**\n     - Manufacturing Date: 29-10-2024\n     - Expiry Date: 03-11-2025\n\n4. **Ciprofloxacin:**\n   - **Inventory Status:**\n     - Current Stock: **63,189 g**\n     - Reorder Point: **36,164.38 g**\n     - Below Reorder Point: Yes\n   - **Shipment Status:**\n     - Shipment SHIP-29DBAD3A: Delay in air transport from Vietnam to USA.\n   - **Additional Info:**\n     - Manufacturing Date: 27-12-2024\n     - Expiry Date: 01-12-2026\n\n5. **Beta Interferon:**\n   - **Inventory Status:**\n     - Current Stock: **7,068 mcg**\n     - Reorder Point: **2,876.71 mcg**\n     - Below Reorder Point: Yes\n   - **Shipment Status:**\n     - Shipment SHIP-FE900C3B: Delay in air transport from China to USA.\n   - **Additional Info:**\n     - Manufacturing Date: 11-01-2025\n     - Expiry Date: 01-06-2026\n\nThese pharmaceuticals have inventory levels below the reorder point and are facing delays in their shipment statuses, which may impact supply chain operations.",
+      "sources": [
+        "inventory",
+        "transport"
+      ],
+      "query_type": "factual",
+      "timestamp": "2025-04-15T22:08:09.042109"
+    },
+    {
+      "query": "Based on current usage rates, which medications will need reordering within the next 30 days?",
+      "enhanced_query": "Which pharmaceuticals, based on current consumption rates, require reordering within the next 30 days according to inventory levels and reorder points?",
+      "response": "### Pharmaceuticals Requiring Reordering Within the Next 30 Days:\n\nBased on the current consumption rates and comparing them with the reorder points of the pharmaceutical items, the following items need reordering within the next 30 days:\n\n1. **Hydrocortisone:**\n   - Current Stock: 3,252 mg\n   - Reorder Point: 3,616.438356164384 mg\n   - Status: Reorder Required\n   - Lead Time: 37 days\n\n2. **Alpha Interferon:**\n   - Current Stock: 3,403 mcg\n   - Reorder Point: 2,054.794520547945 mcg\n   - Status: Active\n   - Lead Time: 23 days\n\n3. **Beta Interferon:**\n   - Current Stock: 7,068 mcg\n   - Reorder Point: 2,876.712328767123 mcg\n   - Status: Active\n   - Lead Time: 35 days\n\nThese items have current stock levels close to or below their reorder points, indicating the need for reordering within the next 30 days to maintain adequate inventory levels based on their consumption rates.",
+      "sources": [
+        "inventory"
+      ],
+      "query_type": "factual",
+      "timestamp": "2025-04-15T22:09:13.270659"
+    },
+    {
+      "query": "Show items where current stock falls below 50% of their reorder points",
+      "enhanced_query": "Display items with current inventory levels below 50 units of their respective reorder points.",
+      "response": "### Items Below Reorder Point Threshold:\n\n1. **Item ID: ITEM -3A00619E**\n   - Generic Name: Hydrocortisone\n   - Current Stock: **3,252**\n   - Reorder Point: **3,616.438**\n   - Status: Reorder Required\n\n2. **Item ID: ITEM -A184D581**\n   - Generic Name: Alpha Interferon\n   - Current Stock: **3,403**\n   - Reorder Point: **2,054.795**\n   - Status: Active\n\n3. **Item ID: ITEM -7B5DECC3**\n   - Generic Name: Beta Interferon\n   - Current Stock: **7,068**\n   - Reorder Point: **2,876.712**\n   - Status: Active\n\n### Action Needed:\n- **Reorder Hydrocortisone:** Current stock is below the reorder point; action is required to replenish inventory.\n- **Monitor Alpha Interferon and Beta Interferon:** While below the reorder point, the current stock levels are not critically low; monitoring closely for potential reorder needs is recommended.",
+      "sources": [
+        "inventory"
+      ],
+      "query_type": "factual",
+      "timestamp": "2025-04-15T22:10:20.194760"
+    },
+    {
+      "query": "Compare the stock levels of our top 10 most expensive medications",
+      "enhanced_query": "Compare the inventory levels of our top 10 highest-priced pharmaceuticals in stock.",
+      "response": "| Pharmaceutical | Current Stock | Reorder Point | Status   |\n|----------------|---------------|--------------|---------|\n|                | 1,000,000     | 93,150       | Adequate |\n| Active         | 750,000       | 98,630       | Adequate |\n| Expiry Date    | 300,000       | 28,767       | Adequate |\n| ng Price       | 500,000       | 39,726       | Adequate |\n| None           | 200,000       | 26,849       | Adequate |\n| None           | 100,000       | 8,493        | Adequate |\n| tory           | 4,569         | 3,972        | Adequate |\n|                | 40,000        | 5,589        | Adequate |\n| Last Updated   | 200,000       | 23,013       | Adequate |\n| Expiry Date    | 25,000        | 2,054        | Adequate |",
+      "sources": [
+        "inventory"
+      ],
+      "query_type": "analytical",
+      "timestamp": "2025-04-15T22:10:57.694899"
+    }
+  ],
+  "metadata": {
+    "query_types": {
+      "analytical": 2,
+      "factual": 3
+    },
+    "sources_used": {
+      "inventory": 5,
+      "guidelines": 1,
+      "transport": 1
+    },
+    "total_interactions": 5
+  },
+  "created_at": "2025-04-15T22:07:28.988536",
+  "last_updated": "2025-04-15T22:10:57.694899"
+}

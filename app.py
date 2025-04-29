@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, render_template, redirect
+from flask import Flask, request, jsonify, render_template, redirect, session
 from flask_cors import CORS
 from flask_session import Session
 from flask_limiter import Limiter
@@ -9,54 +9,89 @@ from dotenv import load_dotenv
 import os
 import traceback
 import logging
-import pandas as pd
-import numpy as np
 import sys
+from datetime import datetime
+import json
+import uuid
+from typing import Dict, Any
+from openai import OpenAI
 
 # Configure logging
 logging.basicConfig(
-    level=logging.DEBUG,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    level=logging.INFO,
+    format='%(asctime)s [%(levelname)s] %(message)s',
     handlers=[
         logging.StreamHandler(sys.stdout),
-        logging.FileHandler('app.log')
+        logging.FileHandler('app.log', mode='a')
     ]
 )
+
+# Set specific loggers to appropriate levels
+logging.getLogger('werkzeug').setLevel(logging.WARNING)
+logging.getLogger('urllib3').setLevel(logging.WARNING)
+logging.getLogger('matplotlib').setLevel(logging.WARNING)
+
 logger = logging.getLogger(__name__)
 
 # Import our components
 from agents.query_enhancer import QueryEnhancer
-from agents.router import Router
+from agents.router import DataRouter
 from agents.rag import RAGAgent
 from agents.analyzer import AnalyticalAgent
 from agents.report_generator import ReportGenerator
+from agents.web_search import WebSearchAgent
 from utils.session_manager import SessionManager
+from utils.chroma_manager import ChromaDBManager
+from utils.chroma_parser import ChromaParser
 from config.settings import AppConfig
 
 # Load environment variables
-load_dotenv()
+load_dotenv(override=True)
 
 def check_required_env_vars():
     required_vars = ['OPENAI_API_KEY']
     missing_vars = [var for var in required_vars if not os.getenv(var)]
     if missing_vars:
         raise ValueError(f"Missing required environment variables: {', '.join(missing_vars)}")
+    else:
+        # Add logging to verify key format
+        api_key = os.getenv('OPENAI_API_KEY')
+        if api_key:
+            logger.info(f"OpenAI API key loaded (starts with: {api_key[:5]}...)")
+        else:
+            logger.error("OpenAI API key is empty")
 
 def check_required_files():
-    required_files = [
-        'embedded_data/inventory_data_embedded.csv',
-        'embedded_data/transport_history_embedded.csv',
-        'embedded_data/us_government_guidelines_for_medicine_transportation_and_storage_embedded.csv',
-        'embedded_data/inventory_management_policy_embedded.csv'
-    ]
-    missing_files = [f for f in required_files if not os.path.exists(f)]
-    if missing_files:
-        raise FileNotFoundError(f"Missing required data files: {', '.join(missing_files)}")
+    """Check if ChromaDB collections are available and accessible"""
+    try:
+        # Initialize ChromaParser
+        parser = ChromaParser(base_dir="vector_db_separate")
+        
+        # Check if collections are loaded
+        collections = list(parser.collection_data.keys())
+        if not collections:
+            raise FileNotFoundError("No ChromaDB collections were found")
+        
+        # Check if each collection has documents
+        empty_collections = []
+        for collection in collections:
+            docs = parser.get_collection_documents(collection)
+            if not docs:
+                empty_collections.append(collection)
+        
+        if empty_collections:
+            logger.warning(f"The following collections have no documents: {', '.join(empty_collections)}")
+        
+        logger.info(f"ChromaDB collections loaded successfully: {', '.join(collections)}")
+        return collections
+    except Exception as e:
+        raise FileNotFoundError(f"Error accessing ChromaDB: {str(e)}")
 
 # Perform initial checks
 try:
     check_required_env_vars()
-    check_required_files()
+    data_files = check_required_files()
+    logger.info(f"All required vector collections found: {len(data_files)} collections")
 except Exception as e:
     logger.error(f"Initialization check failed: {str(e)}")
     raise
@@ -70,6 +105,7 @@ app = Flask(__name__,
 # Configure Flask app
 app.config['SECRET_KEY'] = os.urandom(24)
 app.config['SESSION_TYPE'] = 'filesystem'
+app.config['SESSION_FILE_DIR'] = 'flask_session'
 app.config['CACHE_TYPE'] = 'simple'
 app.config['CACHE_DEFAULT_TIMEOUT'] = 300
 Session(app)
@@ -87,16 +123,15 @@ limiter = Limiter(
 )
 
 # Initialize Flask-RestX
-api = Api(app, version='1.0', title='Inventory RAG API',
+api = Api(app, version='1.0', title='Pharmaceutical RAG API',
     description='A RAG-based API for inventory management and analysis',
     doc='/api/docs',
-    prefix='/api'  # Add prefix for all API endpoints
+    prefix='/api'
 )
 
 # Define namespaces
 ns_chat = api.namespace('chat', description='Chat operations')
 ns_system = api.namespace('system', description='System operations')
-ns_inventory = api.namespace('inventory', description='Inventory operations')
 
 # Define models for request/response validation
 chat_input = api.model('ChatInput', {
@@ -106,8 +141,11 @@ chat_input = api.model('ChatInput', {
 
 chat_response = api.model('ChatResponse', {
     'status': fields.String(description='Response status'),
-    'response': fields.Raw(description='Generated response'),
-    'message': fields.String(description='Error message if any')
+    'response': fields.String(description='Generated natural language response'),
+    'session_id': fields.String(description='Session identifier'),
+    'query': fields.String(description='Original query'),
+    'timestamp': fields.String(description='Response timestamp'),
+    'pipeline_metadata': fields.Raw(description='Metadata about activated components in the processing pipeline')
 })
 
 system_status = api.model('SystemStatus', {
@@ -116,392 +154,390 @@ system_status = api.model('SystemStatus', {
     'components': fields.Raw(description='Component status details')
 })
 
-inventory_stats = api.model('InventoryStats', {
-    'total_items': fields.Integer(description='Total number of items'),
-    'low_stock_items': fields.Integer(description='Number of items below reorder point'),
-    'out_of_stock_items': fields.Integer(description='Number of items with zero stock'),
-    'total_value': fields.Float(description='Total inventory value')
-})
-
 # Initialize components
+config = AppConfig()
+config.use_chroma_db = True  # Ensure we're using ChromaDB
+
+# Set up ChromaParser with robust error handling
 try:
-    config = AppConfig()
-    if not config.OPENAI_API_KEY:
-        raise ValueError("OpenAI API key is not set")
-        
-    query_enhancer = QueryEnhancer()
-    router = Router()
-    rag_agent = RAGAgent()
-    analytical_agent = AnalyticalAgent()
-    report_generator = ReportGenerator()
-    session_manager = SessionManager()
-    
-    logger.info("All components initialized successfully")
+    config.chroma_parser = ChromaParser(base_dir="vector_db_separate")
+    # Verify that at least one collection was loaded
+    collections = list(config.chroma_parser.collection_data.keys())
+    if collections:
+        logger.info(f"Successfully loaded ChromaParser with collections: {', '.join(collections)}")
+    else:
+        logger.warning("No collections found in ChromaParser, will fall back to CSV data")
 except Exception as e:
-    logger.error(f"Error initializing components: {str(e)}")
-    raise
+    logger.error(f"Error initializing ChromaParser: {str(e)}")
+    # Create a minimal ChromaParser that won't cause errors
+    config.chroma_parser = ChromaParser(base_dir="vector_db_separate")
+    logger.warning("Using minimal ChromaParser due to initialization error")
+
+query_enhancer = QueryEnhancer(config)
+data_router = DataRouter(config)
+rag_agent = RAGAgent(config)
+analyzer = AnalyticalAgent(config)
+report_generator = ReportGenerator(config)
+session_manager = SessionManager()
+web_search_agent = WebSearchAgent(config)
 
 @app.route('/')
 def index():
-    """Render the main application interface"""
+    """Render the main UI page."""
     return render_template('index.html')
 
+@app.route('/debug')
+def debug():
+    """Render the debug page."""
+    return render_template('debug.html')
+
 @ns_chat.route('/')
-class ChatEndpoint(Resource):
+class Chat(Resource):
     @ns_chat.expect(chat_input)
     @ns_chat.marshal_with(chat_response)
-    @limiter.limit("10/minute")
+    @limiter.limit("10 per minute")
     def post(self):
+        """Process a chat query and return a response."""
         try:
+            # Get request data
             data = request.json
-            if not data:
-                logger.error("No data provided in request")
-                return {
-                    'status': 'error',
-                    'message': 'No data provided in request'
-                }, 400
-                
-            user_query = data.get('query')
+            query = data.get('query')
             session_id = data.get('session_id')
             
-            if not user_query:
-                logger.error("No query provided")
+            if not query:
                 return {
                     'status': 'error',
-                    'message': 'No query provided'
+                    'response': 'No query provided',
+                    'session_id': session_id,
+                    'query': '',
+                    'timestamp': datetime.now().isoformat()
                 }, 400
                 
             if not session_id:
-                logger.error("No session ID provided")
+                session_id = str(uuid.uuid4())
+                logger.info(f"Created new session: {session_id}")
+            
+            # Log the query
+            logger.info(f"Received query: '{query}' for session {session_id}")
+            
+            # Process the query with pipeline components
+            start_time = datetime.now()
+            
+            # 1. Enhance the query
+            enhancement_result = query_enhancer.enhance(query)
+            if enhancement_result['status'] == 'error':
+                logger.error(f"Query enhancement failed: {enhancement_result['message']}")
+                enhanced_query = query  # Fall back to original query
+                is_web_search = False
+                entities = None
+                query_intent = None
+            else:
+                enhanced_query = enhancement_result['enhanced_query']
+                is_web_search = enhancement_result.get('is_web_search', False)
+                entities = enhancement_result.get('entities')
+                query_intent = enhancement_result.get('query_intent')
+                logger.info(f"Enhanced query: '{enhanced_query}'")
+                if is_web_search:
+                    logger.info("Query identified as requiring web search")
+                if entities:
+                    logger.info(f"Detected entities: {entities}")
+                if query_intent:
+                    logger.info(f"Query intent: {query_intent}")
+            
+            # 2. Route the query to appropriate data sources
+            routing_result = data_router.route_query(enhanced_query, enhancement_result)
+            if routing_result['status'] == 'error':
+                logger.error(f"Query routing failed: {routing_result['message']}")
                 return {
                     'status': 'error',
-                    'message': 'No session ID provided'
-                }, 400
-            
-            # Process the query through our pipeline
-            logger.info(f"Processing query: {user_query} for session: {session_id}")
-            
-            try:
-                logger.debug("Enhancing query...")
-                enhanced_query = query_enhancer.enhance(user_query)
-                logger.info(f"Enhanced query: {enhanced_query}")
-            except Exception as e:
-                logger.error(f"Error during query enhancement: {str(e)}")
-                logger.error(traceback.format_exc())
-                return {
-                    'status': 'error',
-                    'message': f'Error enhancing query: {str(e)}'
+                    'response': f"I encountered an error while processing your query: {routing_result['message']}",
+                    'session_id': session_id,
+                    'query': query,
+                    'timestamp': datetime.now().isoformat()
                 }, 500
             
-            try:
-                logger.debug("Routing query...")
-                selected_source = router.route(enhanced_query)
-                logger.info(f"Selected source: {selected_source}")
-            except Exception as e:
-                logger.error(f"Error during query routing: {str(e)}")
+            # If query was identified as needing web search, make sure web is in sources
+            if is_web_search and 'web' not in routing_result['sources']:
+                logger.info("Adding web source to routing result for web search query")
+                routing_result['sources'].append('web')
+                # Generate web context if not already present
+                if not routing_result.get('web_context'):
+                    routing_result['web_context'] = web_search_agent.generate_web_context(enhanced_query)
+                
+            # Get data sources and data
+            data_sources = routing_result['sources']
+            data_dict = routing_result['data']
+            additional_context = routing_result.get('transport_knowledge')
+            web_context = routing_result.get('web_context')
+            query_type = routing_result.get('query_type', 'factual')  # Get query type from router
+            agent_type = routing_result.get('agent_type', 'vector_rag')  # Get agent type from router
+            routing_confidence = routing_result.get('confidence', 0.5)  # Get confidence from router
+            used_chroma_db = routing_result.get('used_chroma_db', False)  # Check if ChromaDB was used
+            
+            logger.info(f"Query routed to sources: {data_sources}")
+            logger.info(f"Query type: {query_type}, Agent type: {agent_type}, Confidence: {routing_confidence}")
+            
+            # 3. Choose appropriate agent based on query type and agent type
+            response_result = None
+            
+            # For analytical queries, use the analytical agent
+            if agent_type == 'analytics':
+                logger.info("Using analytical agent for response generation")
+                try:
+                    response_result = analyzer.analyze(
+                        data=data_dict,
+                        query=enhanced_query
+                    )
+                    # Ensure response_result has the expected structure
+                    if not response_result or 'response' not in response_result:
+                        logger.error("Analytics agent returned invalid response format")
+                        response_result = {
+                            'status': 'success',
+                            'response': "I analyzed the data but couldn't generate a comprehensive analysis. Here's what I found: " + 
+                                        str(data_dict.keys()) + " were examined but no specific insights could be generated.",
+                            'analysis': {},
+                            'charts': []
+                        }
+                except Exception as e:
+                    logger.error(f"Error in analytics processing: {str(e)}")
+                    logger.error(traceback.format_exc())
+                    # Provide a fallback response
+                    response_result = {
+                        'status': 'success',
+                        'response': f"I tried to analyze your query but encountered a technical issue. I found data sources: {', '.join(data_sources)} but couldn't complete the analysis. You might want to try rephrasing your query or providing more specific details.",
+                        'analysis': {},
+                        'charts': []
+                    }
+            # For hybrid queries, use both RAG and analytical capabilities
+            elif agent_type == 'hybrid':
+                logger.info("Using hybrid approach with both RAG and analytical agents")
+                # First get RAG response for guidelines/regulations
+                rag_response = rag_agent.generate_response(
+                    query=enhanced_query,
+                    data_dict=data_dict,
+                    additional_context=additional_context,
+                    web_context=web_context,
+                    query_type=query_type,
+                    agent_type=agent_type,
+                    entities=entities
+                )
+                
+                # Then add analytical component for data
+                analytical_context = rag_response.get('response', '')
+                try:
+                    response_result = analyzer.analyze(
+                        data=data_dict,
+                        query=enhanced_query
+                    )
+                    # If we have both RAG and analysis responses, combine them
+                    if 'response' in rag_response and 'response' in response_result:
+                        response_result['response'] = "Based on guidelines and regulations:\n\n" + \
+                            rag_response['response'] + "\n\n" + \
+                            "Data analysis shows:\n\n" + \
+                            response_result['response']
+                except Exception as e:
+                    logger.error(f"Error in hybrid analytics processing: {str(e)}")
+                    # Use RAG response if analytics fails
+                    response_result = rag_response
+            # For factual and other queries, use the RAG agent
+            else:
+                logger.info("Using RAG agent for response generation")
+                response_result = rag_agent.generate_response(
+                    query=enhanced_query,
+                    data_dict=data_dict,
+                    additional_context=additional_context,
+                    web_context=web_context,
+                    query_type=query_type,
+                    agent_type=agent_type,
+                    entities=entities
+                )
+            
+            # Check for generation error
+            if response_result.get('status') == 'error':
+                logger.error(f"Response generation failed: {response_result.get('message')}")
                 return {
                     'status': 'error',
-                    'message': 'Error routing query. Please try again.'
+                    'response': response_result.get('response', "I was unable to generate a good response to your query."),
+                    'session_id': session_id,
+                    'query': query,
+                    'timestamp': datetime.now().isoformat()
                 }, 500
             
-            try:
-                logger.debug("Processing with RAG...")
-                rag_response = rag_agent.process(enhanced_query, selected_source)
-                logger.info(f"RAG response generated")
-            except Exception as e:
-                logger.error(f"Error during RAG processing: {str(e)}")
-                return {
-                    'status': 'error',
-                    'message': 'Error retrieving information. Please try again.'
-                }, 500
+            # Calculate processing time
+            end_time = datetime.now()
+            processing_time = (end_time - start_time).total_seconds()
+            logger.info(f"Query processed in {processing_time:.2f} seconds")
             
-            try:
-                logger.debug("Analyzing response...")
-                analysis_result = analytical_agent.analyze(rag_response)
-                logger.info(f"Analysis completed")
-            except Exception as e:
-                logger.error(f"Error during analysis: {str(e)}")
-                analysis_result = {
-                    'insights': rag_response,
-                    'charts': [],
-                    'has_numerical_data': False
-                }
+            # Record successful interaction
+            session_manager.add_interaction(
+                session_id=session_id,
+                query=query,
+                enhanced_query=enhanced_query,
+                response=response_result['response'],
+                sources=data_sources,
+                query_type=query_type
+            )
             
-            try:
-                logger.debug("Generating final report...")
-                final_report = report_generator.generate(analysis_result)
-                logger.info(f"Report generated")
-            except Exception as e:
-                logger.error(f"Error generating report: {str(e)}")
-                return {
-                    'status': 'error',
-                    'message': 'Error generating report. Please try again.'
-                }, 500
-            
-            try:
-                # Store in session history
-                session_manager.add_to_history(session_id, {
-                    'query': user_query,
-                    'response': final_report
-                })
-            except Exception as e:
-                logger.error(f"Error storing in session history: {str(e)}")
-            
+            # Return the response
             return {
                 'status': 'success',
-                'response': final_report
+                'response': response_result['response'],
+                'session_id': session_id,
+                'query': query,
+                'timestamp': datetime.now().isoformat(),
+                'charts': response_result.get('charts', []),
+                'source_info': response_result.get('source_info', ''),
+                'pipeline_metadata': {
+                    'active_agent': agent_type,
+                    'active_sources': data_sources,
+                    'query_type': query_type,
+                    'routing_confidence': routing_confidence,
+                    'entities_detected': entities if entities else {}
+                }
             }
             
         except Exception as e:
-            logger.error(f"Unexpected error: {str(e)}")
+            logger.error(f"Unexpected error in chat processing: {str(e)}")
             logger.error(traceback.format_exc())
             return {
                 'status': 'error',
-                'message': 'An unexpected error occurred. Please try again.',
-                'details': str(e) if app.debug else None
+                'response': "I encountered an unexpected error while processing your request.",
+                'session_id': session_id if 'session_id' in locals() else str(uuid.uuid4()),
+                'query': query if 'query' in locals() else "",
+                'timestamp': datetime.now().isoformat()
             }, 500
 
 @ns_system.route('/status')
-class SystemStatusEndpoint(Resource):
+class SystemStatus(Resource):
     @ns_system.marshal_with(system_status)
     def get(self):
+        """Get the current system status."""
         try:
-            components = {
-                'query_enhancer': query_enhancer is not None,
-                'router': router is not None,
-                'rag_agent': rag_agent is not None,
-                'analytical_agent': analytical_agent is not None,
-                'report_generator': report_generator is not None,
-                'session_manager': session_manager is not None
-            }
+            # Check component statuses
+            component_statuses = {}
             
-            all_healthy = all(components.values())
+            # Check if OpenAI API is accessible
+            try:
+                client = OpenAI(api_key=config.OPENAI_API_KEY)
+                client.models.list()
+                component_statuses['openai_api'] = {
+                    'status': 'online',
+                    'message': 'OpenAI API is accessible'
+                }
+            except Exception as e:
+                component_statuses['openai_api'] = {
+                    'status': 'error',
+                    'message': f'OpenAI API error: {str(e)}'
+                }
+            
+            # Check if vector collections are accessible
+            try:
+                # Initialize ChromaParser
+                chroma_parser = config.chroma_parser or ChromaParser(base_dir="vector_db_separate")
+                
+                # Get collection data
+                collections = list(chroma_parser.collection_data.keys())
+                
+                if collections:
+                    collection_statuses = {}
+                    for collection_name in collections:
+                        try:
+                            # Get document count
+                            docs = chroma_parser.get_collection_documents(collection_name)
+                            collection_statuses[collection_name] = {
+                                'status': 'available',
+                                'count': len(docs),
+                                'path': os.path.join("vector_db_separate", collection_name)
+                            }
+                        except Exception as e:
+                            collection_statuses[collection_name] = {
+                                'status': 'error',
+                                'message': str(e)
+                            }
+                    
+                    component_statuses['vector_collections'] = {
+                        'status': 'online',
+                        'message': f'Found {len(collections)} collections',
+                        'collections': collection_statuses
+                    }
+                else:
+                    component_statuses['vector_collections'] = {
+                        'status': 'warning',
+                        'message': 'No vector collections found'
+                    }
+            except Exception as e:
+                component_statuses['vector_collections'] = {
+                    'status': 'error',
+                    'message': f'Error accessing vector collections: {str(e)}'
+                }
+            
+            # Overall system status
+            if any(s.get('status') == 'error' for s in component_statuses.values() if isinstance(s, dict)):
+                system_status = 'warning'
+                message = 'Some components have issues'
+            else:
+                system_status = 'online'
+                message = 'All systems operational'
             
             return {
-                'status': 'success' if all_healthy else 'degraded',
-                'message': 'System online' if all_healthy else 'Some components are unavailable',
-                'components': components
+                'status': system_status,
+                'message': message,
+                'components': component_statuses
             }
+            
         except Exception as e:
             logger.error(f"Error checking system status: {str(e)}")
+            logger.error(traceback.format_exc())
             return {
                 'status': 'error',
-                'message': 'Error checking system status'
+                'message': f'Error checking system status: {str(e)}',
+                'components': {}
             }, 500
 
-@ns_inventory.route('/stats')
-class InventoryStats(Resource):
-    @ns_inventory.marshal_with(inventory_stats)
-    @cache.cached(timeout=60)  # Cache for 1 minute
-    def get(self):
+@ns_chat.route('/history/<string:session_id>')
+class ChatHistory(Resource):
+    def get(self, session_id):
+        """Get chat history for a session."""
         try:
-            df = pd.read_csv('embedded_data/inventory_data_embedded.csv')
-            if df is None:
-                return {'message': 'Error loading inventory data'}, 500
-                
-            stats = {
-                'total_items': len(df),
-                'low_stock_items': len(df[df['CurrentStock'] <= df['ReorderPoint']]),
-                'out_of_stock_items': len(df[df['CurrentStock'] == 0]),
-                'total_value': (df['CurrentStock'] * df['UnitCost']).sum()
-            }
-            return stats
-        except Exception as e:
-            logger.error(f"Error calculating inventory stats: {str(e)}")
-            return {'message': 'Error calculating inventory stats'}, 500
-
-@ns_inventory.route('/low-stock')
-class LowStockItems(Resource):
-    @cache.cached(timeout=60)  # Cache for 1 minute
-    def get(self):
-        try:
-            df = pd.read_csv('embedded_data/inventory_data_embedded.csv')
-            if df is None:
-                return {'message': 'Error loading inventory data'}, 500
-                
-            low_stock = df[df['CurrentStock'] <= df['ReorderPoint']]
-            items = low_stock[[
-                'ItemID', 'GenericName', 'CurrentStock', 
-                'ReorderPoint', 'Unit', 'Status'
-            ]].to_dict('records')
-            
+            history = session_manager.get_history(session_id)
             return {
                 'status': 'success',
-                'count': len(items),
-                'items': items
+                'session_id': session_id,
+                'history': history
             }
         except Exception as e:
-            logger.error(f"Error retrieving low stock items: {str(e)}")
-            return {'message': 'Error retrieving low stock items'}, 500
+            logger.error(f"Error retrieving chat history: {str(e)}")
+            logger.error(traceback.format_exc())
+            return {
+                'status': 'error',
+                'message': f'Error retrieving chat history: {str(e)}',
+                'session_id': session_id,
+                'history': []
+            }, 500
 
-@ns_inventory.route('/search')
-class InventorySearch(Resource):
-    @ns_inventory.param('query', 'Search query string')
-    def get(self):
+@ns_chat.route('/clear/<string:session_id>')
+class ClearChatHistory(Resource):
+    def delete(self, session_id):
+        """Clear chat history for a session."""
         try:
-            query = request.args.get('query', '').lower()
-            if not query:
-                return {'message': 'No search query provided'}, 400
-                
-            df = pd.read_csv('embedded_data/inventory_data_embedded.csv')
-            if df is None:
-                return {'message': 'Error loading inventory data'}, 500
-                
-            # Search in GenericName and Status
-            mask = df['GenericName'].str.lower().str.contains(query) | \
-                   df['Status'].str.lower().str.contains(query)
-            results = df[mask][[
-                'ItemID', 'GenericName', 'CurrentStock', 
-                'Unit', 'Status', 'UnitCost', 'SellingPrice'
-            ]].to_dict('records')
-            
+            session_manager.clear_history(session_id)
             return {
                 'status': 'success',
-                'count': len(results),
-                'items': results
+                'message': f'History cleared for session {session_id}',
+                'session_id': session_id
             }
         except Exception as e:
-            logger.error(f"Error searching inventory: {str(e)}")
-            return {'message': 'Error searching inventory'}, 500
-
-@ns_inventory.route('/comprehensive')
-class ComprehensiveInventory(Resource):
-    @cache.cached(timeout=60)  # Cache for 1 minute
-    def get(self):
-        """Get comprehensive inventory data with classification-based prioritization"""
-        try:
-            # Load inventory data
-            df = pd.read_csv('embedded_data/inventory_data_embedded.csv')
-            if df is None:
-                return {'message': 'Error loading inventory data'}, 500
-            
-            # Load policy data for classification rules
-            policy_df = pd.read_csv('embedded_data/inventory_management_policy_embedded.csv')
-            
-            # Classify items based on policy rules
-            def classify_item(row):
-                if row['UnitCost'] * row['CurrentStock'] > 100000:  # High value
-                    return 'A'
-                elif row['UnitCost'] * row['CurrentStock'] > 50000:  # Moderate value
-                    return 'B'
-                return 'C'  # Low value
-            
-            df['Classification'] = df.apply(classify_item, axis=1)
-            
-            # Add storage condition flags
-            df['RequiresRefrigeration'] = df['StorageCondition'].str.contains('Refrigerated', case=False)
-            df['RequiresSpecialHandling'] = df['SpecialHandling'].notna()
-            
-            # Calculate stock status
-            df['StockStatus'] = 'Normal'
-            df.loc[df['CurrentStock'] <= df['ReorderPoint'], 'StockStatus'] = 'Low'
-            df.loc[df['CurrentStock'] == 0, 'StockStatus'] = 'Out of Stock'
-            
-            # Prepare comprehensive item details
-            items = []
-            
-            # Process A-class items first (critical items)
-            a_items = df[df['Classification'] == 'A'].sort_values('CurrentStock')
-            for _, item in a_items.iterrows():
-                items.append({
-                    'ItemID': item['ItemID'],
-                    'GenericName': item['GenericName'],
-                    'Classification': 'A',
-                    'CurrentStock': item['CurrentStock'],
-                    'MaxInventory': item['MaxInventory'],
-                    'ReorderPoint': item['ReorderPoint'],
-                    'Unit': item['Unit'],
-                    'StorageCondition': item['StorageCondition'],
-                    'SpecialHandling': item['SpecialHandling'],
-                    'UnitCost': item['UnitCost'],
-                    'SellingPrice': item['SellingPrice'],
-                    'LeadTimeDays': item['LeadTimeDays'],
-                    'Status': item['Status'],
-                    'StockStatus': item['StockStatus'],
-                    'LastUpdated': item['LastUpdated']
-                })
-            
-            # Process B-class items next
-            b_items = df[df['Classification'] == 'B'].sort_values('CurrentStock')
-            for _, item in b_items.iterrows():
-                items.append({
-                    'ItemID': item['ItemID'],
-                    'GenericName': item['GenericName'],
-                    'Classification': 'B',
-                    'CurrentStock': item['CurrentStock'],
-                    'MaxInventory': item['MaxInventory'],
-                    'ReorderPoint': item['ReorderPoint'],
-                    'Unit': item['Unit'],
-                    'StorageCondition': item['StorageCondition'],
-                    'SpecialHandling': item['SpecialHandling'],
-                    'UnitCost': item['UnitCost'],
-                    'SellingPrice': item['SellingPrice'],
-                    'LeadTimeDays': item['LeadTimeDays'],
-                    'Status': item['Status'],
-                    'StockStatus': item['StockStatus'],
-                    'LastUpdated': item['LastUpdated']
-                })
-            
-            # Process C-class items last
-            c_items = df[df['Classification'] == 'C'].sort_values('CurrentStock')
-            for _, item in c_items.iterrows():
-                items.append({
-                    'ItemID': item['ItemID'],
-                    'GenericName': item['GenericName'],
-                    'Classification': 'C',
-                    'CurrentStock': item['CurrentStock'],
-                    'MaxInventory': item['MaxInventory'],
-                    'ReorderPoint': item['ReorderPoint'],
-                    'Unit': item['Unit'],
-                    'StorageCondition': item['StorageCondition'],
-                    'SpecialHandling': item['SpecialHandling'],
-                    'UnitCost': item['UnitCost'],
-                    'SellingPrice': item['SellingPrice'],
-                    'LeadTimeDays': item['LeadTimeDays'],
-                    'Status': item['Status'],
-                    'StockStatus': item['StockStatus'],
-                    'LastUpdated': item['LastUpdated']
-                })
-            
-            # Prepare summary statistics
-            summary = {
-                'total_items': len(df),
-                'items_by_class': {
-                    'A': len(a_items),
-                    'B': len(b_items),
-                    'C': len(c_items)
-                },
-                'items_by_status': {
-                    'normal': len(df[df['StockStatus'] == 'Normal']),
-                    'low_stock': len(df[df['StockStatus'] == 'Low']),
-                    'out_of_stock': len(df[df['StockStatus'] == 'Out of Stock'])
-                },
-                'special_handling': {
-                    'refrigerated': df['RequiresRefrigeration'].sum(),
-                    'special_handling': df['RequiresSpecialHandling'].sum()
-                }
-            }
-            
+            logger.error(f"Error clearing chat history: {str(e)}")
+            logger.error(traceback.format_exc())
             return {
-                'status': 'success',
-                'summary': summary,
-                'items': items
-            }
-            
-        except Exception as e:
-            logger.error(f"Error retrieving comprehensive inventory data: {str(e)}")
-            return {'message': 'Error retrieving comprehensive inventory data'}, 500
+                'status': 'error',
+                'message': f'Error clearing chat history: {str(e)}',
+                'session_id': session_id
+            }, 500
 
 if __name__ == '__main__':
-    try:
-        # Test database connection
-        df = pd.read_csv('embedded_data/inventory_data_embedded.csv')
-        logger.info(f"Successfully loaded inventory data with {len(df)} records")
-        
-        # Start the application
-        port = int(os.getenv('PORT', 5000))
-        app.run(debug=True, port=port)
-    except Exception as e:
-        logger.error(f"Failed to start application: {str(e)}")
-        logger.error(traceback.format_exc())
-        sys.exit(1) 
+    port = int(os.environ.get('PORT', 5000))
+    debug = os.environ.get('FLASK_ENV') == 'development'
+    
+    logger.info(f"Starting server on port {port}, debug={debug}")
+    app.run(host='0.0.0.0', port=port, debug=debug) 

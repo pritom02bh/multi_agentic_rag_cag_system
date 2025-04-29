@@ -1,0 +1,27 @@
+{
+  "history": [
+    {
+      "query": "What is the current inventory status?",
+      "enhanced_query": "What is the current inventory status including stock levels, reorder points, and expiry dates for pharmaceutical products in the system?",
+      "response": "### Current Inventory Status of Pharmaceutical Products:\n\n1. **Paracetamol (Item ID: ITEM-CCEE944C)**\n   - **Current Stock:** **951,453** g\n   - **Reorder Point:** **93,150.68** g\n   - **Expiry Date:** 14-12-2026\n\n2. **Ibuprofen (Item ID: ITEM-32C437D9)**\n   - **Current Stock:** **770,922** g\n   - **Reorder Point:** **61,369.86** g\n   - **Expiry Date:** 14-10-2027\n\n3. **Aspirin (Item ID: ITEM-00DBC34C)**\n   - **Current Stock:** **194,347** g\n   - **Reorder Point:** **98,630.14** g\n   - **Expiry Date:** 02-02-2026\n\n4. **Atorvastatin (Item ID: ITEM-CC350352)**\n   - **Current Stock:** **16,052** g\n   - **Reorder Point:** **15,753.42** g\n   - **Expiry Date:** 23-02-2027\n\n5. **Lisinopril (Item ID: ITEM-2AB2ABEF)**\n   - **Current Stock:** **133,725** g\n   - **Reorder Point:** **28,767.12** g\n   - **Expiry Date:** 10-02-2026\n\n6. **Metformin (Item ID: ITEM-5E3F6D68)**\n   - **Current Stock:** **357,566** g\n   - **Reorder Point:** **76,438.36** g\n   - **Expiry Date:** 17-01-2027\n\n7. **Amoxicillin (Item ID: ITEM-02A72706)**\n   - **Current Stock:** **481,838** g\n   - **Reorder Point:** **39,726.03** g\n   - **Expiry Date:** 03-11-2025\n\n8. **Ciprofloxacin (Item ID: ITEM-8F86EF91)**\n   - **Current Stock:** **63,189** g\n   - **Reorder Point:** **36,164.38** g\n   - **Expiry Date:** 01-12-2026\n\n9. **Sildenafil (Item ID: ITEM-3AABDB93)**\n   - **Current Stock:** **87,637** g\n   - **Reorder Point:** **26,849.32** g\n   - **Expiry Date:** 25-12-2025\n\n10. **Albuterol (Item ID: ITEM-1113DD0E)**\n    - **Current Stock:** **37,079** g\n    - **Reorder Point:** **8,630.14** g\n    - **Expiry Date:** 04-07-2027\n\n11. **Insulin (Item ID: ITEM-B2378A41)**\n    - **Current Stock:** **51,767** IU\n    - **Reorder Point:** **8,493.15** IU\n    - **Expiry Date:** 06-10-2027\n\n12. **Adalimumab (Item ID: ITEM-B14B42DE)**\n    - **Current Stock:** **4,569** mg\n    - **Reorder Point:** **3,972.60** mg\n    - **Expiry Date:** 02-04-2027\n\n13. **Rituximab (Item ID: ITEM-262D39D9)**\n    - **Current Stock:** **41,600** mg\n    - **Reorder Point:** **6,780.82** mg\n    - **Expiry Date:** 28-10-2025\n\n14. **Erythropoietin (Item ID: ITEM-16BA9109)**\n    - **Current Stock:** **17,211** IU\n    - **Reorder Point:** **5,589.04** IU\n    - **Expiry Date:** 02-07-2027\n\n15. **Growth Hormone (Item ID: ITEM-8AFEBE46)**\n    - **Current Stock:** **13,941** IU\n    - **Reorder Point:** **2,794.52** IU\n    - **Expiry Date:** 26-10-2025\n\n16. **Flu Vaccine (Item ID: ITEM-5AEDFB62)**\n    - **Current Stock:** **134,306** doses\n    - **Reorder Point:** **23,013.70** doses\n    - **Expiry Date:** 23-12-2026\n\n17.",
+      "sources": [
+        "inventory",
+        "web"
+      ],
+      "query_type": "factual",
+      "timestamp": "2025-04-15T14:34:14.931378"
+    }
+  ],
+  "metadata": {
+    "query_types": {
+      "factual": 1
+    },
+    "sources_used": {
+      "inventory": 1,
+      "web": 1
+    },
+    "total_interactions": 1
+  },
+  "created_at": "2025-04-15T14:34:14.931378",
+  "last_updated": "2025-04-15T14:34:14.931378"
+}

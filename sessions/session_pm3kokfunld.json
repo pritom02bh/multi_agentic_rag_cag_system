@@ -1,0 +1,77 @@
+{
+  "history": [
+    {
+      "query": "What is the current inventory status?",
+      "enhanced_query": "What is the current inventory status including stock levels, reorder points, and expiry dates for pharmaceutical products in the system?",
+      "response": "# Current Inventory Status for Pharmaceutical Products\n\n## **Paracetamol**\n- **Current Stock**: 951,453 g\n- **Reorder Point**: 93,151 g\n- **Expiry Date**: 14-Dec-2026\n- **Supply Chain Implications**: Stock is well above the reorder point, indicating no immediate need for reorder.\n\n## **Ibuprofen**\n- **Current Stock**: 770,922 g\n- **Reorder Point**: 61,370 g\n- **Expiry Date**: 14-Oct-2027\n- **Supply Chain Implications**: Stock is sufficient, no immediate reorder required.\n\n## **Aspirin**\n- **Current Stock**: 194,347 g\n- **Reorder Point**: 98,630 g\n- **Expiry Date**: 02-Feb-2026\n- **Supply Chain Implications**: Stock is above the reorder point, but monitor closely as it approaches the reorder level.\n\n## **Atorvastatin**\n- **Current Stock**: 16,052 g\n- **Reorder Point**: 15,753 g\n- **Expiry Date**: 23-Feb-2027\n- **Supply Chain Implications**: Stock is near the reorder point, consider placing an order soon.\n\n## **Lisinopril**\n- **Current Stock**: 133,725 g\n- **Reorder Point**: 28,767 g\n- **Expiry Date**: 10-Feb-2026\n- **Supply Chain Implications**: Stock is sufficient, no immediate reorder required.\n\n## **Metformin**\n- **Current Stock**: 357,566 g\n- **Reorder Point**: 76,438 g\n- **Expiry Date**: 17-Jan-2027\n- **Supply Chain Implications**: Stock is well above the reorder point, indicating no immediate need for reorder.\n\n## **Amoxicillin**\n- **Current Stock**: 481,838 g\n- **Reorder Point**: 39,726 g\n- **Expiry Date**: 03-Nov-2025\n- **Supply Chain Implications**: Stock is sufficient, no immediate reorder required.\n\n## **Ciprofloxacin**\n- **Current Stock**: 63,189 g\n- **Reorder Point**: 36,164 g\n- **Expiry Date**: 01-Dec-2026\n- **Supply Chain Implications**: Stock is above the reorder point, but monitor closely as it approaches the reorder level.\n\n## **Sildenafil**\n- **Current Stock**: 87,637 g\n- **Reorder Point**: 26,849 g\n- **Expiry Date**: 25-Dec-2025\n- **Supply Chain Implications**: Stock is sufficient, no immediate reorder required.\n\n## **Albuterol**\n- **Current Stock**: 37,079 g\n- **Reorder Point**: 8,630 g\n- **Expiry Date**: 04-Jul-2027\n- **Supply Chain Implications**: Stock is sufficient, no immediate reorder required.\n\n## **Insulin**\n- **Current Stock**: 51,767 IU\n- **Reorder Point**: 8,493 IU\n- **Expiry Date**: 06-Oct-2027\n- **Supply Chain Implications**: Stock is sufficient, no immediate reorder required.\n\n## **Adalimumab**\n- **Current Stock**: 4,569 mg\n- **Reorder Point**: 3,973 mg\n- **Expiry Date**: 02-Apr-2027\n- **Supply Chain Implications**: Stock is near the reorder point, consider placing an order soon.\n\n## **Rituximab**\n- **Current Stock**: 41,600 mg\n- **Reorder Point**: 6,781 mg\n- **Expiry Date**: 28-Oct-2025\n- **Supply Chain Implications**: Stock is sufficient, no immediate reorder required.\n\n## **Erythropoietin**\n- **Current Stock**: 17,211 IU\n- **Reorder Point**: 5,589 IU\n- **Expiry Date**: 02-Jul-2027\n- **Supply Chain Implications**: Stock is sufficient, no immediate reorder required.\n\n## **Growth Hormone**\n- **Current Stock**: 13,941 IU\n- **Reorder Point**: 2,795 IU\n- **Expiry Date**: 26-Oct-2025\n- **Supply Chain Implications**: Stock is sufficient, no immediate reorder required.\n\n## **Flu Vaccine**\n- **Current Stock**: 134,306 doses\n- **Reorder Point**: 23,014 doses\n- **Expiry Date**",
+      "sources": [
+        "inventory"
+      ],
+      "query_type": "factual",
+      "timestamp": "2025-04-15T23:00:15.332479"
+    },
+    {
+      "query": "How does the unit cost of Growth Hormone compare with its selling price?",
+      "enhanced_query": "Compare the unit cost of Growth Hormone with its selling price, considering factors like production expenses, distribution costs, and profit margins.",
+      "response": "# Analysis Results\n\n## Inventory Analysis\n\n* Analysis of inventory levels and status completed.",
+      "sources": [
+        "inventory",
+        "guidelines",
+        "policy"
+      ],
+      "query_type": "analytical",
+      "timestamp": "2025-04-15T23:00:56.421252"
+    },
+    {
+      "query": "How does the unit cost of Growth Hormone compare with its selling price?",
+      "enhanced_query": "How does the unit cost of Growth Hormone (Somatropin) compare with its selling price, considering factors like procurement expenses, distribution costs, and profit margins?",
+      "response": "# Analysis Results\n\n## Inventory Analysis\n\n* Analysis of inventory levels and status completed.",
+      "sources": [
+        "inventory",
+        "guidelines",
+        "policy"
+      ],
+      "query_type": "analytical",
+      "timestamp": "2025-04-15T23:01:13.792269"
+    },
+    {
+      "query": "Which biologics fall under UN 3373 classification?",
+      "enhanced_query": "Which biologics are classified under UN 3373 for transport according to international regulations?",
+      "response": "### Biologics Classified Under UN 3373 for Transport\n\n#### Current Status\n- **UN 3373 Classification**: Biologics such as Erythropoietin and Alpha Interferon may be classified as Category B infectious substances under UN 3373 if they are diagnostic-grade. This classification requires compliance with PHMSA labeling standards.\n\n#### Impact on Products\n- **Affected Biologics**:\n  - **Erythropoietin (SHIP-C555A8B8)**: May be classified under UN 3373.\n  - **Alpha Interferon (SHIP-248C1C90)**: May be classified under UN 3373.\n- **Packaging Requirements**: These biologics must use triple packaging, which includes a primary vial, a secondary watertight layer, and an outer rigid box with UN markings if deemed hazardous.\n\n#### Recommendations\n- **Compliance**: Ensure that all shipments of Erythropoietin and Alpha Interferon are labeled in accordance with PHMSA standards for UN 3373.\n- **Training**: Staff handling these biologics should receive training on PHMSA regulations and proper packaging techniques to ensure compliance.\n- **Documentation**: Maintain complete documentation, including temperature logs and chain of custody records, to meet regulatory requirements and avoid shipment delays.",
+      "sources": [
+        "guidelines",
+        "inventory",
+        "transport"
+      ],
+      "query_type": "factual",
+      "timestamp": "2025-04-15T23:02:23.812667"
+    },
+    {
+      "query": "Which items will be affected by the US tariff on China? What is the current tariff, and how will it affect our inventory?",
+      "enhanced_query": "Which items will be affected by the US tariff on China? What is the current tariff, and how will it affect our inventory?",
+      "response": "# Current Tariffs on Imports from China\n\n## Current Status\n- The US has imposed tariffs on a broad range of products imported from China. These tariffs are part of ongoing trade tensions and have been subject to changes and exemptions over time.\n- As of the latest updates, certain technology products have been exempted from these tariffs, but other sectors, including pharmaceuticals, may still be affected ([Web 1], [Web 2]).\n\n## Impact on Products\n- **Pharmaceuticals**: While specific details on pharmaceutical tariffs are not fully detailed in the provided web search results, it is known that tariffs can impact the cost of raw materials and finished products imported from China.\n- **Inventory Items**: The following items in our inventory could potentially be affected if they involve components or raw materials sourced from China:\n  - **Paracetamol** (Item ID: ITEM -CCEE944C)\n  - **Ibuprofen** (Item ID: ITEM -32C437D9)\n  - **Aspirin** (Item ID: ITEM -00DBC34C)\n  - **Atorvastatin** (Item ID: ITEM -CC350352)\n  - **Lisinopril** (Item ID: ITEM -2AB2ABEF)\n  - **Metformin** (Item ID: ITEM -5E3F6D68)\n  - **Amoxicillin** (Item ID: ITEM -02A72706)\n  - **Ciprofloxacin** (Item ID: ITEM -8F86EF91)\n  - **Sildenafil** (Item ID: ITEM -3AABDB93)\n  - **Albuterol** (Item ID: ITEM -1113DD0E)\n  - **Insulin** (Item ID: ITEM -B2378A41)\n  - **Adalimumab** (Item ID: ITEM -B14B42DE)\n  - **Rituximab** (Item ID: ITEM -262D39D9)\n  - **Erythropoietin** (Item ID: ITEM -16BA9109)\n  - **Growth Hormone** (Item ID: ITEM -8AFEBE46)\n  - **Flu Vaccine** (Item ID: ITEM -5AEDFB62)\n  - **Hydrocortisone** (Item ID: ITEM -3A00619E)\n  - **Alpha Interferon** (Item ID: ITEM -A184D581)\n  - **Beta Interferon** (Item ID: ITEM -7B5DECC3)\n\n## Recommendations\n- **Review Supply Chain**: Assess the supply chain for each product to determine if any components or raw materials are sourced from China. This will help identify which items are directly impacted by tariffs.\n- **Cost Analysis**: Conduct a cost analysis to understand how tariffs may affect the unit cost of affected products. Adjust pricing strategies accordingly to maintain profitability.\n- **Alternative Sourcing**: Explore alternative suppliers outside of China to mitigate the impact of tariffs on procurement costs.\n- **Monitor Regulatory Changes**: Stay updated on any changes to tariff regulations that may affect pharmaceutical imports. This will help in making timely adjustments to procurement and pricing strategies.\n- **Inventory Management**: Maintain optimal inventory levels, especially for items with longer lead times, to avoid potential supply disruptions due to tariff impacts.",
+      "sources": [
+        "web",
+        "inventory"
+      ],
+      "query_type": "factual",
+      "timestamp": "2025-04-15T23:04:01.477746"
+    }
+  ],
+  "metadata": {
+    "query_types": {
+      "factual": 3,
+      "analytical": 2
+    },
+    "sources_used": {
+      "inventory": 5,
+      "guidelines": 3,
+      "policy": 2,
+      "transport": 1,
+      "web": 1
+    },
+    "total_interactions": 5
+  },
+  "created_at": "2025-04-15T23:00:15.332479",
+  "last_updated": "2025-04-15T23:04:01.477746"
+}

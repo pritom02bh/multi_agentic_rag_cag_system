@@ -1,0 +1,42 @@
+{
+  "history": [
+    {
+      "query": "What are the best practices for pharmaceutical storage?",
+      "enhanced_query": "What are the best practices for pharmaceutical storage according to FDA guidelines to ensure compliance with regulatory requirements and maintain optimal storage conditions for drugs, including temperature control, humidity levels, and proper handling procedures to prevent degradation and ensure product integrity?",
+      "response": "### Best Practices for Pharmaceutical Storage According to FDA Guidelines\n\n1. **Temperature Control**:\n   - Maintain proper temperature ranges as per FDA guidelines:\n     - **Refrigerated (2\u00b0C \u2013 8\u00b0C)**: Use cold chain containers for insulin and growth hormone.\n     - **Frozen (-25\u00b0C to -18\u00b0C)**: Ensure flu vaccine and COVID-19 vaccine are stored in freezer containers with dry ice.\n     - **Controlled Room Temperature (CRT, 15\u00b0C \u2013 35\u00b0C)**: Store drugs like Lisinopril and Metformin in pallet boxes within specified temperature ranges.\n\n2. **Humidity Control**:\n   - Monitor and control humidity levels, especially for frozen products like Beta Interferon stored in ultra-cold freezers.\n\n3. **Proper Handling**:\n   - Ensure pharmaceuticals are stored in suitable conditions to prevent degradation:\n     - Insulin requires refrigerated units with backup power.\n     - Metformin should be stored at room temperature with no special handling requirements.\n\n4. **Packaging Integrity**:\n   - Use appropriate packaging to protect against damage during transportation:\n     - Ensure Ibuprofen and Beta Interferon are packaged in suitable containers for air transport and deep freeze conditions.\n\n5. **Continuous Monitoring**:\n   - Implement continuous monitoring for temperature-sensitive products like Erythropoietin to ensure real-time tracking and compliance with FDA guidelines.\n\n6. **Documentation**:\n   - Include temperature logs for all shipments to meet FDA requirements and ensure complete documentation for each pharmaceutical consignment.\n\n7. **Compliance with FDA Regulations**:\n   - Adhere to CGMP regulations (21 CFR Part 211) for proper storage and handling of pharmaceuticals to ensure compliance with FDA guidelines.\n\nBy following these best practices, pharmaceutical companies can maintain optimal storage conditions, comply with regulatory requirements, and safeguard the integrity and efficacy of drugs during storage and transportation.",
+      "sources": [
+        "guidelines",
+        "inventory",
+        "transport"
+      ],
+      "query_type": "factual",
+      "timestamp": "2025-04-15T16:58:59.804388"
+    },
+    {
+      "query": "What was the most expensive shipment of Erythropoietin?",
+      "enhanced_query": "What was the highest value shipment of Erythropoietin based on the total cost of goods sold (COGS)?",
+      "response": "The highest value shipment of Erythropoietin based on the total cost of goods sold (COGS) was in the shipment with the following details:\n\n- **Generic Name**: Erythropoietin\n- **Cargo Weight**: 0.0\n- **Freight Cost**: 0.04\n- **Customs Value**: 0.12\n- **Origin Country**: Vietnam\n- **Destination Country**: USA\n- **Mode of Transport**: Air\n- **Temperature Category**: CRT\n- **Risk Category**: LOW\n\nThis shipment had the lowest total cost of goods sold (COGS) for Erythropoietin.",
+      "sources": [
+        "inventory",
+        "policy",
+        "transport"
+      ],
+      "query_type": "factual",
+      "timestamp": "2025-04-15T17:01:21.498885"
+    }
+  ],
+  "metadata": {
+    "query_types": {
+      "factual": 2
+    },
+    "sources_used": {
+      "guidelines": 1,
+      "inventory": 2,
+      "transport": 2,
+      "policy": 1
+    },
+    "total_interactions": 2
+  },
+  "created_at": "2025-04-15T16:58:59.804388",
+  "last_updated": "2025-04-15T17:01:21.498885"
+}

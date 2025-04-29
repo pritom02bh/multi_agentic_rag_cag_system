@@ -1,0 +1,154 @@
+{
+  "session_id": "session_az4f1plvdxo",
+  "timestamp": "2025-03-27T12:15:31.215269",
+  "query": "Show me the supply chain for Paracetamol",
+  "enhanced_query": "Please provide a detailed analysis of the supply chain for Paracetamol, including relevant pharmaceutical inventory management concepts and metrics.",
+  "sources": [
+    "transport",
+    "guidelines",
+    "inventory"
+  ],
+  "response": {
+    "status": "success",
+    "response": "# Inventory Status Analysis\n\n\n## \ud83d\udfe1 Low Stock Warnings - Plan Reorder\n**Hydrocortisone**\n\u2022 Current Stock: 3,252 units\n\u2022 Reorder Point: 3,616 units\n\u2022 Days Until Stockout: 27 days\n\u2022 Stock Level: 89.9% of reorder point\n\n## \ud83d\udcca Inventory Overview\n\u2022 Total Products: 19\n\u2022 Total Stock: 3,370,925 units\n\u2022 Items Below Reorder Point: 1\n\u2022 Average Stock per Item: 177,417.1 units",
+    "charts": [
+      {
+        "type": "bar",
+        "title": "Current Stock Levels",
+        "data": {
+          "labels": [
+            "Hydrocortisone",
+            "Alpha Interferon",
+            "Adalimumab",
+            "Beta Interferon",
+            "Growth Hormone",
+            "Atorvastatin",
+            "Erythropoietin",
+            "Albuterol",
+            "Rituximab",
+            "Insulin",
+            "Ciprofloxacin",
+            "Sildenafil",
+            "Lisinopril",
+            "Flu Vaccine",
+            "Aspirin",
+            "Metformin",
+            "Amoxicillin",
+            "Ibuprofen",
+            "Paracetamol"
+          ],
+          "datasets": [
+            {
+              "label": "Current Stock",
+              "data": [
+                3252.0,
+                3403.0,
+                4569.0,
+                7068.0,
+                13941.0,
+                16052.0,
+                17211.0,
+                37079.0,
+                41600.0,
+                51767.0,
+                63189.0,
+                87637.0,
+                133725.0,
+                134306.0,
+                194347.0,
+                357566.0,
+                481838.0,
+                770922.0,
+                951453.0
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "analysis": {
+      "summary": {
+        "inventory": {
+          "total_items": 19,
+          "total_stock": 3370925.0,
+          "avg_stock": 177417.1052631579,
+          "below_reorder": 1
+        }
+      },
+      "charts": [
+        {
+          "type": "bar",
+          "title": "Current Stock Levels",
+          "data": {
+            "labels": [
+              "Hydrocortisone",
+              "Alpha Interferon",
+              "Adalimumab",
+              "Beta Interferon",
+              "Growth Hormone",
+              "Atorvastatin",
+              "Erythropoietin",
+              "Albuterol",
+              "Rituximab",
+              "Insulin",
+              "Ciprofloxacin",
+              "Sildenafil",
+              "Lisinopril",
+              "Flu Vaccine",
+              "Aspirin",
+              "Metformin",
+              "Amoxicillin",
+              "Ibuprofen",
+              "Paracetamol"
+            ],
+            "datasets": [
+              {
+                "label": "Current Stock",
+                "data": [
+                  3252.0,
+                  3403.0,
+                  4569.0,
+                  7068.0,
+                  13941.0,
+                  16052.0,
+                  17211.0,
+                  37079.0,
+                  41600.0,
+                  51767.0,
+                  63189.0,
+                  87637.0,
+                  133725.0,
+                  134306.0,
+                  194347.0,
+                  357566.0,
+                  481838.0,
+                  770922.0,
+                  951453.0
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "recommendations": [
+        {
+          "type": "critical_stock",
+          "items": [
+            {
+              "name": "Hydrocortisone",
+              "current_stock": 3252,
+              "reorder_point": 3616,
+              "status": "LOW",
+              "days_supply": 27,
+              "lead_time": 37,
+              "daily_usage": 120.54794520547946,
+              "stock_ratio": 89.9
+            }
+          ],
+          "message": "Found 1 medications below reorder point requiring attention."
+        }
+      ]
+    }
+  },
+  "data_loading_error": null
+}

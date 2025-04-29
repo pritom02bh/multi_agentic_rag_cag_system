@@ -1,0 +1,27 @@
+{
+  "history": [
+    {
+      "query": "Are there any medications with low stock?",
+      "enhanced_query": "Are there any pharmaceutical products with stock levels below the reorder point threshold indicating low inventory levels?",
+      "response": "### Pharmaceutical Products Below Reorder Point Threshold:\n\n- **Hydrocortisone:**\n  - Generic Name: Hydrocortisone\n  - Current Stock: **3,252**\n  - Reorder Point: **3,616.44**\n  - Status: **Reorder Required**\n  - Expiry Date: 10-06-2026\n  - Lead Time (Days): 37\n  - Unit: mg\n  - Storage Condition: Room Temperature\n  - Special Handling: None\n  - Unit Cost: $23.74\n  - Selling Price: $144.4\n  - Last Updated: 11-02-2025 22:24\n\n### Action Recommended:\n- **Order Replenishment:** Given that the stock of Hydrocortisone is below the reorder point, immediate action is necessary to replenish the inventory to avoid shortages and meet demand requirements.\n- **Monitor Lead Time:** Considering the lead time of 37 days, expedite the ordering process to ensure timely restocking and maintain operational efficiency.\n- **Review Safety Stock:** Evaluate the adequacy of safety stock levels for Hydrocortisone to prevent future inventory shortages.",
+      "sources": [
+        "inventory",
+        "policy"
+      ],
+      "query_type": "factual",
+      "timestamp": "2025-04-15T14:39:51.253882"
+    }
+  ],
+  "metadata": {
+    "query_types": {
+      "factual": 1
+    },
+    "sources_used": {
+      "inventory": 1,
+      "policy": 1
+    },
+    "total_interactions": 1
+  },
+  "created_at": "2025-04-15T14:39:51.253882",
+  "last_updated": "2025-04-15T14:39:51.253882"
+}

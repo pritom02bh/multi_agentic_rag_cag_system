@@ -1,0 +1,7 @@
+[
+  {
+    "query": "What is the current inventory status?",
+    "response": "### Current Inventory Status and Analysis\n\nThe current inventory status of various pharmaceutical items is as follows:\n\n1. **Total Stock Levels:**\n   - Total Weight: **1,973,823 g**\n   - Total IU: **83,122 IU**\n   - Total mg: **107,822 mg**\n   - Total Doses: **134,306 doses**\n   - Total mcg: **10,471 mcg**\n\n2. **Items Expiring Soon (4):**\n   - Amoxicillin\n   - Growth Hormone\n   - Rituximab\n   - Beta Interferon\n\n3. **Average Expiry Extension Days:** 365 days\n\n### Inventory Highlights\n\n- **Low Stock Items:**\n  - Atorvastatin\n  - Lisinopril\n  - Sildenafil\n  - Albuterol\n\n- **Items Expiring Soon:**\n  - Amoxicillin\n  - Growth Hormone\n  - Rituximab\n  - Beta Interferon\n\n- **Potential Optimization Opportunities:**\n  - Managing stock levels of low stock items\n  - Monitoring and planning for items expiring soon\n\n### Recommendations\n\n1. Replenish stock levels for Atorvastatin, Lisinopril, Sildenafil, and Albuterol to avoid shortages.\n2. Prioritize the use of Amoxicillin, Growth Hormone, Rituximab, and Beta Interferon to prevent wastage due to expiry.\n3. Implement a proactive approach to managing stock levels and expiry dates to optimize inventory efficiency.\n\nThis analysis provides insights into the current inventory status, items at risk of expiry, low stock items, and recommendations for optimizing inventory management.",
+    "timestamp": "2025-04-14T21:27:59.915022"
+  }
+]

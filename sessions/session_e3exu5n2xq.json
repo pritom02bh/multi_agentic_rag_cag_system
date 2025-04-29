@@ -1,0 +1,7 @@
+[
+  {
+    "query": "What is the current inventory status?",
+    "response": "# Analysis Report: Pharmaceutical Inventory Status and Recommendations\n\n## Summary:\nThe analysis of the pharmaceutical inventory reveals the current stock levels and expiry status of various items. This information highlights potential areas for optimization and attention to ensure effective inventory management.\n\n## Current Stock Levels and Expiry Status:\n- **Total Stock:**\n  - Weight: 1,982,638 g\n  - IU: 69,947 IU\n  - mg: 107,821 mg\n  - Doses: 134,306 doses\n  - mcg: 10,471 mcg\n- **Earliest Expiry Date:** 02-02-2026\n- **Latest Expiry Date:** 14-10-2027\n\n## Highlights:\n1. **Low Stock Items:**\n   - Hydrocortisone\n   - Alpha Interferon\n   - Beta Interferon\n\n2. **Items Expiring Soon:**\n   - Amoxicillin\n   - Growth Hormone\n   - Rituximab\n\n3. **High Quantity Items:**\n   - Paracetamol\n   - Ibuprofen\n   - Metformin\n\n## Recommendations:\n1. Prioritize restocking of low stock items like Hydrocortisone, Alpha Interferon, and Beta Interferon to prevent stockouts.\n2. Monitor closely and consider early restocking for items expiring soon such as Amoxicillin, Growth Hormone, and Rituximab.\n3. Optimize inventory levels for high quantity items like Paracetamol, Ibuprofen, and Metformin to avoid overstocking.\n\nThis analysis provides valuable insights to streamline inventory management, prevent wastage, and ensure timely restocking to meet demand effectively.",
+    "timestamp": "2025-04-14T15:50:32.135813"
+  }
+]

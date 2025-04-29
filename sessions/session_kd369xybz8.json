@@ -1,0 +1,22 @@
+[
+  {
+    "query": "What is the current stock level of Growth Hormone?",
+    "enhanced_query": "What is the current stock level of Growth Hormone and its expiry date?",
+    "response": "# Pharmaceutical Inventory Report\n\n## Summary\nThe current stock level of Growth Hormone (Item 1) is **13,941 IU**. The batch with BatchNumber GH2410-6259 will expire on **26-10-2025**.\n\n## Stock Level\nThe stock level of Growth Hormone (Item 1) is as follows:\n- Item: Growth Hormone (Item 1)\n- Stock Level: 13,941 IU\n\n## Expiry Date\nThe expiry date of the batch with BatchNumber GH2410-6259 is **26-10-2025**.\n\n## Analysis Highlights\nThe analysis of the data did not reveal any critical issues or highlights. The following highlights were identified:\n- Low Stock: **No**\n- Expiring Soon: **No**\n\n## Recommendations\nBased on the analysis results, no specific recommendations are provided at this time.\n\nPlease note that this report is based on the available data and analysis conducted. If there are any further updates or changes, a revised report will be provided.",
+    "timestamp": "2025-03-27T14:19:15.705051",
+    "processing_time": 7.830878,
+    "sources": [
+      "inventory"
+    ]
+  },
+  {
+    "query": "Which medications are below their reorder points?",
+    "enhanced_query": "Which medications in the inventory are currently below their reorder points, indicating the need for replenishment?",
+    "response": "# Pharmaceutical Inventory Report\n\n## Summary\nBased on the provided inventory data, there are three medications that are currently below their reorder points and in need of replenishment. These medications are:\n1. Item 1 (Lisinopril)\n2. Item 2 (Aspirin)\n3. Item 5 (Amoxicillin)\n\n## Medication Details\n### Item 1 (Lisinopril)\n- **Current Stock**: 133,725\n- **Reorder Point**: 28,767.12328767123\n\n### Item 2 (Aspirin)\n- **Current Stock**: 194,347\n- **Reorder Point**: 98,630.13698630135\n\n### Item 5 (Amoxicillin)\n- **Current Stock**: 481,838\n- **Reorder Point**: 39,726.02739726027\n\n## Analysis Results\nThe analysis of the inventory data reveals the following key metrics:\n\n| Medication          | Current Stock | Reorder Point       |\n|---------------------|---------------|---------------------|\n| Item 1 (Lisinopril) | 133,725       | 28,767.12328767123  |\n| Item 2 (Aspirin)    | 194,347       | 98,630.13698630135  |\n| Item 5 (Amoxicillin)| 481,838       | 39,726.02739726027  |\n\n## Highlights\nThe following critical information has been identified:\n\n- **Item 1 (Lisinopril)** has a current stock of 133,725, which is below the reorder point of 28,767.12328767123.\n- **Item 2 (Aspirin)** has a current stock of 194,347, which is below the reorder point of 98,630.13698630135.\n- **Item 5 (Amoxicillin)** has a current stock of 481,838, which is below the reorder point of 39,726.02739726027.\n\n## Recommendations\nTo ensure a sufficient supply of the medications, the following actions are recommended:\n\n1. Initiate the replenishment process for **Item 1 (Lisinopril)**.\n2. Initiate the replenishment process for **Item 2 (Aspirin)**.\n3. Initiate the replenishment process for **Item 5 (Amoxicillin)**.\n\nTaking these steps will help maintain an adequate inventory level and prevent stockouts.",
+    "timestamp": "2025-03-27T17:15:07.576459",
+    "processing_time": 11.039738,
+    "sources": [
+      "inventory"
+    ]
+  }
+]

@@ -1,0 +1,29 @@
+{
+  "history": [
+    {
+      "query": "What are the best practices for pharmaceutical storage?",
+      "enhanced_query": "What are the best practices for pharmaceutical storage according to FDA guidelines to ensure compliance with regulatory requirements and maintain optimal storage conditions for drugs, vaccines, and biologics, considering factors such as temperature control, humidity levels, UN 3373 packaging standards, and proper handling procedures to prevent product degradation and ensure efficacy and safety?",
+      "response": "# Best Practices for Pharmaceutical Storage According to FDA Guidelines\n\n## Current Status\n- **Regulatory Framework**: Compliance with FDA (21 CFR Parts 210 and 211), FSMA Sanitary Transportation Rule (21 CFR Part 1, Subpart O), and PHMSA (49 CFR Parts 171-180) is mandatory for pharmaceutical storage and transportation.\n- **Temperature Control**: Adherence to USP <659> and FDA guidance for temperature-sensitive products is required. This includes:\n  - **Refrigerated (2\u00b0C \u2013 8\u00b0C)**: Continuous monitoring and temperature logs are necessary.\n  - **Frozen (-25\u00b0C to -18\u00b0C)**: Use of validated freezer containers with dry ice or refrigeration units.\n  - **Controlled Room Temperature (CRT, 15\u00b0C \u2013 35\u00b0C)**: No excursions beyond labeled ranges are allowed.\n- **Packaging Standards**: Per 21 CFR Part 211.94, packaging must protect against damage. UN 3373 standards apply to biologics classified as Category B infectious substances.\n- **Special Handling**: Hazardous materials require PHMSA-compliant labeling and triple packaging.\n\n## Impact on Products\n- **Temperature-Sensitive Products**: Items like Insulin, Growth Hormone, and Flu Vaccine require strict cold chain management to prevent degradation.\n- **Hazardous Materials**: Products such as Beta Interferon and Alpha Interferon need specialized packaging and handling due to their classification as hazardous materials.\n- **Documentation**: Incomplete temperature logs or documentation can lead to shipment detention or regulatory penalties.\n\n## Recommendations\n- **Temperature Monitoring**: Implement continuous temperature monitoring for all temperature-sensitive products. Upgrade systems where necessary to ensure real-time data logging and alerts for excursions.\n- **Packaging Compliance**: Ensure all packaging meets FDA and PHMSA standards, especially for hazardous materials. Use triple packaging for biologics and maintain UN markings where applicable.\n- **Documentation**: Maintain complete and accurate documentation for all shipments, including temperature logs and chain of custody records. Regular audits should be conducted to ensure compliance.\n- **Training**: Provide regular training for staff on CGMP, cold chain management, and handling of hazardous materials to ensure compliance with FDA and PHMSA regulations.\n- **Facility Standards**: Ensure storage facilities meet CGMP requirements, with appropriate shelving and backup power for refrigerated units.\n\nBy adhering to these best practices, pharmaceutical companies can ensure compliance with regulatory requirements, maintain product integrity, and safeguard the efficacy and safety of their products.",
+      "sources": [
+        "guidelines",
+        "inventory",
+        "transport"
+      ],
+      "query_type": "factual",
+      "timestamp": "2025-04-16T16:22:46.950970"
+    }
+  ],
+  "metadata": {
+    "query_types": {
+      "factual": 1
+    },
+    "sources_used": {
+      "guidelines": 1,
+      "inventory": 1,
+      "transport": 1
+    },
+    "total_interactions": 1
+  },
+  "created_at": "2025-04-16T16:22:46.950970",
+  "last_updated": "2025-04-16T16:22:46.950970"
+}

@@ -1,0 +1,27 @@
+{
+  "history": [
+    {
+      "query": "How many units of Insulin do we have in stock?",
+      "enhanced_query": "What is the current quantity of Insulin units available in our inventory?",
+      "response": "**Current Quantity of Insulin Units in Inventory**\n\n- **Item Information:**\n    - Generic Name: Insulin\n    - Current Stock: 51767 units\n    - Unit: IU\n    - Storage Condition: Refrigerated\n    - Manufacturing Date: 25-11-2024\n    - Expiry Date: 06-10-2027\n\n- **Analysis:**\n    - **Current Stock:** 51767 units of Insulin are available in inventory.\n    - **Storage Condition:** Insulin requires refrigerated storage, which is being maintained.\n    - **Manufacturing Date:** The Insulin batch was manufactured on 25-11-2024.\n    - **Expiry Date:** The Insulin batch expires on 06-10-2027.\n  \n- **Insights:**\n    - The current stock level of Insulin is significant, indicating a substantial inventory of this critical medication.\n    - With a lead time of 24 days, monitoring stock levels closely is essential to avoid stockouts or overstocking.\n    - Considering the selling price of $126.0 per unit, managing inventory efficiently is crucial for cost-effectiveness.\n\n- **Recommendations:**\n    - Regularly monitor inventory levels to ensure availability meets demand without excess stock.\n    - Implement a robust inventory management system to track batch details, expiration dates, and reorder points effectively.\n    - Consider optimizing order quantities based on demand forecasts and lead times to prevent stockouts.\n\n**References:**\n\nInventory:\n- [Inventory 1] 86301368  \nUnit: g  \nStorage Condition: Room Tempe...\n- [Inventory 2]  \nItem ID: ITEM -CCEE944C  \nBatch Number: P2410 -2...\n- [Inventory 3] tus: Active  \nLast Updated: 11 -02-2025 22:24  \n \n...\n- [Inventory 4] \nExpiry Date: 23 -02-2027  \nLead Time (Days): 16  ...\n- [Inventory 5] ng Price: 106.9  \nManufacturing Date: 03 -10-2024 ...\n",
+      "sources": [
+        "inventory",
+        "transport"
+      ],
+      "query_type": "analytical",
+      "timestamp": "2025-04-15T19:53:00.786548"
+    }
+  ],
+  "metadata": {
+    "query_types": {
+      "analytical": 1
+    },
+    "sources_used": {
+      "inventory": 1,
+      "transport": 1
+    },
+    "total_interactions": 1
+  },
+  "created_at": "2025-04-15T19:53:00.786548",
+  "last_updated": "2025-04-15T19:53:00.786548"
+}

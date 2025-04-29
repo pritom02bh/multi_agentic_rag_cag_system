@@ -1,0 +1,29 @@
+{
+  "history": [
+    {
+      "query": "What are the best practices for pharmaceutical storage?",
+      "enhanced_query": "What are the best practices for pharmaceutical storage according to FDA guidelines and Good Distribution Practice (GDP) standards, considering factors like temperature control, humidity levels, UN 3373 compliance, and expiry date monitoring?",
+      "response": "### Best Practices for Pharmaceutical Storage\n\n#### FDA Guidelines and GDP Standards:\n1. **Temperature Control**:\n   - Maintain proper temperature conditions as per guidelines:\n     - **Refrigerated (2\u00b0C \u2013 8\u00b0C)**: Use cold chain containers for products like Insulin and Growth Hormone.\n     - **Frozen (-25\u00b0C to -15\u00b0C or -80\u00b0C to -20\u00b0C)**: Utilize ultra-cold freezers for products like Beta Interferon.\n     - **Controlled Room Temperature (15\u00b0C \u2013 35\u00b0C)**: Ensure products like Lisinopril and Metformin are stored within specified ranges.\n   \n2. **Humidity Levels**:\n   - Monitor and control humidity deviations to prevent degradation, especially for products like Beta Interferon stored in ultra-cold freezers.\n\n3. **UN 3373 Compliance**:\n   - Ensure proper labeling and packaging for Category B infectious substances like Erythropoietin and Alpha Interferon, meeting PHMSA standards.\n\n4. **Expiry Date Monitoring**:\n   - Regularly monitor and track expiry dates to prevent dispensing expired products, aligning with FDA regulations and GDP standards.\n\n5. **Documentation**:\n   - Include complete documentation with temperature logs for each shipment to ensure compliance with FDA guidelines and GDP standards.\n\n6. **Product Integrity**:\n   - Maintain product integrity throughout transit by adhering to proper handling, packaging, and storage practices outlined in FDA guidelines and GDP standards.\n\nBy following these best practices, pharmaceutical companies can ensure compliance with FDA regulations, GDP standards, and specific guidelines for temperature-sensitive products, hazardous materials, and proper documentation, ultimately safeguarding product quality and patient safety.",
+      "sources": [
+        "guidelines",
+        "inventory",
+        "transport"
+      ],
+      "query_type": "factual",
+      "timestamp": "2025-04-15T15:00:13.599373"
+    }
+  ],
+  "metadata": {
+    "query_types": {
+      "factual": 1
+    },
+    "sources_used": {
+      "guidelines": 1,
+      "inventory": 1,
+      "transport": 1
+    },
+    "total_interactions": 1
+  },
+  "created_at": "2025-04-15T15:00:13.599373",
+  "last_updated": "2025-04-15T15:00:13.599373"
+}

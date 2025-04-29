@@ -1,0 +1,51 @@
+{
+  "history": [
+    {
+      "query": "What is the current inventory status?",
+      "enhanced_query": "What is the current inventory status including stock levels, reorder points, and expiry dates of pharmaceutical products in the system?",
+      "response": "### Current Inventory Status of Pharmaceutical Products:\n\n1. **Paracetamol:**\n   - **Current Stock:** 951,453 g\n   - **Reorder Point:** 93,150.68 g\n   - **Expiry Date:** 14-12-2026\n\n2. **Ibuprofen:**\n   - **Current Stock:** 770,922 g\n   - **Reorder Point:** 61,369.86 g\n   - **Expiry Date:** 14-10-2027\n\n3. **Aspirin:**\n   - **Current Stock:** 194,347 g\n   - **Reorder Point:** 98,630.14 g\n   - **Expiry Date:** 02-02-2026\n\n4. **Atorvastatin:**\n   - **Current Stock:** 16,052 g\n   - **Reorder Point:** 15,753.42 g\n   - **Expiry Date:** 23-02-2027\n\n5. **Lisinopril:**\n   - **Current Stock:** 133,725 g\n   - **Reorder Point:** 28,767.12 g\n   - **Expiry Date:** 10-02-2026\n\n6. **Metformin:**\n   - **Current Stock:** 357,566 g\n   - **Reorder Point:** 76,438.36 g\n   - **Expiry Date:** 17-01-2027\n\n7. **Amoxicillin:**\n   - **Current Stock:** 481,838 g\n   - **Reorder Point:** 39,726.03 g\n   - **Expiry Date:** 03-11-2025\n\n8. **Ciprofloxacin:**\n   - **Current Stock:** 63,189 g\n   - **Reorder Point:** 36,164.38 g\n   - **Expiry Date:** 01-12-2026\n\n9. **Sildenafil:**\n   - **Current Stock:** 87,637 g\n   - **Reorder Point:** 26,849.32 g\n   - **Expiry Date:** 25-12-2025\n\n10. **Albuterol:**\n    - **Current Stock:** 37,079 g\n    - **Reorder Point:** 8,630.14 g\n    - **Expiry Date:** 04-07-2027\n\n11. **Insulin:**\n    - **Current Stock:** 51,767 IU\n    - **Reorder Point:** 8,493.15 IU\n    - **Expiry Date:** 06-10-2027\n\n12. **Adalimumab:**\n    - **Current Stock:** 4,569 mg\n    - **Reorder Point:** 3,972.60 mg\n    - **Expiry Date:** 02-04-2027\n\n13. **Rituximab:**\n    - **Current Stock:** 41,600 mg\n    - **Reorder Point:** 6,780.82 mg\n    - **Expiry Date:** 28-10-2025\n\n14. **Erythropoietin:**\n    - **Current Stock:** 17,211 IU\n    - **Reorder Point:** 5,589.04 IU\n    - **Expiry Date:** 02-07-2027\n\n15. **Growth Hormone:**\n    - **Current Stock:** 13,941 IU\n    - **Reorder Point:** 2,794.52 IU\n    - **Expiry Date:** 26-10-2025\n\n16. **Flu Vaccine:**\n    - **Current Stock:** 134,306 doses\n    - **Reorder Point:** 23,013.70 doses\n    - **Expiry Date:** 23-12-2026\n\n17. **Hydrocortisone:**\n    - **Current Stock:** 3,252 mg\n    - **Reorder Point:** 3,616.44 mg\n    - **Expiry Date:** 10-06-2026\n\n18. **Alpha Interferon:**\n    - **Current Stock:** 3,403 mcg\n    - **Reorder Point:** 2,054.79 mcg\n    - **Expiry Date:** 23-02-2026\n\n19. **Beta Interferon:**\n    - **Current Stock:** 7,068 mcg\n    - **Reorder Point:** 2,876.71 mcg\n    - **Expiry Date:** 01-06-2026\n\nThis summary provides the current inventory status, including stock levels, reorder points, and expiry dates for various pharmaceutical products in the system.",
+      "sources": [
+        "inventory"
+      ],
+      "query_type": "factual",
+      "timestamp": "2025-04-15T21:57:47.718511"
+    },
+    {
+      "query": "How does the unit cost of Beta Interferon compare with its selling price?",
+      "enhanced_query": "Compare the unit cost of Beta Interferon with its selling price, considering factors like procurement expenses, distribution costs, and profit margins.",
+      "response": "Based on your query about 'Compare the unit cost of Beta Interferon with its selling price, considering factors like procurement expenses, distribution costs, and profit margins.', here's what I found:\n\n## Inventory Analysis\n- Total Items: 10\n- Total Units in Stock: 3,119,569\n- Items Below Reorder Point: 0 (0.0% of total)\n\n### Item Details\n| Item | Current Stock | Reorder Point | Status |\n|------|---------------|---------------|--------|\n| Expiry Date | 25,000 | 2,054 | Adequate |\n|  | 1,000,000 | 93,150 | Adequate |\n| Active  \nLast Updated | 750,000 | 98,630 | Adequate |\n| Expiry Date | 300,000 | 28,767 | Adequate |\n| ng Price | 500,000 | 39,726 | Adequate |",
+      "sources": [
+        "inventory",
+        "guidelines",
+        "policy"
+      ],
+      "query_type": "analytical",
+      "timestamp": "2025-04-15T21:58:14.742283"
+    },
+    {
+      "query": "Are special handling protocols required for Amoxicillin?",
+      "enhanced_query": "Are there specific storage and handling requirements mandated for Amoxicillin as per regulatory guidelines like those set by the FDA or other relevant authorities?",
+      "response": "### Storage and Handling Requirements for Amoxicillin\n\n- **Generic Name:** Amoxicillin\n- **Storage Condition:** Room Temperature\n- **Special Handling:** None\n- **Regulatory Compliance:** \n  - **FDA Guidelines:** The storage condition specified for Amoxicillin is room temperature, and no special handling requirements are indicated in the provided data.\n  - **Relevant Authorities:** There are no specific additional storage or handling requirements mandated for Amoxicillin beyond room temperature storage based on the information available.\n\n### Conclusion:\n- Amoxicillin should be stored at room temperature without any special handling requirements according to the regulatory guidelines outlined in the data provided.",
+      "sources": [
+        "guidelines",
+        "inventory"
+      ],
+      "query_type": "factual",
+      "timestamp": "2025-04-15T21:58:42.262120"
+    }
+  ],
+  "metadata": {
+    "query_types": {
+      "factual": 2,
+      "analytical": 1
+    },
+    "sources_used": {
+      "inventory": 3,
+      "guidelines": 2,
+      "policy": 1
+    },
+    "total_interactions": 3
+  },
+  "created_at": "2025-04-15T21:57:47.718511",
+  "last_updated": "2025-04-15T21:58:42.262120"
+}

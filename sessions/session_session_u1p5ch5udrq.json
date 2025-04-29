@@ -1,0 +1,146 @@
+{
+  "session_id": "session_u1p5ch5udrq",
+  "timestamp": "2025-03-27T10:52:29.621832",
+  "query": "Which medications need immediate reordering based on their current stock and lead time?",
+  "enhanced_query": "Enhanced Query: Which medications in our inventory require immediate reordering, taking into consideration their current stock levels, lead time, and key pharmaceutical inventory management metrics such as reorder point, safety stock, and stock turnover rate?",
+  "sources": [
+    "inventory"
+  ],
+  "response": {
+    "status": "success",
+    "response": "Based on the provided data, the medication that requires immediate reordering is Hydrocortisone. \n\nCurrently, the stock level of Hydrocortisone is 3,252 units, which is below the reorder point of 3,616 units. The reorder point represents the minimum quantity at which a new order should be placed to avoid stockouts. \n\nConsidering the lead time of 37 days, it is crucial to initiate the reordering process promptly to ensure that there is no disruption in the supply chain. The lead time represents the time it takes for the medication to be delivered after placing the order.\n\nAdditionally, it is important to note that the current stock of Hydrocortisone provides a days supply of 27 days. This means that if no new orders are placed, the stock will run out in 27 days, which is before the lead time of 37 days.\n\nTo avoid any potential stockouts and ensure uninterrupted supply, it is recommended to place an immediate order for Hydrocortisone to replenish the stock to the desired level.",
+    "charts": [
+      {
+        "type": "bar",
+        "title": "Current Stock Levels",
+        "data": {
+          "labels": [
+            "Paracetamol",
+            "Ibuprofen",
+            "Aspirin",
+            "Atorvastatin",
+            "Lisinopril",
+            "Metformin",
+            "Amoxicillin",
+            "Ciprofloxacin",
+            "Sildenafil",
+            "Albuterol",
+            "Insulin",
+            "Adalimumab",
+            "Rituximab",
+            "Erythropoietin",
+            "Growth Hormone",
+            "Flu Vaccine",
+            "Hydrocortisone",
+            "Alpha Interferon",
+            "Beta Interferon"
+          ],
+          "datasets": [
+            {
+              "label": "Current Stock",
+              "data": [
+                951453.0,
+                770922.0,
+                194347.0,
+                16052.0,
+                133725.0,
+                357566.0,
+                481838.0,
+                63189.0,
+                87637.0,
+                37079.0,
+                51767.0,
+                4569.0,
+                41600.0,
+                17211.0,
+                13941.0,
+                134306.0,
+                3252.0,
+                3403.0,
+                7068.0
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "analysis": {
+      "summary": {
+        "inventory": {
+          "total_items": 19,
+          "total_stock": 3370925.0,
+          "avg_stock": 177417.1052631579,
+          "below_reorder": 1
+        }
+      },
+      "charts": [
+        {
+          "type": "bar",
+          "title": "Current Stock Levels",
+          "data": {
+            "labels": [
+              "Paracetamol",
+              "Ibuprofen",
+              "Aspirin",
+              "Atorvastatin",
+              "Lisinopril",
+              "Metformin",
+              "Amoxicillin",
+              "Ciprofloxacin",
+              "Sildenafil",
+              "Albuterol",
+              "Insulin",
+              "Adalimumab",
+              "Rituximab",
+              "Erythropoietin",
+              "Growth Hormone",
+              "Flu Vaccine",
+              "Hydrocortisone",
+              "Alpha Interferon",
+              "Beta Interferon"
+            ],
+            "datasets": [
+              {
+                "label": "Current Stock",
+                "data": [
+                  951453.0,
+                  770922.0,
+                  194347.0,
+                  16052.0,
+                  133725.0,
+                  357566.0,
+                  481838.0,
+                  63189.0,
+                  87637.0,
+                  37079.0,
+                  51767.0,
+                  4569.0,
+                  41600.0,
+                  17211.0,
+                  13941.0,
+                  134306.0,
+                  3252.0,
+                  3403.0,
+                  7068.0
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "recommendations": [
+        {
+          "type": "critical_stock",
+          "items": [
+            {
+              "ItemID": "ITEM-3A00619E",
+              "GenericName": "Hydrocortisone",
+              "CurrentStock": 3252,
+              "ReorderPoint": 3616.438356164384
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

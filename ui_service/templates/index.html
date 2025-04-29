@@ -4,14 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PharmAI Assistant</title>
-    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
     <!-- Add Chart.js for visualizations -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- Add additional Chart.js plugins if needed -->
+    <!-- Add Marked.js for markdown rendering -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- Add DOMPurify for sanitizing HTML -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.3.3/purify.min.js"></script>
+    <!-- Add additional Chart.js plugins -->
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
 </head>
 <body>
@@ -20,6 +24,7 @@
         <div class="left-sidebar">
             <div class="logo">
                 <i class="fas fa-capsules"></i>
+                <span>PharmAI</span>
             </div>
             <div class="sidebar-content">
                 <button id="new-chat-btn" class="new-chat-btn">
@@ -27,9 +32,15 @@
                     <span>New Chat</span>
                 </button>
                 <div class="chat-history">
-                    <div class="history-label">Recent</div>
+                    <div class="history-label">
+                        RECENT
+                        <button type="button" class="clear-all" id="clear-all-chats">
+                            <i class="fas fa-trash-alt"></i>
+                            Clear All
+                        </button>
+                    </div>
                     <div id="recent-chats" class="recent-chats">
-                        <!-- Recent chats will be populated here -->
+                        <!-- Chat items will be dynamically added here -->
                     </div>
                 </div>
             </div>
@@ -54,7 +65,7 @@
             <!-- Chat Messages -->
             <div id="chat-messages" class="chat-messages" style="display: none;">
                 <div class="messages-container" id="messages">
-                    <!-- Messages will be populated here -->
+                    <!-- Messages will be populated here dynamically -->
                 </div>
             </div>
             
@@ -62,12 +73,12 @@
             <div class="input-container">
                 <div class="input-wrapper">
                     <textarea 
-                        id="chat-input" 
+                        id="userInput" 
                         placeholder="Message PharmAI..."
                         rows="1"
                         autofocus
                     ></textarea>
-                    <button type="submit" id="send-button" aria-label="Send message">
+                    <button type="submit" id="sendButton" class="send-button" aria-label="Send message">
                         <i class="fas fa-paper-plane"></i>
                     </button>
                 </div>
@@ -91,5 +102,15 @@
     <script src="/static/js/config.js"></script>
     <!-- Load main JavaScript -->
     <script src="/static/js/main.js"></script>
+    
+    <script>
+        // Initialize markdown renderer with options
+        marked.setOptions({
+            breaks: true,  // Enable line breaks
+            gfm: true,    // Enable GitHub Flavored Markdown
+            headerIds: false,  // Disable header IDs
+            mangle: false  // Disable mangling
+        });
+    </script>
 </body>
 </html> 

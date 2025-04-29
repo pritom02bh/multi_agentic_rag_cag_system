@@ -1,0 +1,7 @@
+[
+  {
+    "query": "What is the current inventory status?",
+    "response": "### Current Inventory Status of Pharmaceutical Items\n\nThe current inventory status of various pharmaceutical items is as follows:\n\n1. **Paracetamol (Item 1):**\n   - Current Stock Level: **951,453 g**\n   - Expiry Date: **14-12-2026**\n\n2. **Ibuprofen (Item 2):**\n   - Current Stock Level: **770,922 g**\n   - Expiry Date: **14-10-2027**\n\n3. **Aspirin (Item 3):**\n   - Current Stock Level: **194,347 g**\n   - Expiry Date: **02-02-2026**\n\n4. **Atorvastatin (Item 4):**\n   - Current Stock Level: **16,052 g**\n   - Expiry Date: **23-02-2027**\n\n5. **Lisinopril (Item 5):**\n   - Current Stock Level: **133,725 g**\n   - Expiry Date: **10-02-2026**\n\n6. **Metformin (Item 6):**\n   - Current Stock Level: **357,566 g**\n   - Expiry Date: **17-01-2027**\n\n7. **Amoxicillin (Item 7):**\n   - Current Stock Level: **481,838 g**\n   - Expiry Date: **03-11-2025**\n\n8. **Ciprofloxacin (Item 8):**\n   - Current Stock Level: **63,189 g**\n   - Expiry Date: **01-12-2026**\n\n9. **Sildenafil (Item 9):**\n   - Current Stock Level: **87,637 g**\n   - Expiry Date: **25-12-2025**\n\n10. **Albuterol (Item 10):**\n    - Current Stock Level: **37,079 g**\n    - Expiry Date: **04-07-2027**\n\n11. **Insulin (Item 11):**\n    - Current Stock Level: **51,767 IU**\n    - Expiry Date: **06-10-2027**\n\nThis detailed breakdown provides the current stock levels and expiry dates for each pharmaceutical item in inventory.",
+    "timestamp": "2025-04-14T21:13:33.467670"
+  }
+]

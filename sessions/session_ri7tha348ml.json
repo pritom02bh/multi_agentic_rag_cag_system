@@ -1,0 +1,27 @@
+{
+  "history": [
+    {
+      "query": "Which items will be affected by the US tariff on China? What is the current tariff, and how will it affect our inventory?",
+      "enhanced_query": "Which items will be affected by the US tariff on China? What is the current tariff, and how will it affect our inventory?",
+      "response": "# Current Tariffs on Imports from China\n\n## Current Status\n- **Tariff Rate**: The current U.S. tariff on Chinese imports is set at **34%**.\n- **Exemptions**: Technology products such as smartphones, computers, and chips are exempt from these tariffs.\n- **Information Currency**: The data is based on sources updated within the last few days.\n\n## Impact on Products\n- **Affected Products**: While specific pharmaceutical products are not listed, the broad application of the 34% tariff suggests that many non-exempt categories could be impacted. It is crucial to review product classifications to determine specific applicability.\n- **Exempt Products**: Technology products, including iPhones and PCs, are not subject to these tariffs, as per the U.S. Customs and Border Protection agency's published list.\n\n## Recommendations\n- **Consult Official Resources**: For precise and up-to-date information, consult official customs and trade resources.\n- **Evaluate Supply Chain Impact**: Assess how these tariffs might affect your supply chain and pricing strategies.\n- **Review Product Classifications**: Determine which of your products fall under the tariff codes and adjust inventory strategies accordingly.\n- **Monitor Trade Developments**: Stay informed about ongoing trade negotiations and potential policy changes that could affect tariff rates or product exemptions.\n\nBy following these recommendations, you can better manage the impact of tariffs on your inventory and supply chain operations.",
+      "sources": [
+        "web",
+        "inventory"
+      ],
+      "query_type": "factual",
+      "timestamp": "2025-04-17T14:41:49.151779"
+    }
+  ],
+  "metadata": {
+    "query_types": {
+      "factual": 1
+    },
+    "sources_used": {
+      "web": 1,
+      "inventory": 1
+    },
+    "total_interactions": 1
+  },
+  "created_at": "2025-04-17T14:41:49.151779",
+  "last_updated": "2025-04-17T14:41:49.151779"
+}

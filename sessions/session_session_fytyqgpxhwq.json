@@ -1,0 +1,146 @@
+{
+  "session_id": "session_fytyqgpxhwq",
+  "timestamp": "2025-03-27T10:33:02.456230",
+  "query": "Are there any medications with low stock?",
+  "enhanced_query": "Enhanced Query: Can you provide a list of medications that are currently experiencing low stock levels, based on relevant pharmaceutical inventory management concepts and metrics?",
+  "sources": [
+    "inventory"
+  ],
+  "response": {
+    "status": "success",
+    "response": "Error analyzing inventory data: 'status'",
+    "charts": [
+      {
+        "type": "bar",
+        "title": "Current Stock Levels",
+        "data": {
+          "labels": [
+            "Paracetamol",
+            "Ibuprofen",
+            "Aspirin",
+            "Atorvastatin",
+            "Lisinopril",
+            "Metformin",
+            "Amoxicillin",
+            "Ciprofloxacin",
+            "Sildenafil",
+            "Albuterol",
+            "Insulin",
+            "Adalimumab",
+            "Rituximab",
+            "Erythropoietin",
+            "Growth Hormone",
+            "Flu Vaccine",
+            "Hydrocortisone",
+            "Alpha Interferon",
+            "Beta Interferon"
+          ],
+          "datasets": [
+            {
+              "label": "Current Stock",
+              "data": [
+                951453.0,
+                770922.0,
+                194347.0,
+                16052.0,
+                133725.0,
+                357566.0,
+                481838.0,
+                63189.0,
+                87637.0,
+                37079.0,
+                51767.0,
+                4569.0,
+                41600.0,
+                17211.0,
+                13941.0,
+                134306.0,
+                3252.0,
+                3403.0,
+                7068.0
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "analysis": {
+      "summary": {
+        "inventory": {
+          "total_items": 19,
+          "total_stock": 3370925.0,
+          "avg_stock": 177417.1052631579,
+          "below_reorder": 1
+        }
+      },
+      "charts": [
+        {
+          "type": "bar",
+          "title": "Current Stock Levels",
+          "data": {
+            "labels": [
+              "Paracetamol",
+              "Ibuprofen",
+              "Aspirin",
+              "Atorvastatin",
+              "Lisinopril",
+              "Metformin",
+              "Amoxicillin",
+              "Ciprofloxacin",
+              "Sildenafil",
+              "Albuterol",
+              "Insulin",
+              "Adalimumab",
+              "Rituximab",
+              "Erythropoietin",
+              "Growth Hormone",
+              "Flu Vaccine",
+              "Hydrocortisone",
+              "Alpha Interferon",
+              "Beta Interferon"
+            ],
+            "datasets": [
+              {
+                "label": "Current Stock",
+                "data": [
+                  951453.0,
+                  770922.0,
+                  194347.0,
+                  16052.0,
+                  133725.0,
+                  357566.0,
+                  481838.0,
+                  63189.0,
+                  87637.0,
+                  37079.0,
+                  51767.0,
+                  4569.0,
+                  41600.0,
+                  17211.0,
+                  13941.0,
+                  134306.0,
+                  3252.0,
+                  3403.0,
+                  7068.0
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "recommendations": [
+        {
+          "type": "critical_stock",
+          "items": [
+            {
+              "ItemID": "ITEM-3A00619E",
+              "GenericName": "Hydrocortisone",
+              "CurrentStock": 3252,
+              "ReorderPoint": 3616.438356164384
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

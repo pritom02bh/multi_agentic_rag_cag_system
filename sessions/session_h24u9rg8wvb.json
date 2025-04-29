@@ -1,0 +1,54 @@
+{
+  "history": [
+    {
+      "query": "What are the latest transportation guidelines for our temperature-sensitive vaccines that are currently in stock?",
+      "enhanced_query": "What are the most recent transport regulations for our temperature-sensitive vaccines currently in inventory, considering guidelines from regulatory bodies like the FDA and transportation standards for pharmaceuticals such as UN 3373?",
+      "response": "### Recent Transport Regulations for Temperature-Sensitive Vaccines\n\n#### Flu Vaccine:\n- **Temperature Range**: -25\u00b0C to -18\u00b0C\n- **Transport Mode**: Air (FedEx Express)\n- **Compliance Issues**: 1 excursion, 2 humidity deviations\n- **Guideline Reference**: FDA Ultra-Cold Guidance\n\n### Regulations and Guidelines:\n1. **FDA Guidelines**:\n   - Proper storage and handling of pharmaceuticals during transport.\n   - Temperature-sensitive products must be shipped in qualified containers.\n   - Temperature excursions must be documented and investigated.\n\n2. **PHMSA Regulations**:\n   - Transport of hazardous materials, including pharmaceuticals like vaccines.\n   - Compliance with applicable HMR requirements for safe transport.\n\n3. **UN 3373 Requirements**:\n   - Category B infectious substances may apply to certain pharmaceuticals, necessitating PHMSA-compliant labeling.\n\n### Key Points:\n- Ensure the flu vaccine is transported within the specified temperature range to maintain its integrity.\n- Monitor and document any excursions or deviations in temperature and humidity during transport.\n- Adhere to the FDA Ultra-Cold Guidance for shipping temperature-sensitive vaccines like the flu vaccine.\n\nBy following these regulations and guidelines, PharmaCo can ensure the safe and compliant transport of temperature-sensitive vaccines, such as the flu vaccine, in its inventory.",
+      "sources": [
+        "guidelines",
+        "transport",
+        "web"
+      ],
+      "query_type": "factual",
+      "timestamp": "2025-04-15T11:21:20.012691"
+    },
+    {
+      "query": "How is lead time managed for Insulin?",
+      "enhanced_query": "How is the lead time for Insulin procurement and delivery managed to ensure timely stock replenishment and avoid stockouts in the pharmaceutical supply chain system?",
+      "response": "### Lead Time Management for Insulin Procurement and Delivery\n\n#### Insulin Specifics:\n- **Generic Name:** Insulin\n- **Temperature Range:** 2-8\u00b0C\n- **Storage Requirements:** Refrigerated\n- **Shipment Performance:** \n  - **Average Arrival Delay:** 0.5 days\n  - **Temperature Excursions:** Low\n- **Routes:** Carried by MedExpress, ColdChain Logistics, and MedAir\n- **Risk Assessment:**\n  - **Category:** High Risk\n  - **Factors:** Temperature sensitive, High value\n- **Environmental Impact:**\n  - **Carbon Footprint:** Medium\n  - **Packaging Waste:** Low (Reusable containers)\n\n#### Lead Time Management:\n- **Lead Time for Insulin:** \n  - **Lead Time (Days):** 24 days\n- **Procurement and Delivery Strategy:**\n  - Insulin's lead time of 24 days allows for planning and coordination to avoid stockouts.\n  - To ensure timely replenishment and prevent stockouts:\n    - **Monitor Performance:** Regularly track carrier performance to ensure on-time deliveries.\n    - **Use Specialized Carriers:** Employ carriers qualified for pharmaceutical transport to maintain product integrity.\n    - **Temperature Control:** Utilize validated cold chain containers to adhere to the required temperature range of 2-8\u00b0C.\n  - **Documentation Compliance:** Ensure complete documentation, including temperature logs, to meet regulatory guidelines and ensure product quality.\n  \nBy managing lead times effectively, monitoring carrier performance, and ensuring compliance with temperature requirements and documentation, the pharmaceutical supply chain system can maintain adequate stock levels of insulin, minimizing the risk of stockouts.",
+      "sources": [
+        "inventory",
+        "transport",
+        "guidelines"
+      ],
+      "query_type": "factual",
+      "timestamp": "2025-04-15T11:26:32.486441"
+    },
+    {
+      "query": "What is the current temparature of the New york?",
+      "enhanced_query": "What is the current temperature of New York City for proper storage of pharmaceuticals as per regulatory requirements by agencies like the FDA and PHMSA?",
+      "response": "### Current Temperature for Proper Storage of Pharmaceuticals in New York City\n\nThe current temperature requirements for proper storage of pharmaceuticals in New York City, as per regulatory guidelines from agencies like the FDA and PHMSA, are typically in the range of **15\u00b0C \u2013 25\u00b0C** for controlled room temperature (CRT) storage. This temperature range ensures the stability and integrity of pharmaceutical products during storage and transportation.\n\n#### Relevant Information:\n- **FDA Regulations**: FDA regulations emphasize proper storage and handling of pharmaceuticals to maintain product safety and efficacy.\n- **PHMSA Guidelines**: PHMSA regulates the transport of hazardous materials, including pharmaceuticals, ensuring compliance with safety standards.\n- **Web Search Results**: \n  - Temperature range for pharmaceutical facilities: **15\u00b0C \u2013 25\u00b0C**\n  - Controlled Room Temperature (CRT): **20\u00b0C \u2013 25\u00b0C**\n  - Ideal pharmacy room temperature for medications: **68\u00b0F \u2013 77\u00b0F** (equivalent to **20\u00b0C \u2013 25\u00b0C**)\n\nGiven these guidelines and industry standards, maintaining the temperature within the specified range is crucial to preserve the quality and effectiveness of pharmaceutical products during storage in New York City.",
+      "sources": [
+        "guidelines",
+        "web",
+        "transport"
+      ],
+      "query_type": "factual",
+      "timestamp": "2025-04-15T12:14:11.306304"
+    }
+  ],
+  "metadata": {
+    "query_types": {
+      "factual": 3
+    },
+    "sources_used": {
+      "guidelines": 3,
+      "transport": 3,
+      "web": 2,
+      "inventory": 1
+    },
+    "total_interactions": 3
+  },
+  "created_at": "2025-04-15T11:21:20.012691",
+  "last_updated": "2025-04-15T12:14:11.306304"
+}

@@ -1,0 +1,39 @@
+{
+  "history": [
+    {
+      "query": "Which items will be affected by the US tariff on China? What is the current tariff, and how will it affect our inventory?",
+      "enhanced_query": "Which items will be affected by the US tariff on China? What is the current tariff, and how will it affect our inventory?",
+      "response": "# Current Tariffs on Imports from China\n\n### Current Status\n- The US has imposed tariffs on a range of Chinese goods, with rates varying significantly.\n- Tariffs can range from **7.5% to 100%** depending on the product category.\n- Specific tariffs for pharmaceuticals are not detailed in the provided web search results, but general tariffs on Chinese goods are applicable.\n\n### Impact on Products\n- **Paracetamol, Ibuprofen, Aspirin, Atorvastatin, Lisinopril, Metformin, Amoxicillin, Ciprofloxacin, Sildenafil, Albuterol, Insulin, Adalimumab, Rituximab, Erythropoietin, Growth Hormone, Flu Vaccine, Hydrocortisone, Alpha Interferon, Beta Interferon**: These items may be affected if they are sourced from China.\n- The impact on inventory costs will depend on the specific tariff rate applied to each pharmaceutical product.\n\n### Recommendations\n- **Review Supplier Agreements**: Confirm the country of origin for each product to determine if tariffs apply.\n- **Cost Analysis**: Calculate the potential increase in costs due to tariffs and adjust pricing strategies accordingly.\n- **Inventory Management**: Monitor stock levels closely, especially for items with low current stock relative to reorder points, such as Atorvastatin and Hydrocortisone.\n- **Alternative Sourcing**: Consider alternative suppliers or countries of origin to mitigate tariff impacts.\n- **Regulatory Compliance**: Ensure all import documentation reflects any tariff changes to avoid compliance issues.\n\nBy following these recommendations, the company can better manage the financial and operational impacts of the tariffs on its pharmaceutical inventory.",
+      "sources": [
+        "web",
+        "inventory"
+      ],
+      "query_type": "factual",
+      "timestamp": "2025-04-15T23:44:52.154562"
+    },
+    {
+      "query": "Show me the distribution of stock levels across all pharmaceutical products",
+      "enhanced_query": "Display the distribution of inventory levels for all pharmaceutical products, including details on stock quantities and availability.",
+      "response": "# Distribution of Inventory Levels for Pharmaceutical Products\n\n## Current Inventory Status\n\n- **Lisinopril**\n  - **Current Stock:** 133,725 g\n  - **Maximum Inventory:** 300,000 g\n  - **Reorder Point:** 28,767 g\n  - **Expiry Date:** 10-Feb-2026\n\n- **Metformin**\n  - **Current Stock:** 357,566 g\n  - **Maximum Inventory:** 900,000 g\n  - **Reorder Point:** 76,438 g\n  - **Expiry Date:** 17-Jan-2027\n\n- **Paracetamol**\n  - **Current Stock:** 951,453 g\n  - **Maximum Inventory:** 1,000,000 g\n  - **Reorder Point:** 93,151 g\n  - **Expiry Date:** 14-Dec-2026\n\n- **Ibuprofen**\n  - **Current Stock:** 770,922 g\n  - **Maximum Inventory:** 800,000 g\n  - **Reorder Point:** 61,370 g\n  - **Expiry Date:** 14-Oct-2027\n\n- **Aspirin**\n  - **Current Stock:** 194,347 g\n  - **Maximum Inventory:** 750,000 g\n  - **Reorder Point:** 98,630 g\n  - **Expiry Date:** 02-Feb-2026\n\n- **Atorvastatin**\n  - **Current Stock:** 16,052 g\n  - **Maximum Inventory:** 250,000 g\n  - **Reorder Point:** 15,753 g\n  - **Expiry Date:** 23-Feb-2027\n\n- **Amoxicillin**\n  - **Current Stock:** 481,838 g\n  - **Maximum Inventory:** 500,000 g\n  - **Reorder Point:** 39,726 g\n  - **Expiry Date:** 03-Nov-2025\n\n- **Ciprofloxacin**\n  - **Current Stock:** 63,189 g\n  - **Maximum Inventory:** 400,000 g\n  - **Reorder Point:** 36,164 g\n  - **Expiry Date:** 01-Dec-2026\n\n- **Sildenafil**\n  - **Current Stock:** 87,637 g\n  - **Maximum Inventory:** 200,000 g\n  - **Reorder Point:** 26,849 g\n  - **Expiry Date:** 25-Dec-2025\n\n- **Albuterol**\n  - **Current Stock:** 37,079 g\n  - **Maximum Inventory:** 150,000 g\n  - **Reorder Point:** 8,630 g\n  - **Expiry Date:** 04-Jul-2027\n\n- **Insulin**\n  - **Current Stock:** 51,767 IU\n  - **Maximum Inventory:** 100,000 IU\n  - **Reorder Point:** 8,493 IU\n  - **Expiry Date:** 06-Oct-2027\n\n- **Adalimumab**\n  - **Current Stock:** 4,569 mg\n  - **Maximum Inventory:** 50,000 mg\n  - **Reorder Point:** 3,973 mg\n  - **Expiry Date:** 02-Apr-2027\n\n- **Rituximab**\n  - **Current Stock:** 41,600 mg\n  - **Maximum Inventory:** 75,000 mg\n  - **Reorder Point:** 6,781 mg\n  - **Expiry Date:** 28-Oct-2025\n\n- **Erythropoietin**\n  - **Current Stock:** 17,211 IU\n  - **Maximum Inventory:** 40,000 IU\n  - **Reorder Point:** 5,589 IU\n  - **Expiry Date:** 02-Jul-2027\n\n- **Growth Hormone**\n  - **Current Stock:** 13,941 IU\n  - **Maximum Inventory:** 30,000 IU\n  - **Reorder Point:** 2,795 IU\n  - **Expiry Date:** 26-Oct-2025\n\n- **Flu Vaccine**\n  - **Current Stock:** 134,306 doses\n  - **Maximum Inventory:** 200,000 doses\n  - **Reorder Point:** 23,014 doses\n  - **Expiry Date:** 23-Dec-2026\n\n- **Hydrocortisone**\n  - **Current Stock:** 3,252 mg\n  - **Maximum Inventory:** 30,000 mg\n  - **Reorder Point:** 3,616 mg\n  - **Expiry Date:** 10-Jun-2026\n\n- **Alpha Interferon**\n  - **Current Stock:** 3,403 mcg\n  - **Maximum Inventory:**",
+      "sources": [
+        "inventory",
+        "transport"
+      ],
+      "query_type": "factual",
+      "timestamp": "2025-04-15T23:46:59.558378"
+    }
+  ],
+  "metadata": {
+    "query_types": {
+      "factual": 2
+    },
+    "sources_used": {
+      "web": 1,
+      "inventory": 2,
+      "transport": 1
+    },
+    "total_interactions": 2
+  },
+  "created_at": "2025-04-15T23:44:52.154562",
+  "last_updated": "2025-04-15T23:46:59.558378"
+}

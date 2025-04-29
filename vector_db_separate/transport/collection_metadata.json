@@ -1,0 +1,8 @@
+{
+  "embedding_model": "text-embedding-3-small",
+  "dimensions": 1536,
+  "chunk_size": 1000,
+  "created_at": "2025-04-15T11:18:31.337649",
+  "collection_name": "transport",
+  "original_file": "transport_history.csv"
+}

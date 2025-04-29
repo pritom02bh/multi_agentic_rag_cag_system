@@ -1,0 +1,27 @@
+{
+  "history": [
+    {
+      "query": "How many units of Insulin do we have in stock?",
+      "enhanced_query": "How many units of Insulin (generic name: insulin, brand names: Humulin, Novolin) are currently available in our inventory?",
+      "response": "Based on your query about 'How many units of Insulin (generic name: insulin, brand names: Humulin, Novolin) are currently available in our inventory?', here's what I found:\n\n## Inventory Analysis\n- Total Items: 10\n- Total Units in Stock: 3,119,569\n- Items Below Reorder Point: 0 (0.0% of total)\n\n### Item Details\n| Item | Current Stock | Reorder Point | Status |\n|------|---------------|---------------|--------|\n| None  \nUnit Cost | 100,000 | 8,493 | Adequate |\n|  | 1,000,000 | 93,150 | Adequate |\n| Active  \nLast Updated | 750,000 | 98,630 | Adequate |\n| Expiry Date | 300,000 | 28,767 | Adequate |\n| ng Price | 500,000 | 39,726 | Adequate |\n\n## Transport Analysis\n- Total Shipments: 10\n- Delayed Shipments: 0 (0.0% of total)\n- Average Delay: 0.0 days\n- On-Time Rate: 100.0%",
+      "sources": [
+        "inventory",
+        "transport"
+      ],
+      "query_type": "analytical",
+      "timestamp": "2025-04-15T21:55:27.720248"
+    }
+  ],
+  "metadata": {
+    "query_types": {
+      "analytical": 1
+    },
+    "sources_used": {
+      "inventory": 1,
+      "transport": 1
+    },
+    "total_interactions": 1
+  },
+  "created_at": "2025-04-15T21:55:27.720248",
+  "last_updated": "2025-04-15T21:55:27.720248"
+}

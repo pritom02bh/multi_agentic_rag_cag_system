@@ -1,0 +1,27 @@
+{
+  "history": [
+    {
+      "query": "How many units of Insulin do we have in stock?",
+      "enhanced_query": "How many units of Insulin, a critical medication for diabetes management, are currently available in our inventory?",
+      "response": "Based on your query about 'How many units of Insulin, a critical medication for diabetes management, are currently available in our inventory?', here's what I found:\n\n## Inventory Analysis\n- Total Items: 1\n- Total Units in Stock: 300,000\n- Items Below Reorder Point: 0 (0.0% of total)\n\n### Item Details\n| Item | Current Stock | Reorder Point | Status |\n|------|---------------|---------------|--------|\n| Expiry Date | 300,000 | 28,767 | Adequate |\n\n## Transport Analysis\n- Total Shipments: 10\n- Delayed Shipments: 0 (0.0% of total)\n- Average Delay: 0.0 days\n- On-Time Rate: 100.0%",
+      "sources": [
+        "inventory",
+        "transport"
+      ],
+      "query_type": "analytical",
+      "timestamp": "2025-04-15T21:50:59.382543"
+    }
+  ],
+  "metadata": {
+    "query_types": {
+      "analytical": 1
+    },
+    "sources_used": {
+      "inventory": 1,
+      "transport": 1
+    },
+    "total_interactions": 1
+  },
+  "created_at": "2025-04-15T21:50:59.382543",
+  "last_updated": "2025-04-15T21:50:59.382543"
+}

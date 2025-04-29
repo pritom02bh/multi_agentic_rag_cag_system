@@ -1,0 +1,12 @@
+{
+  "session_id": "session_6vctje1owzl",
+  "timestamp": "2025-03-26T22:45:15.699116",
+  "query": "What is the current inventory status?",
+  "enhanced_query": "Please enhance the following query for pharmaceutical inventory analysis:\n\nQuery: What is the current inventory status?\n\nEnhance it to include relevant pharmaceutical inventory management concepts and metrics.\n\nEnhanced Query: What is the current status of pharmaceutical inventory, including metrics such as stock levels, expiration dates, and turnover rates?",
+  "source": "inventory",
+  "response": {
+    "status": "success",
+    "response": "I apologize, but I encountered an error while generating the response. Please try again or rephrase your query.",
+    "analysis": {
+      "total_items": 19,
+      "total_stock": 

@@ -1,0 +1,23 @@
+{
+  "embedding_model": "text-embedding-3-small",
+  "dimensions": 1536,
+  "datasets": {
+    "Inventory Management Policy.pdf": {
+      "success": true,
+      "collection": "policies"
+    },
+    "inventory_data.pdf": {
+      "success": true,
+      "collection": "inventory"
+    },
+    "transport_history.pdf": {
+      "success": true,
+      "collection": "transport"
+    },
+    "US Government Guidelines for Medicine Transportation and Storage.pdf": {
+      "success": true,
+      "collection": "guidelines"
+    }
+  },
+  "created_at": "2025-04-14T15:17:08.833674"
+}
