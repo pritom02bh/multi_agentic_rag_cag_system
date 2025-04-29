@@ -1,214 +1,165 @@
-# 🏥 PharmAI Assistant: Agentic RAG for Pharmaceutical Supply Chain 🤖
+# 🏥 PharmAI Assistant: Agentic RAG for Pharmaceutical Supply Chain 🚀
 
 ![PharmAI Banner](https://img.shields.io/badge/PharmAI-Pharmaceutical%20RAG%20System-blue?style=for-the-badge&logo=openai)
 
+---
+
 ## 🔍 Overview
+PharmAI Assistant is a cutting-edge **Multi-Agentic Retrieval-Augmented Generation (RAG)** system designed to optimize pharmaceutical **inventory management**, **transport operations**, and **compliance risk analysis**.  
+It combines vector databases, intelligent web search, dynamic analytics, and agent collaboration to drive smarter decision-making across the supply chain.
 
-PharmAI is an advanced retrieval-augmented generation (RAG) system specifically designed for pharmaceutical supply chain management. It combines vector database technology, real-time web search capabilities, and sophisticated analytics to provide intelligent responses to pharmaceutical inventory and logistics queries.
+<p align="center">
+  <img src="https://img.shields.io/badge/license-MIT-green"/> <img src="https://img.shields.io/badge/python-v3.9+-blue"/> <img src="https://img.shields.io/badge/flask-v3.0.0-orange"/> <img src="https://img.shields.io/badge/OpenAI-GPT--4o-purple"/> <img src="https://img.shields.io/badge/ChromaDB-v0.4.24-yellow"/>
+</p>
 
-![License](https://img.shields.io/badge/license-MIT-green) ![Python](https://img.shields.io/badge/python-v3.9+-blue) ![Flask](https://img.shields.io/badge/flask-v3.0.0-orange) ![OpenAI](https://img.shields.io/badge/OpenAI-GPT--4-purple) ![ChromaDB](https://img.shields.io/badge/ChromaDB-v0.4.24-yellow)
+---
 
 ## ✨ Key Features
+- 🧠 **Context-Aware Query Understanding**: Factual, analytical, and hybrid query support.
+- 🔀 **Advanced Multi-Agent Routing**: Smart Query Router dynamically dispatches tasks.
+- 📚 **Multi-Source Knowledge Base**: Inventory, Transport, Regulatory Guidelines, Company Policies.
+- 🌐 **Web Search Agent**: Integrates real-time global updates via SERPER API.
+- 📈 **Analytical Insights**: Trends, shortages, compliance risks prediction.
+- 📊 **Visual Reporting**: Converts complex data into actionable charts and graphs.
+- 🔄 **Session Management**: Maintains conversation memory for seamless interactions.
 
-- 🧠 **Intelligent Query Enhancement**: Refines user queries to include relevant pharmaceutical terminology and context
-- 🔀 **Smart Routing**: Automatically directs queries to the most appropriate data sources
-- 📊 **Data Analysis**: Provides analytical insights on inventory, logistics, and compliance data
-- 🌐 **Web Search Integration**: Supplements local data with real-time information from the web
-- 📈 **Visualization**: Generates informative charts and graphs to represent data trends
-- 📱 **Modern UI**: Clean, responsive interface with real-time processing pipeline visualization
-- 🔄 **Session Management**: Maintains context across conversations for more coherent interactions
+---
 
-## 🏗️ System Architecture
+## 🧠 System Architecture
+![Mermaid Chart - Create complex, visual diagrams with text  A smarter way of creating diagrams -2025-04-28-204425](https://github.com/user-attachments/assets/1db273cd-3b46-4339-89a0-be49fb576c0a)
 
-```
-   User
-    ↓
-+-------------------+     +--------------------+     +--------------------+
-|                   |     |                    |     |                    |
-|  Web Interface    |←→|  Flask Backend API  |←→|  Agent Pipeline     |
-|  (HTML/CSS/JS)    |     |  (Flask-RestX)     |     |  (LangChain/OpenAI)|
-|                   |     |                    |     |                    |
-+-------------------+     +--------------------+     +--------------------+
-                                                            ↑  ↑
-                                                            |  |
-                          +--------------------+            |  |
-                          |                    |            |  |
-                          |  ChromaDB Vector   |←-----------+  |
-                          |  Database          |               |
-                          |                    |               |
-                          +--------------------+               |
-                                                               |
-                          +--------------------+               |
-                          |                    |               |
-                          |  External Web      |←--------------+
-                          |  (SERPER API)      |
-                          |                    |
-                          +--------------------+
-```
+
 
 ## 🔄 Processing Pipeline
 
-1. **Query Enhancement**: The `QueryEnhancer` class analyzes and enhances user queries to improve retrieval
-2. **Query Routing**: The `DataRouter` determines which data sources to use for the query
-3. **Data Retrieval**: Relevant information is retrieved from ChromaDB vector collections
-4. **Web Search Augmentation**: For queries requiring current information, real-time web search is performed
-5. **Response Generation**: The `RAGAgent` or `AnalyticalAgent` generates a comprehensive response
-6. **Visualization**: Where applicable, visualizations are created to represent data trends
+1. **Query Enhancement** → Adds pharmaceutical context
+2. **Routing** → Classifies into Factual, Analytical, or Hybrid
+3. **Retrieval** → Pulls from ChromaDB or Web
+4. **Agent Collaboration** → RAGAgent + AnalyticalAgent + WebSearchAgent
+5. **Visualization** → Displays charts, trend analysis
+6. **Response Delivery** → Fluent, explainable AI answer
 
-## 💻 Installation
+---
+
+## 📦 Data Sources
+- 📦 **Inventory Data** (Stock, reorder points, expiry risks)
+- 🚚 **Transport Data** (Delivery timelines, logistic exceptions)
+- 📜 **Regulatory Guidelines** (Cold chain, FDA, EU compliance)
+- 📝 **Internal Policies** (Company SOPs, operational protocols)
+- 🌐 **Real-Time Web Search** (Global pharmaceutical updates)
+
+---
+
+## 🧩 Core Agents
+
+| Agent | Role |
+|:--|:--|
+| **QueryEnhancer** | Enhances queries with domain-specific context |
+| **DataRouter** | Routes queries intelligently to agents |
+| **RAGAgent** | Factual generation from vector database |
+| **AnalyticalAgent** | Data analysis, forecasting, operational optimization |
+| **WebSearchAgent** | Real-time external info via SERPER |
+| **ReportGenerator** | Comprehensive report creation & visualization |
+
+---
+
+## ⚙️ Installation
 
 ### Prerequisites
-
 - Python 3.9+
-- OpenAI API key
-- SERPER API key (for web search)
+- OpenAI API Key
+- SERPER API Key (for Google search)
 
-### Step 1: Clone the repository
+### Setup Instructions
 
 ```bash
+# Step 1: Clone
 git clone https://github.com/yourusername/pharmai-assistant.git
 cd pharmai-assistant
-```
 
-### Step 2: Create and activate a virtual environment
-
-```bash
+# Step 2: Create virtual environment
 python -m venv venv
-# Windows
-venv\Scripts\activate
-# macOS/Linux
-source venv/bin/activate
-```
+source venv/bin/activate  # Windows: venv\Scripts\activate
 
-### Step 3: Install dependencies
-
-```bash
+# Step 3: Install dependencies
 pip install -r requirements.txt
-```
 
-### Step 4: Set up environment variables
-
-Create a `.env` file in the root directory:
-
-```
+# Step 4: Setup .env
 OPENAI_API_KEY=your_openai_api_key
 SERPER_API_KEY=your_serper_api_key
 OPENAI_MODEL=gpt-4o
-```
 
-### Step 5: Run the application
-
-```bash
+# Step 5: Run
 python app.py
 ```
+Server will start on `http://localhost:5000`
 
-The application will be available at `http://localhost:5000`.
+---
 
-## 🚀 Usage Examples
+## 🚀 Example Use Cases
 
-### Example 1: Inventory Query
-```
-Query: What insulin products are running low on stock?
-```
+| Scenario | Example Query |
+|:--|:--|
+| **Inventory Management** | "What insulin products are running low on stock?" |
+| **Regulatory Compliance** | "What are the temperature requirements for transporting vaccines?" |
+| **Analytics** | "Compare antibiotic stock trends month-over-month." |
+| **External Market Watch** | "What are the latest tariffs on pharmaceutical imports from China?" |
 
-### Example 2: Regulatory Compliance Query
-```
-Query: What are the temperature requirements for transporting flu vaccines?
-```
-
-### Example 3: Analytics Query
-```
-Query: Compare the current stock levels of antibiotics versus last month.
-```
-
-### Example 4: External Information Query
-```
-Query: What are the current tariffs on imported pharmaceuticals from China?
-```
-
-## 📊 Data Sources
-
-The system uses multiple data sources:
-
-- **Inventory Data**: Stock levels, reorder points, expiry dates, etc.
-- **Transport Data**: Shipping information, delivery status, logistics
-- **Guidelines**: Regulatory requirements, compliance information
-- **Policy**: Company policies, operating procedures, internal rules
-- **Web**: Real-time information from the web (via SERPER API)
-
-## 🧩 Components
-
-### Agents
-
-- **QueryEnhancer**: Refines user queries for better retrieval
-- **DataRouter**: Routes queries to appropriate data sources
-- **RAGAgent**: Generates responses for factual queries
-- **AnalyticalAgent**: Analyzes data and provides insights
-- **WebSearchAgent**: Retrieves real-time information from the web
-- **ReportGenerator**: Creates comprehensive reports
-
-### Utilities
-
-- **ChromaDBManager**: Manages interactions with ChromaDB vector database
-- **ChromaParser**: Parses data from ChromaDB collections
-- **SessionManager**: Maintains user sessions and conversation history
-
-## 🔧 Configuration
-
-All system settings are defined in `config/settings.py`. Key configurations include:
-
-- API keys and models (OpenAI, SERPER)
-- Data source paths
-- Analysis thresholds
-- Response templates
-- Chart configurations
-
-## 📋 API Documentation
-
-The API documentation is available at `/api/docs` when running the application. Main endpoints include:
-
-- **POST /api/chat/**: Process a chat query and return a response
-- **GET /api/system/status**: Get system status information
-- **GET /api/chat/history/{session_id}**: Get chat history for a session
-- **DELETE /api/chat/clear/{session_id}**: Clear chat history for a session
-
-## 🔮 Future Enhancements
-
-- 🌟 Multi-model support for different types of queries
-- 🌟 Enhanced analytics with predictive capabilities
-- 🌟 Integration with real-time inventory systems
-- 🌟 Mobile application interface
-- 🌟 Additional language support
+---
 
 ## 📈 Performance Metrics
+- ⏱️ **Avg. Response Time**: < 3 seconds
+- 🎯 **Answer Relevance Accuracy**: > 90%
+- 🔎 **Web Search Integration Success**: > 95%
+- 🔋 **System Uptime**: > 99.9%
 
-- Average response time: < 3 seconds
-- Relevance accuracy: > 90% 
-- Web search integration success rate: > 95%
-- System uptime: > 99.9%
+---
+
+## 🔮 Future Enhancements
+- 🤖 Multi-Model Query Optimization
+- 📊 Predictive Analytics and Forecasting
+- 📦 Live Inventory Management Integration
+- 🌎 Globalization (Multi-Language RAG)
+- 📱 Mobile App Companion
+
+---
+
+## 🛠️ Innovation Highlights
+- 🔍 Multi-Agent Collaboration Framework
+- 🔄 Modular Extensible System
+- 📚 Multi-Knowledge-Base RAG Retrieval
+- 📡 Autonomous Web-Enhanced Intelligence
+
+---
 
 ## 🤝 Contributing
+Contributions are welcome! 🚀
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+```bash
+# Steps
+- Fork this repository
+- Create a new branch (feature/amazing-feature)
+- Commit your changes
+- Push to your branch
+- Open a Pull Request
+```
 
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+---
 
 ## 📜 License
+Distributed under the **MIT License**.  
+See `LICENSE` for more information.
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+---
 
 ## 🙏 Acknowledgements
-
-- OpenAI for providing the foundation models
-- SERPER for web search capabilities
-- The entire open-source community for inspiration and tools
+- **OpenAI** — For foundational models
+- **SERPER API** — For external web search
+- **ChromaDB** — For fast vector retrieval
+- **Montclair State University** — For academic guidance
 
 ---
 
 <p align="center">
-  Made with ❤️ for the pharmaceutical industry
-</p> 
+  Built with ❤️ by Pritom Bhowmik to advance pharmaceutical supply chain intelligence.
+</p>
