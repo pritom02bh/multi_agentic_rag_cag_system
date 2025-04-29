@@ -132,34 +132,19 @@ Server will start on `http://localhost:5000`
 
 ---
 
-## 🤝 Contributing
-Contributions are welcome! 🚀
-
-```bash
-# Steps
-- Fork this repository
-- Create a new branch (feature/amazing-feature)
-- Commit your changes
-- Push to your branch
-- Open a Pull Request
-```
-
----
 
 ## 📜 License
 Distributed under the **MIT License**.  
-See `LICENSE` for more information.
-
 ---
 
 ## 🙏 Acknowledgements
-- **OpenAI** — For foundational models
-- **SERPER API** — For external web search
-- **ChromaDB** — For fast vector retrieval
-- **Montclair State University** — For academic guidance
+
+Thanks to my Academic Adviser and Instructor, **Dr. Hao Liu**,  
+for providing invaluable guidance, mentorship, and support throughout the development of my Master's Project.
+
 
 ---
 
 <p align="center">
-  Built with ❤️ by Pritom Bhowmik to advance pharmaceutical supply chain intelligence.
+  Developed by Pritom Bhowmik to advance pharmaceutical supply chain intelligence.
 </p>
